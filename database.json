@@ -1,0 +1,66 @@
+{
+  "users": [
+    {
+      "id": "usr_admin_1",
+      "name": "Admin (Stowave Director)",
+      "email": "alizohaib.web@gmail.com",
+      "password": "password123",
+      "role": "admin",
+      "department": "Executive Leadership",
+      "title": "Chief Operating Officer & Admin",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "phone": "+92 329 0010909",
+      "joinDate": "2026-10-13",
+      "status": "online",
+      "points": 1560,
+      "bio": "Overseeing Stowave team operations, strategic roadmaps, e-commerce automation, and product excellence.",
+      "skills": [
+        "Strategic Management",
+        "E-Commerce",
+        "Operations",
+        "Team Leadership"
+      ],
+      "updatedAt": "2026-10-13T23:41:04.936Z"
+    }
+  ],
+  "tasks": [],
+  "reports": [],
+  "surveys": [],
+  "survey_responses": [],
+  "peer_ratings": [],
+  "shoutouts": [],
+  "gifts": [],
+  "leaves": [],
+  "announcements": [
+    {
+      "id": "ann_stowave_welcome",
+      "title": "🚀 Stowave Workspace Initialized (100% Real-Time)",
+      "content": "Welcome to your real-time Stowave company portal. All dummy data has been removed. Use \"+ Assign Task\" or \"+ Add Team Member\" to begin.",
+      "priority": "urgent",
+      "pinned": true,
+      "authorId": "usr_admin_1",
+      "createdAt": "2026-10-13T23:47:49.372Z"
+    }
+  ],
+  "audit_logs": [
+    {
+      "id": "log_1791935269372",
+      "userId": "usr_admin_1",
+      "action": "WORKSPACE_RESET",
+      "details": "Workspace reset to clean real-time Stowave slate.",
+      "timestamp": "2026-10-13T23:47:49.372Z"
+    }
+  ],
+  "settings": {
+    "companyName": "Stowave",
+    "companyTagline": "Modern Team Strategy, E-Commerce Operations & Automation",
+    "timezone": "UTC+5 (PKT)",
+    "apifyUserId": "",
+    "apifyApiKey": "",
+    "groqModel": "openai/gpt-oss-120b",
+    "visionModel": "qwen/qwen3.8-27b"
+  },
+  "social_inbox": [],
+  "social_accounts": [],
+  "social_posts": []
+}

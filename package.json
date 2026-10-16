@@ -1,0 +1,18 @@
+{
+  "name": "team-management-backend",
+  "version": "1.0.0",
+  "description": "Enterprise Team Management API with AI & Strategy Engine",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cloudinary": "^2.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "nodemailer": "^10.1.0",
+    "pg": "^8.23.1"
+  }
+}

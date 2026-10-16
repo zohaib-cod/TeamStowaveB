@@ -14,6 +14,18 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
+// Ensure MongoDB connection & sync on cold start
+app.use(async (req, res, next) => {
+  if (db.initPromise) {
+    try {
+      await db.initPromise;
+    } catch (e) {
+      // Graceful fallback to memory/file
+    }
+  }
+  next();
+});
+
 // Mount Notifications & Media Upload Router (Cloudinary, Gmail, WhatsApp)
 const notificationsRouter = require('./routes/notifications');
 app.use('/api/notifications', notificationsRouter);
@@ -877,4 +889,6 @@ process.on('SIGTERM', () => {
 process.on('SIGINT', () => {
   server.close(() => process.exit(0));
 });
+
+module.exports = app;
 

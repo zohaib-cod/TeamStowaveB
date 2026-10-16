@@ -1,5 +1,7 @@
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
+const { MongoClient } = require('mongodb');
 
 const DB_FILE = path.join(__dirname, 'database.json');
 
@@ -416,59 +418,154 @@ const initialData = {
 
 class Database {
   constructor() {
-    this.ensureDb();
+    this.data = this.readFromFile();
+    this.mongoClient = null;
+    this.mongoDb = null;
+    this.isMongoConnected = false;
+
+    if (process.env.MONGODB_URI) {
+      this.initPromise = this.initMongo();
+    } else {
+      this.initPromise = Promise.resolve();
+    }
   }
 
   ensureDb() {
-    if (!fs.existsSync(DB_FILE)) {
-      fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+    try {
+      if (!fs.existsSync(DB_FILE)) {
+        fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+      }
+    } catch (e) {
+      // Ignored on read-only serverless environments
     }
+  }
+
+  readFromFile() {
+    this.ensureDb();
+    try {
+      if (fs.existsSync(DB_FILE)) {
+        const fileContent = fs.readFileSync(DB_FILE, 'utf-8');
+        return JSON.parse(fileContent);
+      }
+    } catch (err) {
+      console.warn('Notice: File read fallback in db:', err.message);
+    }
+    return JSON.parse(JSON.stringify(initialData));
   }
 
   read() {
-    this.ensureDb();
-    try {
-      const data = fs.readFileSync(DB_FILE, 'utf-8');
-      return JSON.parse(data);
-    } catch (err) {
-      console.error('Error reading database file:', err);
-      return initialData;
-    }
+    return this.data;
+  }
+
+  getSettings() {
+    return this.data.settings || {};
   }
 
   write(data) {
+    this.data = data;
     try {
       fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
-      return true;
     } catch (err) {
-      console.error('Error writing to database file:', err);
-      return false;
+      // Serverless (e.g. Vercel) read-only filesystem is expected
+    }
+    return true;
+  }
+
+  async initMongo() {
+    const mongoUri = process.env.MONGODB_URI;
+    if (!mongoUri) return;
+
+    try {
+      this.mongoClient = new MongoClient(mongoUri, {
+        serverSelectionTimeoutMS: 5000,
+      });
+      await this.mongoClient.connect();
+      this.mongoDb = this.mongoClient.db('team_stowave');
+      this.isMongoConnected = true;
+      console.log('🍃 Successfully connected to MongoDB Atlas (team_stowave)!');
+
+      await this.syncFromMongo();
+    } catch (err) {
+      console.error('⚠️ MongoDB Atlas connection error (falling back to memory/file):', err.message);
+    }
+  }
+
+  async syncFromMongo() {
+    if (!this.mongoDb) return;
+    try {
+      const collections = [
+        'users', 'tasks', 'reports', 'surveys', 'survey_responses',
+        'peer_ratings', 'shoutouts', 'gifts', 'leaves', 'announcements',
+        'audit_logs', 'social_inbox', 'social_accounts', 'social_posts'
+      ];
+
+      const usersCount = await this.mongoDb.collection('users').countDocuments();
+      if (usersCount === 0) {
+        console.log('🌱 MongoDB is empty. Seeding initial data into MongoDB Atlas...');
+        for (const col of collections) {
+          const items = this.data[col] || [];
+          if (items.length > 0) {
+            await this.mongoDb.collection(col).insertMany(items.map(i => ({ ...i })));
+          }
+        }
+        if (this.data.settings) {
+          await this.mongoDb.collection('settings').updateOne(
+            { key: 'global_settings' },
+            { $set: { key: 'global_settings', ...this.data.settings } },
+            { upsert: true }
+          );
+        }
+        console.log('✅ Seed data successfully inserted into MongoDB Atlas!');
+        return;
+      }
+
+      for (const col of collections) {
+        const docs = await this.mongoDb.collection(col).find({}).toArray();
+        this.data[col] = docs.map(({ _id, ...rest }) => rest);
+      }
+
+      const settingsDoc = await this.mongoDb.collection('settings').findOne({ key: 'global_settings' });
+      if (settingsDoc) {
+        const { _id, key, ...restSettings } = settingsDoc;
+        this.data.settings = restSettings;
+      }
+      console.log(`📦 Loaded ${this.data.users?.length || 0} users & ${this.data.tasks?.length || 0} tasks from MongoDB Atlas!`);
+    } catch (err) {
+      console.error('Error syncing from MongoDB:', err.message);
     }
   }
 
   getCollection(name) {
-    const data = this.read();
-    return data[name] || [];
+    return this.data[name] || [];
   }
 
   saveCollection(name, items) {
-    const data = this.read();
-    data[name] = items;
-    this.write(data);
+    this.data[name] = items;
+    this.write(this.data);
+
+    if (this.mongoDb) {
+      this.mongoDb.collection(name).deleteMany({})
+        .then(() => items.length ? this.mongoDb.collection(name).insertMany(items.map(i => ({ ...i }))) : null)
+        .catch(err => console.error(`MongoDB saveCollection error on ${name}:`, err.message));
+    }
     return items;
   }
 
   addItem(name, item) {
-    const data = this.read();
-    if (!data[name]) data[name] = [];
+    if (!this.data[name]) this.data[name] = [];
     if (!item.id) {
       item.id = `${name.slice(0, 3)}_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`;
     }
     if (!item.createdAt) {
       item.createdAt = new Date().toISOString();
     }
-    data[name].unshift(item);
-    this.write(data);
+    this.data[name].unshift(item);
+    this.write(this.data);
+
+    if (this.mongoDb) {
+      this.mongoDb.collection(name).insertOne({ ...item })
+        .catch(err => console.error(`MongoDB insert error on ${name}:`, err.message));
+    }
 
     // Also add to audit log
     if (name !== 'audit_logs') {
@@ -485,28 +582,43 @@ class Database {
   }
 
   updateItem(name, id, updates) {
-    const data = this.read();
-    if (!data[name]) return null;
-    const index = data[name].findIndex(item => item.id === id);
+    if (!this.data[name]) return null;
+    const index = this.data[name].findIndex(item => item.id === id);
     if (index === -1) return null;
-    data[name][index] = { ...data[name][index], ...updates, updatedAt: new Date().toISOString() };
-    this.write(data);
-    return data[name][index];
+
+    this.data[name][index] = { ...this.data[name][index], ...updates, updatedAt: new Date().toISOString() };
+    this.write(this.data);
+
+    if (this.mongoDb) {
+      this.mongoDb.collection(name).updateOne({ id }, { $set: updates })
+        .catch(err => console.error(`MongoDB update error on ${name}:`, err.message));
+    }
+
+    return this.data[name][index];
   }
 
   deleteItem(name, id) {
-    const data = this.read();
-    if (!data[name]) return false;
-    const initialLen = data[name].length;
-    data[name] = data[name].filter(item => item.id !== id);
-    this.write(data);
-    return data[name].length < initialLen;
+    if (!this.data[name]) return false;
+    const initialLen = this.data[name].length;
+    this.data[name] = this.data[name].filter(item => item.id !== id);
+    this.write(this.data);
+
+    if (this.mongoDb) {
+      this.mongoDb.collection(name).deleteOne({ id })
+        .catch(err => console.error(`MongoDB delete error on ${name}:`, err.message));
+    }
+
+    return this.data[name].length < initialLen;
   }
 
   clearCollection(name) {
-    const data = this.read();
-    data[name] = [];
-    this.write(data);
+    this.data[name] = [];
+    this.write(this.data);
+
+    if (this.mongoDb) {
+      this.mongoDb.collection(name).deleteMany({})
+        .catch(err => console.error(`MongoDB clear error on ${name}:`, err.message));
+    }
     return [];
   }
 
@@ -568,7 +680,32 @@ class Database {
         visionModel: 'qwen/qwen3.8-27b'
       }
     };
+
+    this.data = freshData;
     this.write(freshData);
+
+    if (this.mongoDb) {
+      const collections = [
+        'users', 'tasks', 'reports', 'surveys', 'survey_responses',
+        'peer_ratings', 'shoutouts', 'gifts', 'leaves', 'announcements',
+        'audit_logs', 'social_inbox', 'social_accounts', 'social_posts'
+      ];
+      Promise.all(
+        collections.map(col =>
+          this.mongoDb.collection(col).deleteMany({})
+            .then(() => freshData[col] && freshData[col].length ? this.mongoDb.collection(col).insertMany(freshData[col].map(i => ({ ...i }))) : null)
+        )
+      ).catch(err => console.error('MongoDB reset error:', err));
+
+      if (freshData.settings) {
+        this.mongoDb.collection('settings').updateOne(
+          { key: 'global_settings' },
+          { $set: { key: 'global_settings', ...freshData.settings } },
+          { upsert: true }
+        ).catch(err => console.error('MongoDB reset settings error:', err));
+      }
+    }
+
     return freshData;
   }
 }

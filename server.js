@@ -1033,6 +1033,198 @@ app.get('/api/audit-logs', (req, res) => {
   res.json(logs.slice(0, 50));
 });
 
+// Helper: execute real portal actions triggered by AI
+function executeAiAction(actionObj, userContext) {
+  if (!actionObj || !actionObj.type) return null;
+  const users = db.getCollection('users') || [];
+  const tasks = db.getCollection('tasks') || [];
+
+  const type = String(actionObj.type).toUpperCase().trim();
+  const params = actionObj.params || actionObj.data || {};
+
+  try {
+    if (type === 'CREATE_TASK' || type === 'ASSIGN_TASK') {
+      const assignTarget = (params.assignedTo || params.assignee || params.member || params.user || '').toLowerCase().trim();
+      let assignee = null;
+      if (assignTarget) {
+        assignee = users.find(u => 
+          (u.id && u.id.toLowerCase() === assignTarget) || 
+          (u.name && u.name.toLowerCase().includes(assignTarget)) ||
+          (u.name && assignTarget.includes(u.name.toLowerCase())) ||
+          (u.email && u.email.toLowerCase().includes(assignTarget))
+        );
+      }
+      if (!assignee) {
+        assignee = users.find(u => u.id !== userContext?.id) || users[0];
+      }
+
+      const newTask = {
+        id: `tsk_${Date.now()}`,
+        title: params.title || 'Assigned Workspace Task',
+        description: params.description || `Task assigned via AI Assistant by ${userContext?.name || 'Administrator'}`,
+        assignedTo: assignee ? assignee.id : (userContext?.id || 'usr_admin_1'),
+        assignedBy: userContext?.id || 'usr_admin_1',
+        assignedByName: userContext?.name || 'Administrator',
+        priority: (params.priority || 'medium').toLowerCase(),
+        status: 'todo',
+        dueDate: params.dueDate || new Date(Date.now() + 86400000 * 3).toISOString().split('T')[0],
+        createdAt: new Date().toISOString(),
+        estimatedHours: 8,
+        actualHours: 0,
+        tags: ['AI-Assigned', assignee?.department || 'General'],
+        images: [],
+        pdfs: [],
+        voiceUrl: '',
+        attachments: [],
+        submissionNotes: '',
+        submissionLink: '',
+        submissionImages: [],
+        submissionPdfs: [],
+        submissionVoice: '',
+        submissionAttachments: [],
+        reviewedBy: null,
+        reviewFeedback: null,
+        rating: null
+      };
+
+      const saved = db.addItem('tasks', newTask);
+
+      createInPortalNotification({
+        userId: newTask.assignedTo,
+        title: '🚨 New Task Assigned by AI',
+        message: `You have been assigned: "${newTask.title}". Due date: ${newTask.dueDate}.`,
+        type: 'task_assigned',
+        link: '/tasks',
+        relatedId: newTask.id
+      });
+
+      db.addItem('audit_logs', {
+        id: `log_${Date.now()}`,
+        userId: userContext?.id || 'ai_copilot',
+        action: 'AI_CREATE_TASK',
+        details: `AI created and assigned task: "${newTask.title}" to ${assignee?.name || 'team member'}`,
+        timestamp: new Date().toISOString(),
+        createdAt: new Date().toISOString()
+      });
+
+      return {
+        success: true,
+        type: 'CREATE_TASK',
+        task: saved,
+        message: `\n\n> ⚡ **Action Executed:** Task *"${newTask.title}"* has been created and assigned to **${assignee?.name || 'Team Member'}**! [View in Tasks](/tasks)`
+      };
+    }
+
+    if (type === 'APPROVE_TASK') {
+      const query = (params.taskTitleOrId || params.taskId || params.title || '').toLowerCase().trim();
+      let task = null;
+      if (query && query.length > 1) {
+        task = tasks.find(t => 
+          (t.id && t.id.toLowerCase() === query) || 
+          (t.title && t.title.toLowerCase().includes(query)) ||
+          (t.title && query.includes(t.title.toLowerCase()))
+        );
+      }
+      if (!task) {
+        task = tasks.find(t => t.status === 'review') || tasks.find(t => t.status !== 'completed') || tasks[tasks.length - 1];
+      }
+
+      if (!task) return { success: false, error: 'Task not found to approve.' };
+
+      const rating = Number(params.rating) || 5;
+      const awardPoints = rating * 20;
+      const updates = {
+        status: 'completed',
+        reviewedBy: userContext?.id || 'usr_admin_1',
+        reviewedByName: userContext?.name || 'Administrator',
+        reviewFeedback: params.feedback || 'Deliverable approved with excellence by Admin via AI!',
+        rating: rating,
+        reviewedAt: new Date().toISOString()
+      };
+
+      const updated = db.updateItem('tasks', task.id, updates);
+      const assignee = users.find(u => u.id === task.assignedTo);
+      if (assignee) {
+        db.updateItem('users', assignee.id, { points: (assignee.points || 0) + awardPoints });
+      }
+
+      createInPortalNotification({
+        userId: task.assignedTo,
+        title: '🎉 Task Deliverable Approved by Admin',
+        message: `Admin approved "${task.title}"! Rating: ${rating}/5 ⭐. +${awardPoints} points awarded.`,
+        type: 'task_approved',
+        link: '/tasks',
+        relatedId: task.id
+      });
+
+      db.addItem('audit_logs', {
+        id: `log_${Date.now()}`,
+        userId: userContext?.id || 'admin',
+        action: 'AI_APPROVE_TASK',
+        details: `AI approved task: "${task.title}" with rating ${rating}/5`,
+        timestamp: new Date().toISOString(),
+        createdAt: new Date().toISOString()
+      });
+
+      return {
+        success: true,
+        type: 'APPROVE_TASK',
+        task: updated,
+        message: `\n\n> ⚡ **Action Executed:** Task *"${task.title}"* has been approved and marked as completed! (+${awardPoints} points awarded to **${assignee?.name || 'assignee'}**) [View in Tasks](/tasks)`
+      };
+    }
+
+    if (type === 'UPDATE_TASK') {
+      const query = (params.taskTitleOrId || params.taskId || params.title || '').toLowerCase().trim();
+      let task = null;
+      if (query) {
+        task = tasks.find(t => 
+          (t.id && t.id.toLowerCase() === query) || 
+          (t.title && t.title.toLowerCase().includes(query)) ||
+          (t.title && query.includes(t.title.toLowerCase()))
+        );
+      }
+      if (!task) task = tasks[0];
+      if (!task) return { success: false, error: 'Task not found.' };
+
+      const updates = {};
+      if (params.status) updates.status = params.status;
+      if (params.priority) updates.priority = params.priority;
+      const updated = db.updateItem('tasks', task.id, updates);
+
+      return {
+        success: true,
+        type: 'UPDATE_TASK',
+        task: updated,
+        message: `\n\n> ⚡ **Action Executed:** Task *"${task.title}"* updated to status **${params.status || task.status}**! [View in Tasks](/tasks)`
+      };
+    }
+
+    if (type === 'DELETE_TASK') {
+      const query = (params.taskTitleOrId || params.taskId || params.title || '').toLowerCase().trim();
+      let task = null;
+      if (query) {
+        task = tasks.find(t => 
+          (t.id && t.id.toLowerCase() === query) || 
+          (t.title && t.title.toLowerCase().includes(query)) ||
+          (t.title && query.includes(t.title.toLowerCase()))
+        );
+      }
+      if (!task) return { success: false, error: 'Task not found.' };
+
+      db.deleteItem('tasks', task.id);
+      return {
+        success: true,
+        type: 'DELETE_TASK',
+        message: `\n\n> ⚡ **Action Executed:** Task *"${task.title}"* has been deleted.`
+      };
+    }
+  } catch (err) {
+    console.error('Error executing AI action:', err);
+  }
+  return null;
+}
+
 // ==========================================
 // 9. AI EXECUTIVE ASSISTANT (GROQ + HF + VISION + LIVE SEARCH)
 // ==========================================
@@ -1080,11 +1272,56 @@ CORE PRINCIPLES & CAPABILITIES:
      * ### 3. Critical Bottlenecks & Operational Risks
      * ### 4. Strategic 48-Hour Action Directives
    - Use clean markdown tables to summarize key metrics so they can be exported to PDF.
-4. RESPONSE TONE & FORMAT (CLAUDE-LIKE):
+4. AUTONOMOUS ACTIONS (CREATE / ASSIGN / APPROVE / UPDATE / DELETE TASKS):
+   You have full authority to execute real workspace actions when requested by the user:
+   - If asked to create or assign a task (e.g. "Ali Haider ko task assign karo...", "task bnao"):
+     Append this exact block at the bottom of your reply:
+     \`\`\`action
+     {
+       "type": "CREATE_TASK",
+       "params": {
+         "title": "Title of task",
+         "assignedTo": "Ali Haider",
+         "priority": "urgent" or "high" or "medium",
+         "dueDate": "2026-10-22",
+         "description": "Task description"
+       }
+     }
+     \`\`\`
+   - If asked to approve a task / deliverable (e.g. "task approve kr do", "is deliverable ko approve karo"):
+     \`\`\`action
+     {
+       "type": "APPROVE_TASK",
+       "params": {
+         "taskTitleOrId": "task name or ID",
+         "rating": 5,
+         "feedback": "Approved with excellence!"
+       }
+     }
+     \`\`\`
+   - If asked to update status (e.g. "complete mark karo"):
+     \`\`\`action
+     {
+       "type": "UPDATE_TASK",
+       "params": {
+         "taskTitleOrId": "task name or ID",
+         "status": "completed"
+       }
+     }
+     \`\`\`
+   - If asked to delete a task:
+     \`\`\`action
+     {
+       "type": "DELETE_TASK",
+       "params": {
+         "taskTitleOrId": "task name or ID"
+       }
+     }
+     \`\`\`
+5. RESPONSE TONE & FORMAT (CLAUDE-LIKE):
    - Never sound like a robotic script. Avoid repetitive canned greeting lists like "I have access to 1 active tasks...". Speak naturally, warmly, and with high intellectual clarity.
    - Match user language: If the user communicates in Roman Urdu / Urdu (e.g. "kia hal hai", "audit kr k do", "tasks check kro"), reply in fluent, polite, elegant Roman Urdu / Urdu with professional English terms. If in English, reply in crisp executive English.
-   - Always structure complex information with markdown: bullet points, bold key terms, tables, and clickable links formatted as [Label](/route), such as [Task Board](/tasks), [Team Directory](/team), [Operations](/operations), [Settings](/settings).
-   - If asked for links or documentation, make sure links are formatted in markdown so they are clickable.`;
+   - Always structure complex information with markdown: bullet points, bold key terms, tables, and clickable links formatted as [Label](/route), such as [Task Board](/tasks), [Team Directory](/team), [Operations](/operations), [Settings](/settings).`;
 
     const messages = [
       { role: 'system', content: systemPrompt },
@@ -1140,7 +1377,85 @@ CORE PRINCIPLES & CAPABILITIES:
       reply = data.choices[0]?.message?.content || 'No response generated.';
     }
 
-    res.json({ reply, model: usedModel });
+    // Check if reply contains an autonomous action block
+    let actionExecuted = null;
+    let actionRaw = null;
+    const actionBlockMatch = reply.match(/```(?:action|json)?\s*([\s\S]*?\{[\s\S]*?"type"[\s\S]*?\})\s*```/);
+    if (actionBlockMatch) {
+      try {
+        actionRaw = JSON.parse(actionBlockMatch[1]);
+        reply = reply.replace(actionBlockMatch[0], '').trim();
+      } catch (e) {}
+    } else {
+      const inlineMatch = reply.match(/(\{\s*"type"\s*:\s*"(?:CREATE_TASK|ASSIGN_TASK|APPROVE_TASK|UPDATE_TASK|DELETE_TASK)"[\s\S]*?\})/i);
+      if (inlineMatch) {
+        try {
+          actionRaw = JSON.parse(inlineMatch[1]);
+          reply = reply.replace(inlineMatch[0], '').trim();
+        } catch (e) {}
+      }
+    }
+
+    if (actionRaw && actionRaw.type) {
+      const actionResult = executeAiAction(actionRaw, userContext);
+      if (actionResult && actionResult.success) {
+        actionExecuted = actionResult;
+        reply = reply.trim() + actionResult.message;
+      }
+    }
+
+    // Direct intent fallback if AI didn't emit code block but intent is obvious
+    if (!actionExecuted) {
+      const lowerMsg = message.toLowerCase();
+      // 1. Approve task fallback
+      if ((lowerMsg.includes('approve') || lowerMsg.includes('aprove') || lowerMsg.includes('manzoor')) && (lowerMsg.includes('task') || lowerMsg.includes('deliverable') || lowerMsg.includes('kam') || lowerMsg.includes('testing'))) {
+        let cleanQuery = message
+          .replace(/(approve|aprove|task|deliverable|kam|ko|kr do|kardo|kar do|please|plz|bhi|is|ye)/gi, '')
+          .replace(/["'`]/g, '')
+          .trim();
+        const result = executeAiAction({ type: 'APPROVE_TASK', params: { taskTitleOrId: cleanQuery } }, userContext);
+        if (result && result.success) {
+          actionExecuted = result;
+          reply += result.message;
+        }
+      }
+      // 2. Assign / Create task fallback
+      else if ((lowerMsg.includes('assign') || lowerMsg.includes('create') || lowerMsg.includes('banao') || lowerMsg.includes('de do')) && (lowerMsg.includes('task') || lowerMsg.includes('kam'))) {
+        const allUsers = db.getCollection('users') || [];
+        const foundUser = allUsers.find(u => lowerMsg.includes(u.name.toLowerCase()) || (u.name.split(' ')[0] && lowerMsg.includes(u.name.split(' ')[0].toLowerCase())));
+        const cleanTitle = message
+          .replace(/(assign|create|banao|task|kam|ko|karo|kr do|kardo|kar do|please|plz|aik|ek|new)/gi, '')
+          .replace(foundUser ? new RegExp(foundUser.name, 'gi') : '', '')
+          .replace(/["'`:]/g, '')
+          .trim();
+
+        const result = executeAiAction({
+          type: 'CREATE_TASK',
+          params: {
+            title: cleanTitle.length > 3 ? cleanTitle : 'Assigned Workspace Task',
+            assignedTo: foundUser ? foundUser.name : (allUsers[0]?.name || 'team member')
+          }
+        }, userContext);
+        if (result && result.success) {
+          actionExecuted = result;
+          reply += result.message;
+        }
+      }
+      // 3. Delete task fallback
+      else if ((lowerMsg.includes('delete') || lowerMsg.includes('remove') || lowerMsg.includes('hatao') || lowerMsg.includes('khatam')) && lowerMsg.includes('task')) {
+        let cleanQuery = message
+          .replace(/(delete|remove|hatao|khatam|task|ko|kr do|kardo|kar do|please|plz|is|ye)/gi, '')
+          .replace(/["'`]/g, '')
+          .trim();
+        const result = executeAiAction({ type: 'DELETE_TASK', params: { taskTitleOrId: cleanQuery } }, userContext);
+        if (result && result.success) {
+          actionExecuted = result;
+          reply += result.message;
+        }
+      }
+    }
+
+    res.json({ reply, actionExecuted, model: usedModel });
   } catch (error) {
     console.error('AI Chat Error:', error);
     res.status(500).json({ error: error.message || 'Failed to process AI chat.' });

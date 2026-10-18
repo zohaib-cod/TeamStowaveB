@@ -2,6 +2,7 @@ const express = require('express');
 const crypto = require('crypto');
 const db = require('../db');
 const { sendInviteEmail } = require('../services/emailService');
+const { alertAdmins } = require('../services/whatsappService');
 
 const router = express.Router();
 
@@ -251,6 +252,17 @@ router.post('/invite', async (req, res) => {
       invitedByName: newInvite.invitedByName
     });
     emailDispatched = emailResult.success;
+
+    // Dispatch WhatsApp alert to configured admin numbers
+    alertAdmins(
+      `✉️ *New Team Invitation Sent*\n\n` +
+      `👤 *Recipient:* ${normalizedEmail}\n` +
+      `👑 *Role:* ${newInvite.role.toUpperCase()}\n` +
+      `🏢 *Department:* ${newInvite.department || 'General'}\n` +
+      `⏳ *Expires In:* 30 mins\n\n` +
+      `🔗 *Invite Link:* ${inviteLink}`,
+      'TEAM INVITATION'
+    ).catch(e => console.warn('Invite WhatsApp dispatch error:', e.message));
   } catch (err) {
     console.error('Invite email error:', err.message);
   }

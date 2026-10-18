@@ -4,7 +4,16 @@ const cors = require('cors');
 const db = require('./db');
 
 const { notifyTaskAssigned, notifyWorkApproved, notifyTaskRejected } = require('./services/emailService');
-const { alertAdmins } = require('./services/whatsappService');
+const { 
+  alertAdmins,
+  notifyWhatsAppTaskAssigned,
+  notifyWhatsAppTaskSubmitted,
+  notifyWhatsAppTaskApproved,
+  notifyWhatsAppTaskRejected,
+  notifyWhatsAppExtensionRequested,
+  notifyWhatsAppExtensionReviewed,
+  notifyWhatsAppInPortalAlert
+} = require('./services/whatsappService');
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -230,6 +239,12 @@ function createInPortalNotification({ userId, title, message, type = 'info', lin
       createdAt: new Date().toISOString()
     };
     db.addItem('notifications', newNotification);
+
+    // Auto-dispatch WhatsApp notification to configured admin numbers (923290010909, 923184360458)
+    notifyWhatsAppInPortalAlert({ title, message, type, link }).catch(err => {
+      console.warn('Auto WhatsApp notification broadcast failed:', err.message);
+    });
+
     return newNotification;
   } catch (err) {
     console.warn('Error creating in-portal notification:', err);
@@ -316,9 +331,15 @@ app.post('/api/tasks', (req, res) => {
       assigneeName: assignee.name
     }).catch(e => console.warn('Email notify error:', e.message));
   }
-  if (newTask.priority === 'urgent' || newTask.priority === 'high') {
-    alertAdmins(`🚨 Urgent Task Created: "${title}" assigned to ${assignee?.name || 'team'}. Due: ${newTask.dueDate}`).catch(e => console.warn('WhatsApp alert error:', e.message));
-  }
+
+  // Rich WhatsApp dispatch to configured admin numbers (923290010909, 923184360458)
+  notifyWhatsAppTaskAssigned({
+    taskTitle: title,
+    priority: newTask.priority,
+    dueDate: newTask.dueDate,
+    assigneeName: assignee?.name || 'Team Contributor',
+    assignedByName: newTask.assignedByName || 'Leadership'
+  }).catch(e => console.warn('WhatsApp task assigned alert error:', e.message));
 
   res.status(201).json(saved);
 });
@@ -371,6 +392,14 @@ app.post('/api/tasks/:id/submit', (req, res) => {
     link: '/tasks',
     relatedId: task.id
   });
+
+  // Rich WhatsApp dispatch
+  notifyWhatsAppTaskSubmitted({
+    taskTitle: task.title,
+    submittedByName: updates.submittedByName || 'Team Member',
+    notes: updates.submissionNotes,
+    actualHours: updates.actualHours
+  }).catch(e => console.warn('WhatsApp task submitted alert error:', e.message));
 
   res.json(updated);
 });
@@ -477,6 +506,23 @@ app.post('/api/tasks/:id/review', async (req, res) => {
     }
   }
 
+  // Rich WhatsApp dispatch to configured numbers
+  if (isApproved) {
+    notifyWhatsAppTaskApproved({
+      taskTitle: task.title,
+      memberName: assignee?.name || 'Team Member',
+      rating: numericRating || 5,
+      pointsAwarded: awardPoints,
+      feedback: updates.reviewFeedback
+    }).catch(err => console.warn('Approval WhatsApp dispatch failed:', err.message));
+  } else {
+    notifyWhatsAppTaskRejected({
+      taskTitle: task.title,
+      memberName: assignee?.name || 'Team Member',
+      reason: updates.reviewFeedback
+    }).catch(err => console.warn('Rejection WhatsApp dispatch failed:', err.message));
+  }
+
   // In-portal notification for Assignee
   createInPortalNotification({
     userId: task.assignedTo,
@@ -534,6 +580,14 @@ app.post('/api/tasks/:id/request-extension', (req, res) => {
     relatedId: task.id
   });
 
+  // Rich WhatsApp dispatch
+  notifyWhatsAppExtensionRequested({
+    taskTitle: task.title,
+    memberName: member?.name || 'Team Member',
+    requestedDueDate,
+    reason: updates.extensionReason
+  }).catch(err => console.warn('Extension request WhatsApp error:', err.message));
+
   res.json(updated);
 });
 
@@ -578,6 +632,14 @@ app.post('/api/tasks/:id/review-extension', (req, res) => {
     link: '/tasks',
     relatedId: task.id
   });
+
+  // Rich WhatsApp dispatch
+  notifyWhatsAppExtensionReviewed({
+    taskTitle: task.title,
+    approved: isApproved,
+    memberName: task.assignedByName || 'Team Member',
+    notes: updates.extensionReviewNotes
+  }).catch(e => console.warn('Extension review WhatsApp error:', e.message));
 
   res.json(updated);
 });
@@ -1098,6 +1160,14 @@ function executeAiAction(actionObj, userContext) {
         relatedId: newTask.id
       });
 
+      notifyWhatsAppTaskAssigned({
+        taskTitle: newTask.title,
+        priority: newTask.priority,
+        dueDate: newTask.dueDate,
+        assigneeName: assignee?.name || 'Team Contributor',
+        assignedByName: 'Stowave AI Strategic Advisor'
+      }).catch(e => console.warn('AI task assigned WhatsApp error:', e.message));
+
       db.addItem('audit_logs', {
         id: `log_${Date.now()}`,
         userId: userContext?.id || 'ai_copilot',
@@ -1156,6 +1226,14 @@ function executeAiAction(actionObj, userContext) {
         link: '/tasks',
         relatedId: task.id
       });
+
+      notifyWhatsAppTaskApproved({
+        taskTitle: task.title,
+        memberName: assignee?.name || 'Team Member',
+        rating: rating,
+        pointsAwarded: awardPoints,
+        feedback: updates.reviewFeedback
+      }).catch(e => console.warn('AI approval WhatsApp error:', e.message));
 
       db.addItem('audit_logs', {
         id: `log_${Date.now()}`,

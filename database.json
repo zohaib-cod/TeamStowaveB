@@ -13,7 +13,7 @@
       "phone": "+92 329 0010909",
       "joinDate": "2026-10-18",
       "status": "online",
-      "points": 2600,
+      "points": 3100,
       "bio": "Primary Administrator & Director at Stowave.",
       "skills": [
         "Strategy",
@@ -22,7 +22,11 @@
         "E-Commerce"
       ],
       "createdAt": "2026-10-18T10:48:36.422Z",
-      "updatedAt": "2026-10-18T12:15:10.171Z"
+      "lastDevice": "Android Phone / App",
+      "lastIp": "103.191.123.188",
+      "lastLogin": "2026-10-18T17:56:23.085Z",
+      "lastLoginFormatted": "Oct 18, 2026, 05:56:23 PM",
+      "updatedAt": "2026-10-18T22:36:05.870Z"
     },
     {
       "id": "usr_1792324121131_qjg8",
@@ -36,18 +40,90 @@
       "phone": "+92 300 0000000",
       "joinDate": "2026-10-18",
       "status": "online",
-      "points": 660,
+      "points": 720,
       "bio": "Contributor in Customer Comments & DM Replies Fast Turnaround, Daily Bank Balances & Payment Reconciliation, Courier COD (Cash on Delivery) Payout Audit, Profit & Loss Margin Weekly Documentation, Company Expense Invoices & Vendor Settlement, Product Physical Inspection & Quality Standards, Packaging Standards & Unboxing Quality Verification, Warehouse Stock Physical Counting & Discrepancies, Return Parcel (RTO) Inspection & Restocking, Soft Records Google Drive & Cloud File Management, Hard Copy Physical Invoices & Archival Filing, Budget Authorizations & Major Expenditure Approvals.",
       "skills": [
         "Operations",
         "Collaboration",
         "Customer Comments & DM Replies Fast Turnaround, Daily Bank Balances & Payment Reconciliation, Courier COD (Cash on Delivery) Payout Audit, Profit & Loss Margin Weekly Documentation, Company Expense Invoices & Vendor Settlement, Product Physical Inspection & Quality Standards, Packaging Standards & Unboxing Quality Verification, Warehouse Stock Physical Counting & Discrepancies, Return Parcel (RTO) Inspection & Restocking, Soft Records Google Drive & Cloud File Management, Hard Copy Physical Invoices & Archival Filing, Budget Authorizations & Major Expenditure Approvals"
       ],
-      "createdAt": "2026-10-18T11:48:41.131Z",
-      "updatedAt": "2026-10-18T11:58:22.490Z"
+      "createdAt": "2026-10-18T11:48:41.131Z"
     }
   ],
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "tsk_1792349655275",
+      "title": "Hello testing ",
+      "description": "Hello testing description ",
+      "assignedTo": "usr_1792320516422_nv0x",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "urgent",
+      "status": "completed",
+      "dueDate": "2026-10-20",
+      "createdAt": "2026-10-18T18:54:15.275Z",
+      "estimatedHours": 8,
+      "actualHours": 8,
+      "tags": [
+        "Strategic",
+        "Q4-Milestone"
+      ],
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "",
+      "attachments": [],
+      "submissionNotes": "Hello testing ",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": "usr_1792320516422_nv0x",
+      "reviewFeedback": "Testing review",
+      "rating": 5,
+      "submittedAt": "2026-10-18T19:02:48.671Z",
+      "submittedBy": "usr_1792320516422_nv0x",
+      "submittedByName": "Ali Zohaib",
+      "reviewedAt": "2026-10-18T22:28:24.963Z",
+      "reviewedByName": "Ali Zohaib"
+    },
+    {
+      "id": "tsk_1792356668523",
+      "title": "Social DM & Comment Summary Sheet",
+      "description": "Har social channel (Instagram, TikTok, LinkedIn, Facebook, Twitter, YouTube) ke liye ek consolidated sheet banayein jismein total DMs aur comments ki count ho. Sheet ko Google Drive ya Stowave Drive par share karein aur summary ko Ali Zohaib ko email/notification ke through bhejein.",
+      "assignedTo": "usr_1792324121131_qjg8",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "high",
+      "status": "completed",
+      "dueDate": "2026-10-22",
+      "createdAt": "2026-10-18T20:51:08.523Z",
+      "estimatedHours": 8,
+      "actualHours": 8,
+      "tags": [
+        "AI-Assigned",
+        "Customer Comments & DM Replies Fast Turnaround, Daily Bank Balances & Payment Reconciliation, Courier COD (Cash on Delivery) Payout Audit, Profit & Loss Margin Weekly Documentation, Company Expense Invoices & Vendor Settlement, Product Physical Inspection & Quality Standards, Packaging Standards & Unboxing Quality Verification, Warehouse Stock Physical Counting & Discrepancies, Return Parcel (RTO) Inspection & Restocking, Soft Records Google Drive & Cloud File Management, Hard Copy Physical Invoices & Archival Filing, Budget Authorizations & Major Expenditure Approvals"
+      ],
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "",
+      "attachments": [],
+      "submissionNotes": "ok",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": "usr_1792320516422_nv0x",
+      "reviewFeedback": "Outstanding deliverable! Approved.",
+      "rating": 3,
+      "submittedAt": "2026-10-18T22:22:36.750Z",
+      "submittedBy": "usr_1792320516422_nv0x",
+      "submittedByName": "Ali Zohaib",
+      "reviewedAt": "2026-10-18T22:22:43.594Z",
+      "reviewedByName": "Ali Zohaib"
+    }
+  ],
   "reports": [],
   "surveys": [],
   "survey_responses": [],
@@ -77,60 +153,36 @@
   ],
   "audit_logs": [
     {
-      "id": "log_1792325850337",
-      "userId": "usr_1792324121131_qjg8",
-      "action": "CREATE_TASKS",
-      "details": "Created new item in tasks: [Social Media Operations] Daily Social Media Execution",
-      "timestamp": "2026-10-18T12:17:30.337Z",
-      "createdAt": "2026-10-18T12:17:30.337Z"
-    },
-    {
-      "id": "log_1792325710178",
+      "id": "log_1792362971029",
       "userId": "usr_1792320516422_nv0x",
       "action": "CREATE_NOTIFICATIONS",
       "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
-      "timestamp": "2026-10-18T12:15:10.178Z",
-      "createdAt": "2026-10-18T12:15:10.178Z"
+      "timestamp": "2026-10-18T22:36:11.029Z",
+      "createdAt": "2026-10-18T22:36:11.029Z"
     },
     {
-      "id": "log_1792324812002",
+      "id": "log_1792362950042",
       "userId": "admins",
       "action": "CREATE_NOTIFICATIONS",
       "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
-      "timestamp": "2026-10-18T12:00:12.002Z",
-      "createdAt": "2026-10-18T12:00:12.002Z"
+      "timestamp": "2026-10-18T22:35:50.042Z",
+      "createdAt": "2026-10-18T22:35:50.042Z"
     },
     {
-      "id": "log_1792324702502",
-      "userId": "usr_1792324121131_qjg8",
-      "action": "CREATE_NOTIFICATIONS",
-      "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
-      "timestamp": "2026-10-18T11:58:22.502Z",
-      "createdAt": "2026-10-18T11:58:22.502Z"
-    },
-    {
-      "id": "log_1792324681925",
-      "userId": "admins",
-      "action": "CREATE_NOTIFICATIONS",
-      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
-      "timestamp": "2026-10-18T11:58:01.925Z",
-      "createdAt": "2026-10-18T11:58:01.925Z"
-    },
-    {
-      "id": "log_1792324647996",
-      "userId": "usr_1792324121131_qjg8",
+      "id": "log_1792362926871",
+      "userId": "usr_1792320516422_nv0x",
       "action": "CREATE_NOTIFICATIONS",
       "details": "Created new item in notifications: 🚨 New Task Assigned",
-      "timestamp": "2026-10-18T11:57:27.996Z",
-      "createdAt": "2026-10-18T11:57:27.996Z"
+      "timestamp": "2026-10-18T22:35:26.871Z",
+      "createdAt": "2026-10-18T22:35:26.871Z"
     },
     {
-      "id": "log_1792324647988",
-      "userId": "usr_1792320516422_nv0x",
+      "id": "log_1792362926702",
+      "userId": "usr_admin_1",
       "action": "CREATE_TASKS",
-      "details": "Created new item in tasks: testing zohaib",
-      "timestamp": "2026-10-18T11:57:27.988Z",
-      "createdAt": "2026-10-18T11:57:27.988Z"
+      "details": "Created new item in tasks: WhatsApp & Persistence Live Flow Test",
+      "timestamp": "2026-10-18T22:35:26.702Z",
+      "createdAt": "2026-10-18T22:35:26.702Z"
     },
     {
       "id": "log_1791935269372",
@@ -321,6 +373,222 @@
       "details": "Created new item in notifications: ✅ Deadline Extension Approved!",
       "timestamp": "2026-10-18T11:51:42.966Z",
       "createdAt": "2026-10-18T11:51:42.966Z"
+    },
+    {
+      "id": "log_1792324647996",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-10-18T11:57:27.996Z",
+      "createdAt": "2026-10-18T11:57:27.996Z"
+    },
+    {
+      "id": "log_1792324647988",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: testing zohaib",
+      "timestamp": "2026-10-18T11:57:27.988Z",
+      "createdAt": "2026-10-18T11:57:27.988Z"
+    },
+    {
+      "id": "log_1792324681925",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
+      "timestamp": "2026-10-18T11:58:01.925Z",
+      "createdAt": "2026-10-18T11:58:01.925Z"
+    },
+    {
+      "id": "log_1792324702502",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
+      "timestamp": "2026-10-18T11:58:22.502Z",
+      "createdAt": "2026-10-18T11:58:22.502Z"
+    },
+    {
+      "id": "log_1792324812002",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
+      "timestamp": "2026-10-18T12:00:12.002Z",
+      "createdAt": "2026-10-18T12:00:12.002Z"
+    },
+    {
+      "id": "log_1792325710178",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
+      "timestamp": "2026-10-18T12:15:10.178Z",
+      "createdAt": "2026-10-18T12:15:10.178Z"
+    },
+    {
+      "id": "log_1792325850337",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: [Social Media Operations] Daily Social Media Execution",
+      "timestamp": "2026-10-18T12:17:30.337Z",
+      "createdAt": "2026-10-18T12:17:30.337Z"
+    },
+    {
+      "id": "log_1792342715225",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_LOGIN_LOGS",
+      "details": "Created new item in login_logs: Ali Zohaib",
+      "timestamp": "2026-10-18T16:58:35.225Z",
+      "createdAt": "2026-10-18T16:58:35.225Z"
+    },
+    {
+      "id": "log_1792346183116",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_LOGIN_LOGS",
+      "details": "Created new item in login_logs: Ali Zohaib",
+      "timestamp": "2026-10-18T17:56:23.116Z",
+      "createdAt": "2026-10-18T17:56:23.116Z"
+    },
+    {
+      "id": "log_1792347862751",
+      "userId": "usr_admin_1",
+      "action": "CREATE_ACTIVE_PRESENCES",
+      "details": "Created new item in active_presences: Ali Zohaib",
+      "timestamp": "2026-10-18T18:24:22.751Z",
+      "createdAt": "2026-10-18T18:24:22.751Z"
+    },
+    {
+      "id": "log_1792348054981",
+      "userId": "usr_admin_1",
+      "action": "CREATE_ACTIVE_PRESENCES",
+      "details": "Created new item in active_presences: Ali Zohaib",
+      "timestamp": "2026-10-18T18:27:34.981Z",
+      "createdAt": "2026-10-18T18:27:34.981Z"
+    },
+    {
+      "id": "log_1792347862750",
+      "userId": "usr_admin_1",
+      "action": "CREATE_ACTIVE_PRESENCES",
+      "details": "Created new item in active_presences: Ali Zohaib",
+      "timestamp": "2026-10-18T18:24:22.750Z",
+      "createdAt": "2026-10-18T18:24:22.750Z"
+    },
+    {
+      "id": "log_1792348145835",
+      "userId": "usr_admin_1",
+      "action": "CREATE_ACTIVE_PRESENCES",
+      "details": "Created new item in active_presences: Ali Zohaib",
+      "timestamp": "2026-10-18T18:29:05.835Z",
+      "createdAt": "2026-10-18T18:29:05.835Z"
+    },
+    {
+      "id": "log_1792349655276",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Hello testing ",
+      "timestamp": "2026-10-18T18:54:15.276Z",
+      "createdAt": "2026-10-18T18:54:15.276Z"
+    },
+    {
+      "id": "log_1792349655277",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-10-18T18:54:15.277Z",
+      "createdAt": "2026-10-18T18:54:15.277Z"
+    },
+    {
+      "id": "log_1792349973884",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PENDING_PROFILE_UPDATES",
+      "details": "Created new item in pending_profile_updates: pup_1792349973883_92od",
+      "timestamp": "2026-10-18T18:59:33.884Z",
+      "createdAt": "2026-10-18T18:59:33.884Z"
+    },
+    {
+      "id": "log_1792350168673",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
+      "timestamp": "2026-10-18T19:02:48.673Z",
+      "createdAt": "2026-10-18T19:02:48.673Z"
+    },
+    {
+      "id": "log_1792356668525",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned by AI",
+      "timestamp": "2026-10-18T20:51:08.525Z",
+      "createdAt": "2026-10-18T20:51:08.525Z"
+    },
+    {
+      "id": "log_1792356668526",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "AI_CREATE_TASK",
+      "details": "AI created and assigned task: \"Social DM & Comment Summary Sheet\" to Ali Haider",
+      "timestamp": "2026-10-18T20:51:08.526Z",
+      "createdAt": "2026-10-18T20:51:08.526Z"
+    },
+    {
+      "id": "log_1792356668524",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Social DM & Comment Summary Sheet",
+      "timestamp": "2026-10-18T20:51:08.524Z",
+      "createdAt": "2026-10-18T20:51:08.524Z"
+    },
+    {
+      "id": "log_1792362074273",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
+      "timestamp": "2026-10-18T22:21:14.273Z",
+      "createdAt": "2026-10-18T22:21:14.273Z"
+    },
+    {
+      "id": "log_1792362095209",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
+      "timestamp": "2026-10-18T22:21:35.209Z",
+      "createdAt": "2026-10-18T22:21:35.209Z"
+    },
+    {
+      "id": "log_1792362156752",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
+      "timestamp": "2026-10-18T22:22:36.752Z",
+      "createdAt": "2026-10-18T22:22:36.752Z"
+    },
+    {
+      "id": "log_1792362163613",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
+      "timestamp": "2026-10-18T22:22:43.613Z",
+      "createdAt": "2026-10-18T22:22:43.613Z"
+    },
+    {
+      "id": "log_1792362198779",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
+      "timestamp": "2026-10-18T22:23:18.779Z",
+      "createdAt": "2026-10-18T22:23:18.779Z"
+    },
+    {
+      "id": "log_1792362204878",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
+      "timestamp": "2026-10-18T22:23:24.878Z",
+      "createdAt": "2026-10-18T22:23:24.878Z"
+    },
+    {
+      "id": "log_1792362504968",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
+      "timestamp": "2026-10-18T22:28:24.968Z",
+      "createdAt": "2026-10-18T22:28:24.968Z"
     }
   ],
   "settings": {
@@ -387,6 +655,39 @@
   ],
   "pending_profile_updates": [],
   "notifications": [
+    {
+      "id": "notif_1792362970946_22ks4",
+      "userId": "usr_1792320516422_nv0x",
+      "title": "🎉 Task Deliverable Approved!",
+      "message": "Admin approved \"WhatsApp & Persistence Live Flow Test\"! Rating: 5/5 Stars ⭐. +100 points awarded.",
+      "type": "task_approved",
+      "link": "/tasks",
+      "relatedId": "tsk_1792362926605",
+      "read": false,
+      "createdAt": "2026-10-18T22:36:10.946Z"
+    },
+    {
+      "id": "notif_1792362949958_1cw7i",
+      "userId": "admins",
+      "title": "📤 Task Deliverables Submitted",
+      "message": "Ali Zohaib has submitted deliverables for \"WhatsApp & Persistence Live Flow Test\". Click to review.",
+      "type": "task_submitted",
+      "link": "/tasks",
+      "relatedId": "tsk_1792362926605",
+      "read": false,
+      "createdAt": "2026-10-18T22:35:49.958Z"
+    },
+    {
+      "id": "notif_1792362926787_y1jfk",
+      "userId": "usr_1792320516422_nv0x",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"WhatsApp & Persistence Live Flow Test\". Due date: 2026-10-25.",
+      "type": "task_assigned",
+      "link": "/tasks",
+      "relatedId": "tsk_1792362926605",
+      "read": false,
+      "createdAt": "2026-10-18T22:35:26.788Z"
+    },
     {
       "id": "notif_1792325710176_apt6r",
       "userId": "usr_1792320516422_nv0x",

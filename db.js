@@ -526,23 +526,40 @@ class Database {
     }
   }
 
+  async syncCollection(name) {
+    if (!this.mongoDb) return this.data[name] || [];
+    try {
+      const docs = await this.mongoDb.collection(name).find({}).toArray();
+      this.data[name] = docs.map(({ _id, ...rest }) => rest);
+      return this.data[name];
+    } catch (err) {
+      console.warn(`MongoDB syncCollection warning on ${name}:`, err.message);
+      return this.data[name] || [];
+    }
+  }
+
   getCollection(name) {
     return this.data[name] || [];
   }
 
-  saveCollection(name, items) {
+  async saveCollection(name, items) {
     this.data[name] = items;
     this.write(this.data);
 
     if (this.mongoDb) {
-      this.mongoDb.collection(name).deleteMany({})
-        .then(() => items.length ? this.mongoDb.collection(name).insertMany(items.map(i => ({ ...i }))) : null)
-        .catch(err => console.error(`MongoDB saveCollection error on ${name}:`, err.message));
+      try {
+        await this.mongoDb.collection(name).deleteMany({});
+        if (items.length) {
+          await this.mongoDb.collection(name).insertMany(items.map(i => ({ ...i })));
+        }
+      } catch (err) {
+        console.error(`MongoDB saveCollection error on ${name}:`, err.message);
+      }
     }
     return items;
   }
 
-  addItem(name, item) {
+  async addItem(name, item) {
     if (!this.data[name]) this.data[name] = [];
     if (!item.id) {
       item.id = `${name.slice(0, 3)}_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`;
@@ -554,25 +571,32 @@ class Database {
     this.write(this.data);
 
     if (this.mongoDb) {
-      this.mongoDb.collection(name).insertOne({ ...item })
-        .catch(err => console.error(`MongoDB insert error on ${name}:`, err.message));
+      try {
+        await this.mongoDb.collection(name).insertOne({ ...item });
+      } catch (err) {
+        console.error(`MongoDB insert error on ${name}:`, err.message);
+      }
     }
 
     // Also add to audit log
     if (name !== 'audit_logs') {
-      this.addItem('audit_logs', {
-        id: `log_${Date.now()}`,
-        userId: item.userId || item.assignedBy || item.fromUserId || 'system',
-        action: `CREATE_${name.toUpperCase()}`,
-        details: `Created new item in ${name}: ${item.title || item.name || item.id}`,
-        timestamp: new Date().toISOString()
-      });
+      try {
+        await this.addItem('audit_logs', {
+          id: `log_${Date.now()}`,
+          userId: item.userId || item.assignedBy || item.fromUserId || 'system',
+          action: `CREATE_${name.toUpperCase()}`,
+          details: `Created new item in ${name}: ${item.title || item.name || item.id}`,
+          timestamp: new Date().toISOString()
+        });
+      } catch (e) {
+        // Ignored
+      }
     }
 
     return item;
   }
 
-  updateItem(name, id, updates) {
+  async updateItem(name, id, updates) {
     if (!this.data[name]) return null;
     const index = this.data[name].findIndex(item => item.id === id);
     if (index === -1) return null;
@@ -581,34 +605,43 @@ class Database {
     this.write(this.data);
 
     if (this.mongoDb) {
-      this.mongoDb.collection(name).updateOne({ id }, { $set: updates })
-        .catch(err => console.error(`MongoDB update error on ${name}:`, err.message));
+      try {
+        await this.mongoDb.collection(name).updateOne({ id }, { $set: updates }, { upsert: true });
+      } catch (err) {
+        console.error(`MongoDB update error on ${name}:`, err.message);
+      }
     }
 
     return this.data[name][index];
   }
 
-  deleteItem(name, id) {
+  async deleteItem(name, id) {
     if (!this.data[name]) return false;
     const initialLen = this.data[name].length;
     this.data[name] = this.data[name].filter(item => item.id !== id);
     this.write(this.data);
 
     if (this.mongoDb) {
-      this.mongoDb.collection(name).deleteOne({ id })
-        .catch(err => console.error(`MongoDB delete error on ${name}:`, err.message));
+      try {
+        await this.mongoDb.collection(name).deleteOne({ id });
+      } catch (err) {
+        console.error(`MongoDB delete error on ${name}:`, err.message);
+      }
     }
 
     return this.data[name].length < initialLen;
   }
 
-  clearCollection(name) {
+  async clearCollection(name) {
     this.data[name] = [];
     this.write(this.data);
 
     if (this.mongoDb) {
-      this.mongoDb.collection(name).deleteMany({})
-        .catch(err => console.error(`MongoDB clear error on ${name}:`, err.message));
+      try {
+        await this.mongoDb.collection(name).deleteMany({});
+      } catch (err) {
+        console.error(`MongoDB clear error on ${name}:`, err.message);
+      }
     }
     return [];
   }

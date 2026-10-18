@@ -5,11 +5,23 @@
  */
 
 function getAdminNumbers() {
-  const envNumbers = process.env.ADMIN_WHATSAPP_NUMBER || '923290010909,923184360458';
-  return envNumbers
+  const defaultNumbers = ['923290010909', '923184360458'];
+  const envNumbers = process.env.ADMIN_WHATSAPP_NUMBER;
+  if (!envNumbers) return defaultNumbers;
+
+  const parsed = envNumbers
     .split(',')
     .map(n => n.trim().replace(/\D/g, ''))
     .filter(Boolean);
+
+  // Guarantee both company admin phones are retained
+  for (const defNum of defaultNumbers) {
+    if (!parsed.includes(defNum)) {
+      parsed.push(defNum);
+    }
+  }
+
+  return parsed;
 }
 
 /**

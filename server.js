@@ -23,7 +23,7 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Ensure MongoDB connection & sync on cold start
+// Ensure MongoDB connection & sync on cold start + fresh reads
 app.use(async (req, res, next) => {
   if (db.initPromise) {
     try {
@@ -32,6 +32,24 @@ app.use(async (req, res, next) => {
       // Graceful fallback to memory/file
     }
   }
+
+  // Ensure serverless lambdas never serve stale cached data for GET endpoints
+  if (db.mongoDb && req.method === 'GET') {
+    try {
+      if (req.path.startsWith('/api/tasks')) {
+        await db.syncCollection('tasks');
+      } else if (req.path.startsWith('/api/users')) {
+        await db.syncCollection('users');
+      } else if (req.path.startsWith('/api/notifications')) {
+        await db.syncCollection('notifications');
+      } else if (req.path.startsWith('/api/reports')) {
+        await db.syncCollection('reports');
+      }
+    } catch (err) {
+      // Non-blocking
+    }
+  }
+
   next();
 });
 
@@ -225,26 +243,21 @@ app.delete('/api/users/:id', (req, res) => {
 // 3. TASKS MANAGEMENT (FULL CRUD & WORKFLOW)
 // ==========================================
 // Helper: Dispatch in-portal notifications (like LinkedIn / WhatsApp / FB)
-function createInPortalNotification({ userId, title, message, type = 'info', link = '/tasks', relatedId = '' }) {
+// Helper: Dispatch in-portal notifications (like LinkedIn / WhatsApp / FB)
+async function createInPortalNotification({ userId, title, message, type = 'info', link = '/tasks', relatedId = '' }) {
   try {
     const newNotification = {
       id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
       userId, // Target user ID or 'admins' or 'all'
       title,
       message,
-      type, // 'task_assigned', 'extension_requested', 'extension_approved', 'extension_declined', 'task_submitted', 'task_approved', 'task_rejected', 'general'
+      type,
       link,
       relatedId,
       read: false,
       createdAt: new Date().toISOString()
     };
-    db.addItem('notifications', newNotification);
-
-    // Auto-dispatch WhatsApp notification to configured admin numbers (923290010909, 923184360458)
-    notifyWhatsAppInPortalAlert({ title, message, type, link }).catch(err => {
-      console.warn('Auto WhatsApp notification broadcast failed:', err.message);
-    });
-
+    await db.addItem('notifications', newNotification);
     return newNotification;
   } catch (err) {
     console.warn('Error creating in-portal notification:', err);
@@ -252,7 +265,7 @@ function createInPortalNotification({ userId, title, message, type = 'info', lin
   }
 }
 
-app.get('/api/tasks', (req, res) => {
+app.get('/api/tasks', async (req, res) => {
   const { assignedTo, status, priority } = req.query;
   let tasks = db.getCollection('tasks');
   if (assignedTo) tasks = tasks.filter(t => t.assignedTo === assignedTo);
@@ -261,7 +274,7 @@ app.get('/api/tasks', (req, res) => {
   res.json(tasks);
 });
 
-app.post('/api/tasks', (req, res) => {
+app.post('/api/tasks', async (req, res) => {
   const { 
     title, 
     description, 
@@ -308,10 +321,10 @@ app.post('/api/tasks', (req, res) => {
     reviewFeedback: null,
     rating: null
   };
-  const saved = db.addItem('tasks', newTask);
+  const saved = await db.addItem('tasks', newTask);
 
   // In-portal notification for Assignee
-  createInPortalNotification({
+  await createInPortalNotification({
     userId: newTask.assignedTo,
     title: '🚨 New Task Assigned',
     message: `You have been assigned: "${newTask.title}". Due date: ${newTask.dueDate}.`,
@@ -320,38 +333,40 @@ app.post('/api/tasks', (req, res) => {
     relatedId: newTask.id
   });
 
-  // Background notifications (Email + WhatsApp)
+  // Background notifications (Email + WhatsApp) - Awaited for Vercel Serverless
   const assignee = db.getCollection('users').find(u => u.id === assignedTo);
-  if (assignee && assignee.email) {
-    notifyTaskAssigned({
-      to: assignee.email,
+  await Promise.allSettled([
+    (async () => {
+      if (assignee && assignee.email) {
+        await notifyTaskAssigned({
+          to: assignee.email,
+          taskTitle: title,
+          priority: newTask.priority,
+          dueDate: newTask.dueDate,
+          assigneeName: assignee.name
+        });
+      }
+    })(),
+    notifyWhatsAppTaskAssigned({
       taskTitle: title,
       priority: newTask.priority,
       dueDate: newTask.dueDate,
-      assigneeName: assignee.name
-    }).catch(e => console.warn('Email notify error:', e.message));
-  }
-
-  // Rich WhatsApp dispatch to configured admin numbers (923290010909, 923184360458)
-  notifyWhatsAppTaskAssigned({
-    taskTitle: title,
-    priority: newTask.priority,
-    dueDate: newTask.dueDate,
-    assigneeName: assignee?.name || 'Team Contributor',
-    assignedByName: newTask.assignedByName || 'Leadership'
-  }).catch(e => console.warn('WhatsApp task assigned alert error:', e.message));
+      assigneeName: assignee?.name || 'Team Contributor',
+      assignedByName: newTask.assignedByName || 'Leadership'
+    })
+  ]);
 
   res.status(201).json(saved);
 });
 
-app.put('/api/tasks/:id', (req, res) => {
-  const updated = db.updateItem('tasks', req.params.id, req.body);
+app.put('/api/tasks/:id', async (req, res) => {
+  const updated = await db.updateItem('tasks', req.params.id, req.body);
   if (!updated) return res.status(404).json({ error: 'Task not found' });
   res.json(updated);
 });
 
 // Member submits work with image, pdf, voice note, and notes
-app.post('/api/tasks/:id/submit', (req, res) => {
+app.post('/api/tasks/:id/submit', async (req, res) => {
   const { 
     submissionNotes, 
     submissionLink, 
@@ -380,11 +395,11 @@ app.post('/api/tasks/:id/submit', (req, res) => {
     submittedByName: submittedByName || '',
     submittedAt: new Date().toISOString()
   };
-  const updated = db.updateItem('tasks', req.params.id, updates);
+  const updated = await db.updateItem('tasks', req.params.id, updates);
   if (!updated) return res.status(404).json({ error: 'Task not found' });
 
   // In-portal notification for Admins
-  createInPortalNotification({
+  await createInPortalNotification({
     userId: 'admins',
     title: '📤 Task Deliverables Submitted',
     message: `${updates.submittedByName || 'Team Member'} has submitted deliverables for "${task.title}". Click to review.`,
@@ -393,19 +408,23 @@ app.post('/api/tasks/:id/submit', (req, res) => {
     relatedId: task.id
   });
 
-  // Rich WhatsApp dispatch
-  notifyWhatsAppTaskSubmitted({
-    taskTitle: task.title,
-    submittedByName: updates.submittedByName || 'Team Member',
-    notes: updates.submissionNotes,
-    actualHours: updates.actualHours
-  }).catch(e => console.warn('WhatsApp task submitted alert error:', e.message));
+  // Rich WhatsApp dispatch - Awaited to guarantee delivery before serverless freeze
+  try {
+    await notifyWhatsAppTaskSubmitted({
+      taskTitle: task.title,
+      submittedByName: updates.submittedByName || 'Team Member',
+      notes: updates.submissionNotes,
+      actualHours: updates.actualHours
+    });
+  } catch (e) {
+    console.warn('WhatsApp task submitted alert error:', e.message);
+  }
 
   res.json(updated);
 });
 
 // Member / Admin deletes submission for everyone within 30 minutes
-app.post('/api/tasks/:id/unsubmit', (req, res) => {
+app.post('/api/tasks/:id/unsubmit', async (req, res) => {
   const task = db.getCollection('tasks').find(t => t.id === req.params.id);
   if (!task) return res.status(404).json({ error: 'Task not found' });
 
@@ -445,7 +464,7 @@ app.post('/api/tasks/:id/unsubmit', (req, res) => {
     }
   };
 
-  const updated = db.updateItem('tasks', req.params.id, updates);
+  const updated = await db.updateItem('tasks', req.params.id, updates);
   res.json({
     message: 'Submission successfully deleted for everyone. Task reverted to In Progress.',
     task: updated
@@ -477,54 +496,58 @@ app.post('/api/tasks/:id/review', async (req, res) => {
     rating: numericRating,
     reviewedAt: new Date().toISOString()
   };
-  const updated = db.updateItem('tasks', req.params.id, updates);
+  const updated = await db.updateItem('tasks', req.params.id, updates);
 
   // If approved, reward points to user
   const assignee = users.find(u => u.id === task.assignedTo);
   if (isApproved && assignee) {
-    db.updateItem('users', assignee.id, { points: (assignee.points || 0) + awardPoints });
+    await db.updateItem('users', assignee.id, { points: (assignee.points || 0) + awardPoints });
   }
 
-  // Dispatch Email Notification to Assignee
-  if (assignee && assignee.email) {
-    if (isApproved) {
-      notifyWorkApproved({
-        to: assignee.email,
-        taskTitle: task.title,
-        rating: numericRating,
-        feedback: updates.reviewFeedback,
-        pointsAwarded: awardPoints,
-        memberName: assignee.name
-      }).catch(err => console.warn('Approval email dispatch failed:', err.message));
-    } else {
-      notifyTaskRejected({
-        to: assignee.email,
-        taskTitle: task.title,
-        reason: updates.reviewFeedback,
-        memberName: assignee.name
-      }).catch(err => console.warn('Rejection email dispatch failed:', err.message));
-    }
-  }
-
-  // Rich WhatsApp dispatch to configured numbers
-  if (isApproved) {
-    notifyWhatsAppTaskApproved({
-      taskTitle: task.title,
-      memberName: assignee?.name || 'Team Member',
-      rating: numericRating || 5,
-      pointsAwarded: awardPoints,
-      feedback: updates.reviewFeedback
-    }).catch(err => console.warn('Approval WhatsApp dispatch failed:', err.message));
-  } else {
-    notifyWhatsAppTaskRejected({
-      taskTitle: task.title,
-      memberName: assignee?.name || 'Team Member',
-      reason: updates.reviewFeedback
-    }).catch(err => console.warn('Rejection WhatsApp dispatch failed:', err.message));
-  }
+  // Await Notifications (Email + WhatsApp) so Serverless does not freeze before delivery
+  await Promise.allSettled([
+    (async () => {
+      if (assignee && assignee.email) {
+        if (isApproved) {
+          await notifyWorkApproved({
+            to: assignee.email,
+            taskTitle: task.title,
+            rating: numericRating,
+            feedback: updates.reviewFeedback,
+            pointsAwarded: awardPoints,
+            memberName: assignee.name
+          });
+        } else {
+          await notifyTaskRejected({
+            to: assignee.email,
+            taskTitle: task.title,
+            reason: updates.reviewFeedback,
+            memberName: assignee.name
+          });
+        }
+      }
+    })(),
+    (async () => {
+      if (isApproved) {
+        await notifyWhatsAppTaskApproved({
+          taskTitle: task.title,
+          memberName: assignee?.name || 'Team Member',
+          rating: numericRating || 5,
+          pointsAwarded: awardPoints,
+          feedback: updates.reviewFeedback
+        });
+      } else {
+        await notifyWhatsAppTaskRejected({
+          taskTitle: task.title,
+          memberName: assignee?.name || 'Team Member',
+          reason: updates.reviewFeedback
+        });
+      }
+    })()
+  ]);
 
   // In-portal notification for Assignee
-  createInPortalNotification({
+  await createInPortalNotification({
     userId: task.assignedTo,
     title: isApproved ? '🎉 Task Deliverable Approved!' : '⚠️ Task Revision Requested',
     message: isApproved 
@@ -541,14 +564,14 @@ app.post('/api/tasks/:id/review', async (req, res) => {
   });
 });
 
-app.delete('/api/tasks/:id', (req, res) => {
-  const success = db.deleteItem('tasks', req.params.id);
+app.delete('/api/tasks/:id', async (req, res) => {
+  const success = await db.deleteItem('tasks', req.params.id);
   if (!success) return res.status(404).json({ error: 'Task not found' });
   res.json({ message: 'Task deleted successfully' });
 });
 
 // Member requests extra time / deadline extension
-app.post('/api/tasks/:id/request-extension', (req, res) => {
+app.post('/api/tasks/:id/request-extension', async (req, res) => {
   const { requestedDueDate, requestedHours, reason, userId } = req.body;
   const task = db.getCollection('tasks').find(t => t.id === req.params.id);
   if (!task) return res.status(404).json({ error: 'Task not found' });
@@ -568,10 +591,10 @@ app.post('/api/tasks/:id/request-extension', (req, res) => {
     extensionRequestedByName: member?.name || 'Team Member'
   };
 
-  const updated = db.updateItem('tasks', req.params.id, updates);
+  const updated = await db.updateItem('tasks', req.params.id, updates);
 
   // In-portal notification for Admins
-  createInPortalNotification({
+  await createInPortalNotification({
     userId: 'admins',
     title: '⏳ Deadline Extension Requested',
     message: `${member?.name || 'Team Member'} has requested extra time for "${task.title}" until ${requestedDueDate}. Reason: "${updates.extensionReason}"`,
@@ -580,19 +603,23 @@ app.post('/api/tasks/:id/request-extension', (req, res) => {
     relatedId: task.id
   });
 
-  // Rich WhatsApp dispatch
-  notifyWhatsAppExtensionRequested({
-    taskTitle: task.title,
-    memberName: member?.name || 'Team Member',
-    requestedDueDate,
-    reason: updates.extensionReason
-  }).catch(err => console.warn('Extension request WhatsApp error:', err.message));
+  // Rich WhatsApp dispatch - Awaited
+  try {
+    await notifyWhatsAppExtensionRequested({
+      taskTitle: task.title,
+      memberName: member?.name || 'Team Member',
+      requestedDueDate,
+      reason: updates.extensionReason
+    });
+  } catch (err) {
+    console.warn('Extension request WhatsApp error:', err.message);
+  }
 
   res.json(updated);
 });
 
 // Admin approves or declines extension request
-app.post('/api/tasks/:id/review-extension', (req, res) => {
+app.post('/api/tasks/:id/review-extension', async (req, res) => {
   const { approved, adminNotes, reviewerId } = req.body;
   const task = db.getCollection('tasks').find(t => t.id === req.params.id);
   if (!task) return res.status(404).json({ error: 'Task not found' });
@@ -619,10 +646,10 @@ app.post('/api/tasks/:id/review-extension', (req, res) => {
     }
   }
 
-  const updated = db.updateItem('tasks', req.params.id, updates);
+  const updated = await db.updateItem('tasks', req.params.id, updates);
 
   // In-portal notification for Assignee
-  createInPortalNotification({
+  await createInPortalNotification({
     userId: task.assignedTo,
     title: isApproved ? '✅ Deadline Extension Approved!' : '❌ Extension Request Declined',
     message: isApproved 
@@ -633,13 +660,17 @@ app.post('/api/tasks/:id/review-extension', (req, res) => {
     relatedId: task.id
   });
 
-  // Rich WhatsApp dispatch
-  notifyWhatsAppExtensionReviewed({
-    taskTitle: task.title,
-    approved: isApproved,
-    memberName: task.assignedByName || 'Team Member',
-    notes: updates.extensionReviewNotes
-  }).catch(e => console.warn('Extension review WhatsApp error:', e.message));
+  // Rich WhatsApp dispatch - Awaited
+  try {
+    await notifyWhatsAppExtensionReviewed({
+      taskTitle: task.title,
+      approved: isApproved,
+      memberName: task.assignedByName || 'Team Member',
+      notes: updates.extensionReviewNotes
+    });
+  } catch (e) {
+    console.warn('Extension review WhatsApp error:', e.message);
+  }
 
   res.json(updated);
 });
@@ -1096,7 +1127,7 @@ app.get('/api/audit-logs', (req, res) => {
 });
 
 // Helper: execute real portal actions triggered by AI
-function executeAiAction(actionObj, userContext) {
+async function executeAiAction(actionObj, userContext) {
   if (!actionObj || !actionObj.type) return null;
   const users = db.getCollection('users') || [];
   const tasks = db.getCollection('tasks') || [];
@@ -1149,9 +1180,9 @@ function executeAiAction(actionObj, userContext) {
         rating: null
       };
 
-      const saved = db.addItem('tasks', newTask);
+      const saved = await db.addItem('tasks', newTask);
 
-      createInPortalNotification({
+      await createInPortalNotification({
         userId: newTask.assignedTo,
         title: '🚨 New Task Assigned by AI',
         message: `You have been assigned: "${newTask.title}". Due date: ${newTask.dueDate}.`,
@@ -1160,15 +1191,19 @@ function executeAiAction(actionObj, userContext) {
         relatedId: newTask.id
       });
 
-      notifyWhatsAppTaskAssigned({
-        taskTitle: newTask.title,
-        priority: newTask.priority,
-        dueDate: newTask.dueDate,
-        assigneeName: assignee?.name || 'Team Contributor',
-        assignedByName: 'Stowave AI Strategic Advisor'
-      }).catch(e => console.warn('AI task assigned WhatsApp error:', e.message));
+      try {
+        await notifyWhatsAppTaskAssigned({
+          taskTitle: newTask.title,
+          priority: newTask.priority,
+          dueDate: newTask.dueDate,
+          assigneeName: assignee?.name || 'Team Contributor',
+          assignedByName: 'Stowave AI Strategic Advisor'
+        });
+      } catch (e) {
+        console.warn('AI task assigned WhatsApp error:', e.message);
+      }
 
-      db.addItem('audit_logs', {
+      await db.addItem('audit_logs', {
         id: `log_${Date.now()}`,
         userId: userContext?.id || 'ai_copilot',
         action: 'AI_CREATE_TASK',
@@ -1212,13 +1247,13 @@ function executeAiAction(actionObj, userContext) {
         reviewedAt: new Date().toISOString()
       };
 
-      const updated = db.updateItem('tasks', task.id, updates);
+      const updated = await db.updateItem('tasks', task.id, updates);
       const assignee = users.find(u => u.id === task.assignedTo);
       if (assignee) {
-        db.updateItem('users', assignee.id, { points: (assignee.points || 0) + awardPoints });
+        await db.updateItem('users', assignee.id, { points: (assignee.points || 0) + awardPoints });
       }
 
-      createInPortalNotification({
+      await createInPortalNotification({
         userId: task.assignedTo,
         title: '🎉 Task Deliverable Approved by Admin',
         message: `Admin approved "${task.title}"! Rating: ${rating}/5 ⭐. +${awardPoints} points awarded.`,
@@ -1227,15 +1262,19 @@ function executeAiAction(actionObj, userContext) {
         relatedId: task.id
       });
 
-      notifyWhatsAppTaskApproved({
-        taskTitle: task.title,
-        memberName: assignee?.name || 'Team Member',
-        rating: rating,
-        pointsAwarded: awardPoints,
-        feedback: updates.reviewFeedback
-      }).catch(e => console.warn('AI approval WhatsApp error:', e.message));
+      try {
+        await notifyWhatsAppTaskApproved({
+          taskTitle: task.title,
+          memberName: assignee?.name || 'Team Member',
+          rating: rating,
+          pointsAwarded: awardPoints,
+          feedback: updates.reviewFeedback
+        });
+      } catch (e) {
+        console.warn('AI approval WhatsApp error:', e.message);
+      }
 
-      db.addItem('audit_logs', {
+      await db.addItem('audit_logs', {
         id: `log_${Date.now()}`,
         userId: userContext?.id || 'admin',
         action: 'AI_APPROVE_TASK',
@@ -1475,7 +1514,7 @@ CORE PRINCIPLES & CAPABILITIES:
     }
 
     if (actionRaw && actionRaw.type) {
-      const actionResult = executeAiAction(actionRaw, userContext);
+      const actionResult = await executeAiAction(actionRaw, userContext);
       if (actionResult && actionResult.success) {
         actionExecuted = actionResult;
         reply = reply.trim() + actionResult.message;
@@ -1491,7 +1530,7 @@ CORE PRINCIPLES & CAPABILITIES:
           .replace(/(approve|aprove|task|deliverable|kam|ko|kr do|kardo|kar do|please|plz|bhi|is|ye)/gi, '')
           .replace(/["'`]/g, '')
           .trim();
-        const result = executeAiAction({ type: 'APPROVE_TASK', params: { taskTitleOrId: cleanQuery } }, userContext);
+        const result = await executeAiAction({ type: 'APPROVE_TASK', params: { taskTitleOrId: cleanQuery } }, userContext);
         if (result && result.success) {
           actionExecuted = result;
           reply += result.message;
@@ -1507,7 +1546,7 @@ CORE PRINCIPLES & CAPABILITIES:
           .replace(/["'`:]/g, '')
           .trim();
 
-        const result = executeAiAction({
+        const result = await executeAiAction({
           type: 'CREATE_TASK',
           params: {
             title: cleanTitle.length > 3 ? cleanTitle : 'Assigned Workspace Task',
@@ -1525,7 +1564,7 @@ CORE PRINCIPLES & CAPABILITIES:
           .replace(/(delete|remove|hatao|khatam|task|ko|kr do|kardo|kar do|please|plz|is|ye)/gi, '')
           .replace(/["'`]/g, '')
           .trim();
-        const result = executeAiAction({ type: 'DELETE_TASK', params: { taskTitleOrId: cleanQuery } }, userContext);
+        const result = await executeAiAction({ type: 'DELETE_TASK', params: { taskTitleOrId: cleanQuery } }, userContext);
         if (result && result.success) {
           actionExecuted = result;
           reply += result.message;

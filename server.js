@@ -45,48 +45,87 @@ app.use('/api/upload', (req, res, next) => {
 });
 
 // Helper: build live context for AI
-function buildLiveCompanyContext() {
-  const users = db.getCollection('users');
-  const tasks = db.getCollection('tasks');
-  const reports = db.getCollection('reports');
-  const surveys = db.getCollection('surveys');
-  const shoutouts = db.getCollection('shoutouts');
-  const gifts = db.getCollection('gifts');
+function buildLiveCompanyContext(userContext = null) {
+  const users = db.getCollection('users') || [];
+  const tasks = db.getCollection('tasks') || [];
+  const reports = db.getCollection('reports') || [];
+  const surveys = db.getCollection('surveys') || [];
+  const shoutouts = db.getCollection('shoutouts') || [];
+  const gifts = db.getCollection('gifts') || [];
+  const departments = db.getCollection('departments') || [];
+  const presence = db.getCollection('presence') || [];
+  const auditLogs = db.getCollection('audit_logs') || [];
+  const leaves = db.getCollection('leaves') || [];
   const socialAccounts = db.getCollection('social_accounts') || [];
   const socialPosts = db.getCollection('social_posts') || [];
   const socialInbox = db.getCollection('social_inbox') || [];
 
-  const pendingTasks = tasks.filter(t => t.status === 'todo' || t.status === 'in_progress').length;
-  const reviewTasks = tasks.filter(t => t.status === 'review').length;
-  const completedTasks = tasks.filter(t => t.status === 'completed').length;
-  const activeSurveys = surveys.filter(s => s.status === 'active' && new Date(s.expiresAt) > new Date()).length;
-  const unreadDms = socialInbox.filter(i => i.status === 'unread').length;
+  const pendingTasks = tasks.filter(t => t.status === 'todo' || t.status === 'in_progress');
+  const reviewTasks = tasks.filter(t => t.status === 'review');
+  const completedTasks = tasks.filter(t => t.status === 'completed');
+  const activeSurveys = surveys.filter(s => s.status === 'active' && new Date(s.expiresAt) > new Date());
+  const unreadDms = socialInbox.filter(i => i.status === 'unread');
+
+  let currentUserSection = '';
+  if (userContext && (userContext.name || userContext.id)) {
+    const matchedUser = users.find(u => (userContext.id && u.id === userContext.id) || (userContext.email && u.email && u.email.toLowerCase() === userContext.email.toLowerCase())) || userContext;
+    const userTasks = tasks.filter(t => t.assignedTo === matchedUser.id);
+    const createdTasks = tasks.filter(t => t.assignedBy === matchedUser.id);
+
+    currentUserSection = `
+=== CURRENT AUTHENTICATED USER (WHO IS TALKING TO YOU) ===
+- Name: ${matchedUser.name}
+- Email: ${matchedUser.email}
+- System Role: ${matchedUser.role === 'admin' ? 'Primary Director & Administrator (Full Authority & Leadership)' : 'Team Member / Specialist'}
+- Department: ${matchedUser.department || 'General'}
+- Designation / Title: ${matchedUser.title || 'Team Member'}
+- Points / Reputation: ${matchedUser.points || 0} pts
+- Profile Bio: ${matchedUser.bio || 'N/A'}
+- Skills: ${(matchedUser.skills || []).join(', ') || 'N/A'}
+- Tasks Directly Assigned to ${matchedUser.name} (${userTasks.length}):
+${userTasks.length > 0 ? userTasks.map(t => `  • [${t.priority?.toUpperCase() || 'NORMAL'}] "${t.title}" | Status: ${t.status} | Due: ${t.dueDate || 'N/A'} | ID: ${t.id}`).join('\n') : '  • No direct tasks assigned.'}
+- Tasks Created / Delegated by ${matchedUser.name} (${createdTasks.length}):
+${createdTasks.length > 0 ? createdTasks.map(t => `  • "${t.title}" (Assigned to: ${users.find(u => u.id === t.assignedTo)?.name || t.assignedTo}, Status: ${t.status})`).join('\n') : '  • None.'}
+=============================================================`;
+  }
 
   return `
---- LIVE COMPANY CONTEXT & STATE (OCTOBER 2026) ---
+--- LIVE STOWAVE WORKSPACE & PORTAL DATA ---
 Company Name: ${db.getSettings().companyName || 'Stowave Global'}
-Active Team Members (${users.length}):
-${users.map(u => `• ${u.name} (${u.title}, ${u.department}) - Status: ${u.status}, Role: ${u.role}, Points: ${u.points}`).join('\n')}
+Portal Domain: https://team.stowave.com
+${currentUserSection}
 
-Task Statistics:
-- Total Tasks: ${tasks.length}
-- In Progress / To-Do: ${pendingTasks}
-- Awaiting Admin Review: ${reviewTasks}
-- Completed: ${completedTasks}
+=== FULL TEAM DIRECTORY (${users.length} Members) ===
+${users.map(u => `• ${u.name} | ${u.title} (${u.department}) | Role: ${u.role} | Status: ${u.status} | Points: ${u.points || 0} | Email: ${u.email}`).join('\n')}
 
-Social Media & Omnichannel Command:
-- Connected Channels: ${socialAccounts.map(a => `${a.name} (${a.handle}, ${a.followers} followers)`).join(', ') || 'Instagram, TikTok, LinkedIn, Facebook, Twitter, YouTube'}
-- Published Broadcasts: ${socialPosts.length} posts
-- Unread Social Inquiries / DMs: ${unreadDms}
+=== COMPREHENSIVE TASKS OVERVIEW (${tasks.length} Total) ===
+- In-Progress/To-Do: ${pendingTasks.length}
+- Submitted / Awaiting Review: ${reviewTasks.length}
+- Completed: ${completedTasks.length}
+All Current Tasks:
+${tasks.map(t => `• [${t.id}] "${t.title}" | Priority: ${t.priority} | Status: ${t.status} | Assigned: ${users.find(u => u.id === t.assignedTo)?.name || t.assignedTo} | Due: ${t.dueDate || 'N/A'}${t.submissionNotes ? ` | Note: ${t.submissionNotes}` : ''}${t.reviewFeedback ? ` | Feedback: ${t.reviewFeedback}` : ''}`).join('\n')}
+
+=== DEPARTMENTS ===
+${departments.map(d => `• ${d.name} (${d.membersCount || 0} members)`).join('\n') || '• Executive Leadership\n• Operations\n• Social Media Command'}
+
+=== LIVE PRESENCE & ACTIVITY ===
+${presence.map(p => `• ${p.userName || p.name}: ${p.status} (Active page: ${p.currentPage || '/'}, Heartbeat: ${new Date(p.lastHeartbeat || Date.now()).toLocaleTimeString()})`).join('\n') || '• Real-time presence tracking active.'}
+
+=== RECENT AUDIT LOGS (Last Actions) ===
+${auditLogs.slice(0, 8).map(l => `• [${l.timestamp || l.createdAt}] ${l.action}: ${l.details || ''}`).join('\n') || '• No recent audit events.'}
+
+=== OMNICHANNEL SOCIAL COMMAND ===
+- Channels: ${socialAccounts.map(a => `${a.name} (${a.handle}, ${a.followers} followers)`).join(', ') || 'Instagram, TikTok, LinkedIn, Facebook, Twitter, YouTube'}
+- Published Broadcasts: ${socialPosts.length}
+- Unread Social Inquiries / DMs: ${unreadDms.length}
 - Strategy Health Score: 88/100 (Surging Velocity)
 
-Recent Key Tasks:
-${tasks.slice(0, 5).map(t => `• [${t.priority.toUpperCase()}] "${t.title}" (Status: ${t.status}, Assigned to: ${users.find(u => u.id === t.assignedTo)?.name || t.assignedTo})`).join('\n')}
-
-Active Feedback Surveys: ${activeSurveys} active.
-Total Kudos / Shoutouts Given: ${shoutouts.length}
-Total Gifts Exchanged: ${gifts.length}
---------------------------------------------------`;
+=== STANDUPS, FEEDBACK & LEAVES ===
+- Active Surveys: ${activeSurveys.length}
+- Pending Leaves: ${leaves.filter(l => l.status === 'pending').length}
+- Kudos / Shoutouts: ${shoutouts.length}
+- Gifts / Recognition: ${gifts.length}
+--------------------------------------------`;
 }
 
 // ==========================================
@@ -998,7 +1037,7 @@ app.get('/api/audit-logs', (req, res) => {
 // 9. AI EXECUTIVE ASSISTANT (GROQ + HF + VISION + LIVE SEARCH)
 // ==========================================
 app.post('/api/ai/chat', async (req, res) => {
-  const { message, history = [], searchTrends = false } = req.body;
+  const { message, history = [], searchTrends = false, userContext = null } = req.body;
   const groqKey = process.env.GROQ_API_KEY;
 
   if (!groqKey) {
@@ -1006,13 +1045,12 @@ app.post('/api/ai/chat', async (req, res) => {
   }
 
   try {
-    const liveContext = buildLiveCompanyContext();
+    const liveContext = buildLiveCompanyContext(userContext);
 
     // If web search is requested, fetch real-time trend info
     let webContext = '';
     if (searchTrends || message.toLowerCase().includes('trend') || message.toLowerCase().includes('market') || message.toLowerCase().includes('search')) {
       try {
-        // Query DuckDuckGo instant answer or Wikipedia summary for real-time verification
         const queryTerm = encodeURIComponent(message.replace(/trend|trends|search|latest/gi, '').trim() || 'team productivity management trends 2026');
         const searchResp = await fetch(`https://api.duckduckgo.com/?q=${queryTerm}&format=json&no_html=1&skip_disambig=1`);
         const searchData = await searchResp.json();
@@ -1024,48 +1062,85 @@ app.post('/api/ai/chat', async (req, res) => {
       }
     }
 
-    const systemPrompt = `You are the Stowave AI Executive Strategic Advisor & Company Intelligence Engine for Stowave Global.
-You possess complete, real-time access to Stowave's internal portal data: team members, tasks, reports, feedback, performance metrics, and the Omnichannel Social Command Center.
+    const systemPrompt = `You are Stowave AI, an elite enterprise executive advisor designed in the style and intelligence of Claude (Anthropic). You are remarkably thoughtful, structured, articulate, insightful, and proactive.
 
 ${liveContext}
 ${webContext ? webContext : ''}
 
-Your Mission & Capabilities:
-1. Provide accurate, insightful, and strategic guidance to the Admin and Team Members.
-2. If asked about team status, tasks, deadlines, reports, or ratings, cite the exact real data above with zero fabrication.
-3. Social Media & Content Command: You can draft multi-platform social media posts (Instagram, TikTok, LinkedIn, Twitter, Facebook), suggest viral video hooks, analyze competitor accounts, and suggest optimal posting times.
-4. If asked to write or post an announcement or social post, write the exact tailored copies for the platforms requested with hashtags, hooks, and call-to-actions.
-5. If the user talks in Urdu / Roman Urdu, respond warmly and clearly in Urdu / Roman Urdu or bilingual English/Urdu as natural.
-6. Keep your answers well-formatted with markdown, bullet points, and high executive polish.`;
+CORE PRINCIPLES & CAPABILITIES:
+1. USER PERSONALIZATION: You are directly conversing with ${userContext?.name || 'the user'}. Always recognize them personally, know their title (${userContext?.title || 'Team Member'}), department (${userContext?.department || 'General'}), and role (${userContext?.role === 'admin' ? 'Primary Administrator & Director (Full Authority)' : 'Team Member / Specialist'}). Never ask them who they are — you already know!
+2. COMPLETE PORTAL OMNISCIENCE: You have full real-time access to the entire Stowave workspace (all tasks, members, reviews, attendance/presence, departments, social command, and audit logs). When asked about any task, person, or metric, quote exact facts and figures from the data above with zero fabrication.
+3. EXECUTIVE AUDIT GENERATION:
+   When the user asks for an "audit" (e.g. "audit kr k do", "team audit", "performance audit", "tasks audit", "workspace audit", "meri company ka audit karo"):
+   - Provide an exhaustive, senior-management-grade audit report.
+   - Use clean, professional headings:
+     * ## Executive Summary & Workspace Health Index (e.g. 88/100)
+     * ### 1. Workload & Task Execution Analysis (urgent vs overdue vs review)
+     * ### 2. Departmental & Team Performance (individual velocity, points, status)
+     * ### 3. Critical Bottlenecks & Operational Risks
+     * ### 4. Strategic 48-Hour Action Directives
+   - Use clean markdown tables to summarize key metrics so they can be exported to PDF.
+4. RESPONSE TONE & FORMAT (CLAUDE-LIKE):
+   - Never sound like a robotic script. Avoid repetitive canned greeting lists like "I have access to 1 active tasks...". Speak naturally, warmly, and with high intellectual clarity.
+   - Match user language: If the user communicates in Roman Urdu / Urdu (e.g. "kia hal hai", "audit kr k do", "tasks check kro"), reply in fluent, polite, elegant Roman Urdu / Urdu with professional English terms. If in English, reply in crisp executive English.
+   - Always structure complex information with markdown: bullet points, bold key terms, tables, and clickable links formatted as [Label](/route), such as [Task Board](/tasks), [Team Directory](/team), [Operations](/operations), [Settings](/settings).
+   - If asked for links or documentation, make sure links are formatted in markdown so they are clickable.`;
 
     const messages = [
       { role: 'system', content: systemPrompt },
-      ...history.slice(-6).map(h => ({ role: h.role, content: h.content })),
+      ...history.slice(-8).map(h => ({ role: h.role, content: h.content })),
       { role: 'user', content: message }
     ];
 
-    const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${groqKey}`
-      },
-      body: JSON.stringify({
-        model: 'openai/gpt-oss-120b',
-        messages,
-        temperature: 0.6,
-        max_tokens: 1200
-      })
-    });
+    let reply = '';
+    let usedModel = 'openai/gpt-oss-120b';
 
-    if (!groqResponse.ok) {
-      const errText = await groqResponse.text();
-      throw new Error(`Groq API Error: ${errText}`);
+    try {
+      const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqKey}`
+        },
+        body: JSON.stringify({
+          model: usedModel,
+          messages,
+          temperature: 0.6,
+          max_tokens: 2500
+        })
+      });
+
+      if (groqResponse.ok) {
+        const data = await groqResponse.json();
+        reply = data.choices[0]?.message?.content || '';
+      } else {
+        throw new Error(`Groq Primary Model Error: ${await groqResponse.text()}`);
+      }
+    } catch (primaryErr) {
+      console.warn('Primary model failed, falling back to llama-3.3-70b-versatile:', primaryErr.message);
+      usedModel = 'llama-3.3-70b-versatile';
+      const fallbackResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqKey}`
+        },
+        body: JSON.stringify({
+          model: usedModel,
+          messages,
+          temperature: 0.6,
+          max_tokens: 2500
+        })
+      });
+      if (!fallbackResponse.ok) {
+        const errText = await fallbackResponse.text();
+        throw new Error(`Groq Fallback Model Error: ${errText}`);
+      }
+      const data = await fallbackResponse.json();
+      reply = data.choices[0]?.message?.content || 'No response generated.';
     }
 
-    const data = await groqResponse.json();
-    const reply = data.choices[0]?.message?.content || 'No response generated.';
-    res.json({ reply, model: 'openai/gpt-oss-120b' });
+    res.json({ reply, model: usedModel });
   } catch (error) {
     console.error('AI Chat Error:', error);
     res.status(500).json({ error: error.message || 'Failed to process AI chat.' });

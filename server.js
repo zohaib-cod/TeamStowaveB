@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const db = require('./db');
 
-const { notifyTaskAssigned, notifyWorkApproved } = require('./services/emailService');
+const { notifyTaskAssigned, notifyWorkApproved, notifyTaskRejected } = require('./services/emailService');
 const { alertAdmins } = require('./services/whatsappService');
 
 const app = express();
@@ -26,9 +26,19 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// Mount Notifications & Media Upload Router (Cloudinary, Gmail, WhatsApp)
+// Mount Routers
 const notificationsRouter = require('./routes/notifications');
+const authRouter = require('./routes/auth');
+const profileRouter = require('./routes/profile');
+const presenceRouter = require('./routes/presence');
+const departmentsRouter = require('./routes/departments');
+
 app.use('/api/notifications', notificationsRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/profile', profileRouter);
+app.use('/api/presence', presenceRouter);
+app.use('/api/departments', departmentsRouter);
+
 app.use('/api/upload', (req, res, next) => {
   req.url = '/upload';
   notificationsRouter(req, res, next);
@@ -161,19 +171,33 @@ app.delete('/api/users/:id', (req, res) => {
   res.json({ message: 'User deleted successfully' });
 });
 
-app.post('/api/auth/login', (req, res) => {
-  const { email, password } = req.body;
-  const users = db.getCollection('users');
-  const user = users.find(u => u.email.toLowerCase() === (email || '').toLowerCase());
-  if (!user || user.password !== password) {
-    return res.status(401).json({ error: 'Invalid credentials. Use password123 or select a profile.' });
-  }
-  res.json({ user, token: `jwt_${user.id}_${Date.now()}` });
-});
+
 
 // ==========================================
 // 3. TASKS MANAGEMENT (FULL CRUD & WORKFLOW)
 // ==========================================
+// Helper: Dispatch in-portal notifications (like LinkedIn / WhatsApp / FB)
+function createInPortalNotification({ userId, title, message, type = 'info', link = '/tasks', relatedId = '' }) {
+  try {
+    const newNotification = {
+      id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+      userId, // Target user ID or 'admins' or 'all'
+      title,
+      message,
+      type, // 'task_assigned', 'extension_requested', 'extension_approved', 'extension_declined', 'task_submitted', 'task_approved', 'task_rejected', 'general'
+      link,
+      relatedId,
+      read: false,
+      createdAt: new Date().toISOString()
+    };
+    db.addItem('notifications', newNotification);
+    return newNotification;
+  } catch (err) {
+    console.warn('Error creating in-portal notification:', err);
+    return null;
+  }
+}
+
 app.get('/api/tasks', (req, res) => {
   const { assignedTo, status, priority } = req.query;
   let tasks = db.getCollection('tasks');
@@ -184,7 +208,21 @@ app.get('/api/tasks', (req, res) => {
 });
 
 app.post('/api/tasks', (req, res) => {
-  const { title, description, assignedTo, assignedBy, priority, dueDate, estimatedHours, tags } = req.body;
+  const { 
+    title, 
+    description, 
+    assignedTo, 
+    assignedBy, 
+    assignedByName,
+    priority, 
+    dueDate, 
+    estimatedHours, 
+    tags,
+    images = [],
+    pdfs = [],
+    voiceUrl = '',
+    attachments = []
+  } = req.body;
   if (!title || !assignedTo) {
     return res.status(400).json({ error: 'Title and assigned team member are required.' });
   }
@@ -194,6 +232,7 @@ app.post('/api/tasks', (req, res) => {
     description: description || '',
     assignedTo,
     assignedBy: assignedBy || 'usr_admin_1',
+    assignedByName: assignedByName || '',
     priority: priority || 'medium',
     status: 'todo',
     dueDate: dueDate || new Date(Date.now() + 86400000 * 3).toISOString().split('T')[0],
@@ -201,13 +240,31 @@ app.post('/api/tasks', (req, res) => {
     estimatedHours: Number(estimatedHours) || 8,
     actualHours: 0,
     tags: Array.isArray(tags) ? tags : (tags ? tags.split(',').map(s => s.trim()) : ['General']),
+    images: Array.isArray(images) ? images : [],
+    pdfs: Array.isArray(pdfs) ? pdfs : [],
+    voiceUrl: voiceUrl || '',
+    attachments: Array.isArray(attachments) ? attachments : [],
     submissionNotes: '',
     submissionLink: '',
+    submissionImages: [],
+    submissionPdfs: [],
+    submissionVoice: '',
+    submissionAttachments: [],
     reviewedBy: null,
     reviewFeedback: null,
     rating: null
   };
   const saved = db.addItem('tasks', newTask);
+
+  // In-portal notification for Assignee
+  createInPortalNotification({
+    userId: newTask.assignedTo,
+    title: '🚨 New Task Assigned',
+    message: `You have been assigned: "${newTask.title}". Due date: ${newTask.dueDate}.`,
+    type: 'task_assigned',
+    link: '/tasks',
+    relatedId: newTask.id
+  });
 
   // Background notifications (Email + WhatsApp)
   const assignee = db.getCollection('users').find(u => u.id === assignedTo);
@@ -233,52 +290,304 @@ app.put('/api/tasks/:id', (req, res) => {
   res.json(updated);
 });
 
-// Member submits work
+// Member submits work with image, pdf, voice note, and notes
 app.post('/api/tasks/:id/submit', (req, res) => {
-  const { submissionNotes, submissionLink, actualHours } = req.body;
+  const { 
+    submissionNotes, 
+    submissionLink, 
+    actualHours,
+    images = [],
+    pdfs = [],
+    voiceUrl = '',
+    attachments = [],
+    submittedBy = '',
+    submittedByName = ''
+  } = req.body;
+
+  const task = db.getCollection('tasks').find(t => t.id === req.params.id);
+  if (!task) return res.status(404).json({ error: 'Task not found' });
+
   const updates = {
     status: 'review',
     submissionNotes: submissionNotes || 'Work completed and submitted for review.',
     submissionLink: submissionLink || '',
     actualHours: Number(actualHours) || 0,
+    submissionImages: images,
+    submissionPdfs: pdfs,
+    submissionVoice: voiceUrl,
+    submissionAttachments: attachments,
+    submittedBy: submittedBy || task.assignedTo,
+    submittedByName: submittedByName || '',
     submittedAt: new Date().toISOString()
   };
   const updated = db.updateItem('tasks', req.params.id, updates);
   if (!updated) return res.status(404).json({ error: 'Task not found' });
+
+  // In-portal notification for Admins
+  createInPortalNotification({
+    userId: 'admins',
+    title: '📤 Task Deliverables Submitted',
+    message: `${updates.submittedByName || 'Team Member'} has submitted deliverables for "${task.title}". Click to review.`,
+    type: 'task_submitted',
+    link: '/tasks',
+    relatedId: task.id
+  });
+
   res.json(updated);
 });
 
-// Admin reviews work (Approve / Reject / Rate)
-app.post('/api/tasks/:id/review', (req, res) => {
-  const { status, reviewFeedback, rating, reviewerId } = req.body; // status: 'completed' or 'in_progress' (needs revision)
+// Member / Admin deletes submission for everyone within 30 minutes
+app.post('/api/tasks/:id/unsubmit', (req, res) => {
   const task = db.getCollection('tasks').find(t => t.id === req.params.id);
   if (!task) return res.status(404).json({ error: 'Task not found' });
 
+  if (!task.submittedAt) {
+    return res.status(400).json({ error: 'Task is not currently submitted.' });
+  }
+
+  if (task.status === 'completed') {
+    return res.status(400).json({ error: 'Admin pehlay hi deliverable approve kar chukay hain. Ab delete nahi kiya ja sakta.' });
+  }
+
+  // Enforce 30-minute window
+  const submittedTime = new Date(task.submittedAt).getTime();
+  const elapsedMs = Date.now() - submittedTime;
+  const THIRTY_MINUTES_MS = 30 * 60 * 1000;
+
+  if (elapsedMs > THIRTY_MINUTES_MS) {
+    return res.status(400).json({ 
+      error: '30 minute ka time guzar chuka hai. Ab submission delete nahi ho sakti.',
+      elapsedMinutes: Math.floor(elapsedMs / 60000)
+    });
+  }
+
   const updates = {
-    status: status === 'completed' ? 'completed' : 'in_progress',
+    status: 'in_progress',
+    submissionNotes: '',
+    submissionLink: '',
+    submissionImages: [],
+    submissionPdfs: [],
+    submissionVoice: '',
+    submissionAttachments: [],
+    submittedAt: null,
+    deletedSubmissionLog: {
+      deletedAt: new Date().toISOString(),
+      deletedBy: req.body.userId || 'Member',
+      message: 'Submission deleted for everyone within 30-minute grace window.'
+    }
+  };
+
+  const updated = db.updateItem('tasks', req.params.id, updates);
+  res.json({
+    message: 'Submission successfully deleted for everyone. Task reverted to In Progress.',
+    task: updated
+  });
+});
+
+// Admin reviews work (Approve / Reject / Rate)
+app.post('/api/tasks/:id/review', async (req, res) => {
+  const { status, reviewFeedback, rating, reviewerId } = req.body; // status: 'completed' or 'in_progress' / 'rejected'
+  const task = db.getCollection('tasks').find(t => t.id === req.params.id);
+  if (!task) return res.status(404).json({ error: 'Task not found' });
+
+  // Enforce Admin Verification
+  const users = db.getCollection('users');
+  const reviewer = users.find(u => u.id === reviewerId);
+  if (reviewer && reviewer.role !== 'admin') {
+    return res.status(403).json({ error: 'Unauthorized: Only an Administrator can approve or reject submitted deliverables.' });
+  }
+
+  const isApproved = status === 'completed';
+  const numericRating = rating !== undefined && rating !== null && rating !== '' ? Number(rating) : null;
+  const awardPoints = isApproved ? (numericRating ? numericRating * 20 : 100) : 0;
+
+  const updates = {
+    status: isApproved ? 'completed' : 'rejected',
     reviewedBy: reviewerId || 'usr_admin_1',
-    reviewFeedback: reviewFeedback || (status === 'completed' ? 'Great work!' : 'Please address the requested revisions.'),
-    rating: Number(rating) || 5,
+    reviewedByName: reviewer?.name || 'Administrator',
+    reviewFeedback: reviewFeedback || (isApproved ? 'Deliverable approved with excellence!' : 'Deliverable requires revision. Please update and re-submit.'),
+    rating: numericRating,
     reviewedAt: new Date().toISOString()
   };
   const updated = db.updateItem('tasks', req.params.id, updates);
 
-  // If approved and rated, reward points to user
-  if (status === 'completed' && task.assignedTo) {
-    const user = db.getCollection('users').find(u => u.id === task.assignedTo);
-    if (user) {
-      const awardPoints = (Number(rating) || 5) * 20;
-      db.updateItem('users', user.id, { points: (user.points || 0) + awardPoints });
+  // If approved, reward points to user
+  const assignee = users.find(u => u.id === task.assignedTo);
+  if (isApproved && assignee) {
+    db.updateItem('users', assignee.id, { points: (assignee.points || 0) + awardPoints });
+  }
+
+  // Dispatch Email Notification to Assignee
+  if (assignee && assignee.email) {
+    if (isApproved) {
+      notifyWorkApproved({
+        to: assignee.email,
+        taskTitle: task.title,
+        rating: numericRating,
+        feedback: updates.reviewFeedback,
+        pointsAwarded: awardPoints,
+        memberName: assignee.name
+      }).catch(err => console.warn('Approval email dispatch failed:', err.message));
+    } else {
+      notifyTaskRejected({
+        to: assignee.email,
+        taskTitle: task.title,
+        reason: updates.reviewFeedback,
+        memberName: assignee.name
+      }).catch(err => console.warn('Rejection email dispatch failed:', err.message));
     }
   }
 
-  res.json(updated);
+  // In-portal notification for Assignee
+  createInPortalNotification({
+    userId: task.assignedTo,
+    title: isApproved ? '🎉 Task Deliverable Approved!' : '⚠️ Task Revision Requested',
+    message: isApproved 
+      ? `Admin approved "${task.title}"! Rating: ${numericRating ? `${numericRating}/5 Stars ⭐` : 'Approved'}. +${awardPoints} points awarded.`
+      : `Admin requested revisions on "${task.title}": "${updates.reviewFeedback}"`,
+    type: isApproved ? 'task_approved' : 'task_rejected',
+    link: '/tasks',
+    relatedId: task.id
+  });
+
+  res.json({
+    message: isApproved ? 'Task deliverable approved and email dispatched!' : 'Task rejected / revisions requested and email dispatched!',
+    task: updated
+  });
 });
 
 app.delete('/api/tasks/:id', (req, res) => {
   const success = db.deleteItem('tasks', req.params.id);
   if (!success) return res.status(404).json({ error: 'Task not found' });
   res.json({ message: 'Task deleted successfully' });
+});
+
+// Member requests extra time / deadline extension
+app.post('/api/tasks/:id/request-extension', (req, res) => {
+  const { requestedDueDate, requestedHours, reason, userId } = req.body;
+  const task = db.getCollection('tasks').find(t => t.id === req.params.id);
+  if (!task) return res.status(404).json({ error: 'Task not found' });
+  if (!requestedDueDate) return res.status(400).json({ error: 'New requested deadline is required.' });
+
+  const users = db.getCollection('users') || [];
+  const member = users.find(u => u.id === userId) || users.find(u => u.id === task.assignedTo);
+
+  const updates = {
+    extensionRequested: true,
+    extensionStatus: 'pending', // 'pending' | 'approved' | 'declined'
+    requestedDueDate,
+    requestedHours: Number(requestedHours) || 0,
+    extensionReason: reason || 'More time requested to complete deliverables.',
+    extensionRequestedAt: new Date().toISOString(),
+    extensionRequestedBy: member?.id || userId,
+    extensionRequestedByName: member?.name || 'Team Member'
+  };
+
+  const updated = db.updateItem('tasks', req.params.id, updates);
+
+  // In-portal notification for Admins
+  createInPortalNotification({
+    userId: 'admins',
+    title: '⏳ Deadline Extension Requested',
+    message: `${member?.name || 'Team Member'} has requested extra time for "${task.title}" until ${requestedDueDate}. Reason: "${updates.extensionReason}"`,
+    type: 'extension_requested',
+    link: '/tasks',
+    relatedId: task.id
+  });
+
+  res.json(updated);
+});
+
+// Admin approves or declines extension request
+app.post('/api/tasks/:id/review-extension', (req, res) => {
+  const { approved, adminNotes, reviewerId } = req.body;
+  const task = db.getCollection('tasks').find(t => t.id === req.params.id);
+  if (!task) return res.status(404).json({ error: 'Task not found' });
+
+  const users = db.getCollection('users') || [];
+  const reviewer = users.find(u => u.id === reviewerId);
+  if (reviewer && reviewer.role !== 'admin') {
+    return res.status(403).json({ error: 'Only administrators can approve or decline extension requests.' });
+  }
+
+  const isApproved = Boolean(approved);
+  const updates = {
+    extensionStatus: isApproved ? 'approved' : 'declined',
+    extensionReviewedAt: new Date().toISOString(),
+    extensionReviewedBy: reviewerId || 'usr_admin_1',
+    extensionReviewedByName: reviewer?.name || 'Administrator',
+    extensionReviewNotes: adminNotes || (isApproved ? 'Extension granted.' : 'Extension declined.')
+  };
+
+  if (isApproved && task.requestedDueDate) {
+    updates.dueDate = task.requestedDueDate;
+    if (task.requestedHours) {
+      updates.estimatedHours = (task.estimatedHours || 0) + Number(task.requestedHours);
+    }
+  }
+
+  const updated = db.updateItem('tasks', req.params.id, updates);
+
+  // In-portal notification for Assignee
+  createInPortalNotification({
+    userId: task.assignedTo,
+    title: isApproved ? '✅ Deadline Extension Approved!' : '❌ Extension Request Declined',
+    message: isApproved 
+      ? `Admin approved your extra time request for "${task.title}". New deadline: ${updates.dueDate || task.requestedDueDate}.`
+      : `Your deadline extension request for "${task.title}" was declined: "${updates.extensionReviewNotes}"`,
+    type: isApproved ? 'extension_approved' : 'extension_declined',
+    link: '/tasks',
+    relatedId: task.id
+  });
+
+  res.json(updated);
+});
+
+// ==========================================
+// 3B. IN-PORTAL NOTIFICATIONS (LINKEDIN / FB / WHATSAPP STYLE)
+// ==========================================
+app.get('/api/notifications', (req, res) => {
+  const { userId } = req.query;
+  const allNotifs = db.getCollection('notifications') || [];
+  const users = db.getCollection('users') || [];
+  const requestingUser = users.find(u => u.id === userId);
+  const isAdmin = requestingUser?.role === 'admin';
+
+  const userNotifs = allNotifs.filter(n => {
+    if (n.userId === 'all') return true;
+    if (isAdmin && n.userId === 'admins') return true;
+    return n.userId === userId;
+  });
+
+  userNotifs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  res.json(userNotifs);
+});
+
+app.put('/api/notifications/:id/read', (req, res) => {
+  const updated = db.updateItem('notifications', req.params.id, { read: true });
+  res.json(updated || { success: true });
+});
+
+app.post('/api/notifications/mark-all-read', (req, res) => {
+  const { userId } = req.body;
+  const users = db.getCollection('users') || [];
+  const requestingUser = users.find(u => u.id === userId);
+  const isAdmin = requestingUser?.role === 'admin';
+  const allNotifs = db.getCollection('notifications') || [];
+
+  allNotifs.forEach(n => {
+    const isTarget = n.userId === userId || n.userId === 'all' || (isAdmin && n.userId === 'admins');
+    if (isTarget && !n.read) {
+      db.updateItem('notifications', n.id, { read: true });
+    }
+  });
+
+  res.json({ success: true });
+});
+
+app.delete('/api/notifications/:id', (req, res) => {
+  db.deleteItem('notifications', req.params.id);
+  res.json({ success: true });
 });
 
 // ==========================================

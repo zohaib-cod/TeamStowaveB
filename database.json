@@ -1,26 +1,50 @@
 {
   "users": [
     {
-      "id": "usr_admin_1",
-      "name": "Admin (Stowave Director)",
+      "id": "usr_1792320516422_nv0x",
+      "name": "Ali Zohaib",
       "email": "alizohaib.web@gmail.com",
-      "password": "password123",
+      "password": "12345",
       "role": "admin",
+      "isFirstAdmin": true,
       "department": "Executive Leadership",
-      "title": "Chief Operating Officer & Admin",
-      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "title": "Primary Administrator & Director",
+      "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792321219/stowave_avatars/vhljiaysakw7lksfyukn.jpg",
       "phone": "+92 329 0010909",
-      "joinDate": "2026-10-13",
+      "joinDate": "2026-10-18",
       "status": "online",
-      "points": 1560,
-      "bio": "Overseeing Stowave team operations, strategic roadmaps, e-commerce automation, and product excellence.",
+      "points": 2600,
+      "bio": "Primary Administrator & Director at Stowave.",
       "skills": [
-        "Strategic Management",
-        "E-Commerce",
+        "Strategy",
+        "Leadership",
         "Operations",
-        "Team Leadership"
+        "E-Commerce"
       ],
-      "updatedAt": "2026-10-13T23:41:04.936Z"
+      "createdAt": "2026-10-18T10:48:36.422Z",
+      "updatedAt": "2026-10-18T12:15:10.171Z"
+    },
+    {
+      "id": "usr_1792324121131_qjg8",
+      "name": "Ali Haider",
+      "email": "alihaiderpkp12@gmail.com",
+      "password": "12345678",
+      "role": "member",
+      "department": "Customer Comments & DM Replies Fast Turnaround, Daily Bank Balances & Payment Reconciliation, Courier COD (Cash on Delivery) Payout Audit, Profit & Loss Margin Weekly Documentation, Company Expense Invoices & Vendor Settlement, Product Physical Inspection & Quality Standards, Packaging Standards & Unboxing Quality Verification, Warehouse Stock Physical Counting & Discrepancies, Return Parcel (RTO) Inspection & Restocking, Soft Records Google Drive & Cloud File Management, Hard Copy Physical Invoices & Archival Filing, Budget Authorizations & Major Expenditure Approvals",
+      "title": "Team Specialist",
+      "avatar": "https://images.unsplash.com/photo-1534528766780?auto=format&fit=crop&w=200&q=80",
+      "phone": "+92 300 0000000",
+      "joinDate": "2026-10-18",
+      "status": "online",
+      "points": 660,
+      "bio": "Contributor in Customer Comments & DM Replies Fast Turnaround, Daily Bank Balances & Payment Reconciliation, Courier COD (Cash on Delivery) Payout Audit, Profit & Loss Margin Weekly Documentation, Company Expense Invoices & Vendor Settlement, Product Physical Inspection & Quality Standards, Packaging Standards & Unboxing Quality Verification, Warehouse Stock Physical Counting & Discrepancies, Return Parcel (RTO) Inspection & Restocking, Soft Records Google Drive & Cloud File Management, Hard Copy Physical Invoices & Archival Filing, Budget Authorizations & Major Expenditure Approvals.",
+      "skills": [
+        "Operations",
+        "Collaboration",
+        "Customer Comments & DM Replies Fast Turnaround, Daily Bank Balances & Payment Reconciliation, Courier COD (Cash on Delivery) Payout Audit, Profit & Loss Margin Weekly Documentation, Company Expense Invoices & Vendor Settlement, Product Physical Inspection & Quality Standards, Packaging Standards & Unboxing Quality Verification, Warehouse Stock Physical Counting & Discrepancies, Return Parcel (RTO) Inspection & Restocking, Soft Records Google Drive & Cloud File Management, Hard Copy Physical Invoices & Archival Filing, Budget Authorizations & Major Expenditure Approvals"
+      ],
+      "createdAt": "2026-10-18T11:48:41.131Z",
+      "updatedAt": "2026-10-18T11:58:22.490Z"
     }
   ],
   "tasks": [],
@@ -40,27 +64,421 @@
       "pinned": true,
       "authorId": "usr_admin_1",
       "createdAt": "2026-10-13T23:47:49.372Z"
+    },
+    {
+      "id": "ann_stowave_welcome",
+      "title": "🚀 Stowave Workspace Initialized (100% Real-Time)",
+      "content": "Welcome to your real-time Stowave company portal. All dummy data has been removed. Use \"+ Assign Task\" or \"+ Add Team Member\" to begin.",
+      "priority": "urgent",
+      "pinned": true,
+      "authorId": "usr_admin_1",
+      "createdAt": "2026-10-13T23:47:49.372Z"
     }
   ],
   "audit_logs": [
+    {
+      "id": "log_1792325850337",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: [Social Media Operations] Daily Social Media Execution",
+      "timestamp": "2026-10-18T12:17:30.337Z",
+      "createdAt": "2026-10-18T12:17:30.337Z"
+    },
+    {
+      "id": "log_1792325710178",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
+      "timestamp": "2026-10-18T12:15:10.178Z",
+      "createdAt": "2026-10-18T12:15:10.178Z"
+    },
+    {
+      "id": "log_1792324812002",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
+      "timestamp": "2026-10-18T12:00:12.002Z",
+      "createdAt": "2026-10-18T12:00:12.002Z"
+    },
+    {
+      "id": "log_1792324702502",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🎉 Task Deliverable Approved!",
+      "timestamp": "2026-10-18T11:58:22.502Z",
+      "createdAt": "2026-10-18T11:58:22.502Z"
+    },
+    {
+      "id": "log_1792324681925",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
+      "timestamp": "2026-10-18T11:58:01.925Z",
+      "createdAt": "2026-10-18T11:58:01.925Z"
+    },
+    {
+      "id": "log_1792324647996",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-10-18T11:57:27.996Z",
+      "createdAt": "2026-10-18T11:57:27.996Z"
+    },
+    {
+      "id": "log_1792324647988",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: testing zohaib",
+      "timestamp": "2026-10-18T11:57:27.988Z",
+      "createdAt": "2026-10-18T11:57:27.988Z"
+    },
     {
       "id": "log_1791935269372",
       "userId": "usr_admin_1",
       "action": "WORKSPACE_RESET",
       "details": "Workspace reset to clean real-time Stowave slate.",
       "timestamp": "2026-10-13T23:47:49.372Z"
+    },
+    {
+      "id": "log_1792317381932",
+      "userId": "usr_admin_1",
+      "action": "CREATE_ACTIVE_PRESENCES",
+      "details": "Created new item in active_presences: Admin (Stowave Director)",
+      "timestamp": "2026-10-18T09:56:21.932Z",
+      "createdAt": "2026-10-18T09:56:21.932Z"
+    },
+    {
+      "id": "log_1792318138874",
+      "userId": "system",
+      "action": "CREATE_INVITATIONS",
+      "details": "Created new item in invitations: inv_1792318138873_7tm2",
+      "timestamp": "2026-10-18T10:08:58.874Z",
+      "createdAt": "2026-10-18T10:08:58.874Z"
+    },
+    {
+      "id": "log_1792318163878",
+      "userId": "system",
+      "action": "CREATE_USERS",
+      "details": "Created new item in users: Team Specialist",
+      "timestamp": "2026-10-18T10:09:23.878Z",
+      "createdAt": "2026-10-18T10:09:23.878Z"
+    },
+    {
+      "id": "log_1792318184575",
+      "userId": "usr_1792318163877_8pwm",
+      "action": "CREATE_PENDING_PROFILE_UPDATES",
+      "details": "Created new item in pending_profile_updates: pup_1792318184574_ajcm",
+      "timestamp": "2026-10-18T10:09:44.575Z",
+      "createdAt": "2026-10-18T10:09:44.575Z"
+    },
+    {
+      "id": "log_1792318241691",
+      "userId": "usr_admin_1",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Website Maintenance Sprint",
+      "timestamp": "2026-10-18T10:10:41.691Z",
+      "createdAt": "2026-10-18T10:10:41.691Z"
+    },
+    {
+      "id": "log_1792319685504",
+      "userId": "system",
+      "action": "CREATE_USERS",
+      "details": "Created new item in users: Primary Administrator & Director",
+      "timestamp": "2026-10-18T10:34:45.504Z",
+      "createdAt": "2026-10-18T10:34:45.504Z"
+    },
+    {
+      "id": "log_1792319685524",
+      "userId": "system",
+      "action": "CREATE_INVITATIONS",
+      "details": "Created new item in invitations: inv_1792319685524_t6lu",
+      "timestamp": "2026-10-18T10:34:45.524Z",
+      "createdAt": "2026-10-18T10:34:45.524Z"
+    },
+    {
+      "id": "log_1791935269372",
+      "userId": "usr_admin_1",
+      "action": "WORKSPACE_RESET",
+      "details": "Workspace reset to clean real-time Stowave slate.",
+      "timestamp": "2026-10-13T23:47:49.372Z"
+    },
+    {
+      "id": "log_1792320330067",
+      "userId": "system",
+      "action": "CREATE_USERS",
+      "details": "Created new item in users: Primary Administrator & Director",
+      "timestamp": "2026-10-18T10:45:30.067Z",
+      "createdAt": "2026-10-18T10:45:30.067Z"
+    },
+    {
+      "id": "log_1792320516423",
+      "userId": "system",
+      "action": "CREATE_USERS",
+      "details": "Created new item in users: Primary Administrator & Director",
+      "timestamp": "2026-10-18T10:48:36.423Z",
+      "createdAt": "2026-10-18T10:48:36.423Z"
+    },
+    {
+      "id": "log_1792320517952",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_ACTIVE_PRESENCES",
+      "details": "Created new item in active_presences: Alizohaib Web",
+      "timestamp": "2026-10-18T10:48:37.953Z",
+      "createdAt": "2026-10-18T10:48:37.953Z"
+    },
+    {
+      "id": "log_1792321221789",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PENDING_PROFILE_UPDATES",
+      "details": "Created new item in pending_profile_updates: pup_1792321221788_6otw",
+      "timestamp": "2026-10-18T11:00:21.789Z",
+      "createdAt": "2026-10-18T11:00:21.789Z"
+    },
+    {
+      "id": "log_1792322543446",
+      "userId": "usr_admin_1",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Test Verification Task",
+      "timestamp": "2026-10-18T11:22:23.446Z",
+      "createdAt": "2026-10-18T11:22:23.446Z"
+    },
+    {
+      "id": "log_1792323071564",
+      "userId": "usr_admin_1",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Test Strategic Task with Attachments",
+      "timestamp": "2026-10-18T11:31:11.564Z",
+      "createdAt": "2026-10-18T11:31:11.564Z"
+    },
+    {
+      "id": "log_1792324057148",
+      "userId": "system",
+      "action": "CREATE_INVITATIONS",
+      "details": "Created new item in invitations: inv_1792324057147_mw1c",
+      "timestamp": "2026-10-18T11:47:37.148Z",
+      "createdAt": "2026-10-18T11:47:37.148Z"
+    },
+    {
+      "id": "log_1792324121132",
+      "userId": "system",
+      "action": "CREATE_USERS",
+      "details": "Created new item in users: Team Specialist",
+      "timestamp": "2026-10-18T11:48:41.132Z",
+      "createdAt": "2026-10-18T11:48:41.132Z"
+    },
+    {
+      "id": "log_1792324123265",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_ACTIVE_PRESENCES",
+      "details": "Created new item in active_presences: Ali Haider",
+      "timestamp": "2026-10-18T11:48:43.265Z",
+      "createdAt": "2026-10-18T11:48:43.265Z"
+    },
+    {
+      "id": "log_1792324248881",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-10-18T11:50:48.881Z",
+      "createdAt": "2026-10-18T11:50:48.881Z"
+    },
+    {
+      "id": "log_1792324248874",
+      "userId": "usr_admin_1",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: task testing ",
+      "timestamp": "2026-10-18T11:50:48.874Z",
+      "createdAt": "2026-10-18T11:50:48.874Z"
+    },
+    {
+      "id": "log_1792324302926",
+      "userId": "usr_member_1",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-10-18T11:51:42.926Z",
+      "createdAt": "2026-10-18T11:51:42.926Z"
+    },
+    {
+      "id": "log_1792324302947",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: ⏳ Deadline Extension Requested",
+      "timestamp": "2026-10-18T11:51:42.947Z",
+      "createdAt": "2026-10-18T11:51:42.947Z"
+    },
+    {
+      "id": "log_1792324302920",
+      "userId": "usr_admin_1",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Extension Test Task",
+      "timestamp": "2026-10-18T11:51:42.921Z",
+      "createdAt": "2026-10-18T11:51:42.921Z"
+    },
+    {
+      "id": "log_1792324302966",
+      "userId": "usr_member_1",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: ✅ Deadline Extension Approved!",
+      "timestamp": "2026-10-18T11:51:42.966Z",
+      "createdAt": "2026-10-18T11:51:42.966Z"
     }
   ],
   "settings": {
     "companyName": "Stowave",
-    "companyTagline": "Modern Team Strategy, E-Commerce Operations & Automation",
-    "timezone": "UTC+5 (PKT)",
-    "apifyUserId": "",
+    "updatedAt": "2026-10-16T16:06:58.414Z",
     "apifyApiKey": "",
+    "apifyUserId": "",
+    "companyTagline": "Modern Team Strategy, E-Commerce Operations & Automation",
     "groqModel": "openai/gpt-oss-120b",
+    "timezone": "UTC+5 (PKT)",
     "visionModel": "qwen/qwen3.8-27b"
   },
   "social_inbox": [],
   "social_accounts": [],
-  "social_posts": []
+  "social_posts": [],
+  "active_presences": [
+    {
+      "id": "prs_usr_1792324121131_qjg8",
+      "userId": "usr_1792324121131_qjg8",
+      "name": "Ali Haider",
+      "avatar": "https://images.unsplash.com/photo-1534528766780?auto=format&fit=crop&w=200&q=80",
+      "role": "member",
+      "currentPage": "/tasks",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792324123264,
+      "lastHeartbeat": 1792327684728,
+      "lastSeen": 1792324123264,
+      "createdAt": "2026-10-18T11:48:43.264Z",
+      "updatedAt": "2026-10-18T12:48:04.728Z"
+    },
+    {
+      "id": "prs_usr_1792320516422_nv0x",
+      "userId": "usr_1792320516422_nv0x",
+      "name": "Ali Zohaib",
+      "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792321219/stowave_avatars/vhljiaysakw7lksfyukn.jpg",
+      "role": "admin",
+      "currentPage": "/team",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792327982836,
+      "lastHeartbeat": 1792328068310,
+      "lastSeen": 1792320517952,
+      "createdAt": "2026-10-18T10:48:37.952Z",
+      "updatedAt": "2026-10-18T12:54:28.310Z"
+    }
+  ],
+  "invitations": [
+    {
+      "id": "inv_1792324057147_mw1c",
+      "email": "alihaiderpkp12@gmail.com",
+      "role": "member",
+      "department": "Customer Comments & DM Replies Fast Turnaround, Daily Bank Balances & Payment Reconciliation, Courier COD (Cash on Delivery) Payout Audit, Profit & Loss Margin Weekly Documentation, Company Expense Invoices & Vendor Settlement, Product Physical Inspection & Quality Standards, Packaging Standards & Unboxing Quality Verification, Warehouse Stock Physical Counting & Discrepancies, Return Parcel (RTO) Inspection & Restocking, Soft Records Google Drive & Cloud File Management, Hard Copy Physical Invoices & Archival Filing, Budget Authorizations & Major Expenditure Approvals",
+      "token": "7fc6e607e129f77e3ec9cd9684d3a74cf857430bc110a218",
+      "status": "accepted",
+      "expiresAt": "2026-10-18T12:17:37.147Z",
+      "invitedBy": "usr_1792320516422_nv0x",
+      "invitedByName": "Ali Zohaib",
+      "createdAt": "2026-10-18T11:47:37.147Z",
+      "acceptedAt": "2026-10-18T11:48:41.133Z",
+      "acceptedUserId": "usr_1792324121131_qjg8",
+      "updatedAt": "2026-10-18T11:48:41.134Z"
+    }
+  ],
+  "pending_profile_updates": [],
+  "notifications": [
+    {
+      "id": "notif_1792325710176_apt6r",
+      "userId": "usr_1792320516422_nv0x",
+      "title": "🎉 Task Deliverable Approved!",
+      "message": "Admin approved \"task testing \"! Rating: 5/5 Stars ⭐. +100 points awarded.",
+      "type": "task_approved",
+      "link": "/tasks",
+      "relatedId": "tsk_1792324248868",
+      "read": false,
+      "createdAt": "2026-10-18T12:15:10.176Z"
+    },
+    {
+      "id": "notif_1792324811992_5cpjv",
+      "userId": "admins",
+      "title": "📤 Task Deliverables Submitted",
+      "message": "Ali Zohaib has submitted deliverables for \"task testing \". Click to review.",
+      "type": "task_submitted",
+      "link": "/tasks",
+      "relatedId": "tsk_1792324248868",
+      "read": true,
+      "createdAt": "2026-10-18T12:00:11.992Z",
+      "updatedAt": "2026-10-18T12:00:41.191Z"
+    },
+    {
+      "id": "notif_1792324681924_cga5u",
+      "userId": "admins",
+      "title": "📤 Task Deliverables Submitted",
+      "message": "Ali Haider has submitted deliverables for \"testing zohaib\". Click to review.",
+      "type": "task_submitted",
+      "link": "/tasks",
+      "relatedId": "tsk_1792324647985",
+      "read": true,
+      "createdAt": "2026-10-18T11:58:01.924Z",
+      "updatedAt": "2026-10-18T12:00:41.192Z"
+    },
+    {
+      "id": "notif_1792324647994_lyfue",
+      "userId": "usr_1792324121131_qjg8",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"testing zohaib\". Due date: 2026-10-20.",
+      "type": "task_assigned",
+      "link": "/tasks",
+      "relatedId": "tsk_1792324647985",
+      "read": true,
+      "createdAt": "2026-10-18T11:57:27.994Z",
+      "updatedAt": "2026-10-18T12:28:03.640Z"
+    },
+    {
+      "id": "notif_1792324302964_l791g",
+      "userId": "usr_member_1",
+      "title": "✅ Deadline Extension Approved!",
+      "message": "Admin approved your extra time request for \"Extension Test Task\". New deadline: 2026-10-24.",
+      "type": "extension_approved",
+      "link": "/tasks",
+      "relatedId": "tsk_1792324302916",
+      "read": false,
+      "createdAt": "2026-10-18T11:51:42.964Z"
+    },
+    {
+      "id": "notif_1792324302946_ibd2n",
+      "userId": "admins",
+      "title": "⏳ Deadline Extension Requested",
+      "message": "Team Member has requested extra time for \"Extension Test Task\" until 2026-10-24. Reason: \"Need extra days for thorough quality testing\"",
+      "type": "extension_requested",
+      "link": "/tasks",
+      "relatedId": "tsk_1792324302916",
+      "read": true,
+      "createdAt": "2026-10-18T11:51:42.946Z",
+      "updatedAt": "2026-10-18T12:00:41.199Z"
+    },
+    {
+      "id": "notif_1792324302925_2vo3w",
+      "userId": "usr_member_1",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"Extension Test Task\". Due date: 2026-10-20.",
+      "type": "task_assigned",
+      "link": "/tasks",
+      "relatedId": "tsk_1792324302916",
+      "read": false,
+      "createdAt": "2026-10-18T11:51:42.925Z"
+    },
+    {
+      "id": "notif_1792324248879_2ohuo",
+      "userId": "usr_1792320516422_nv0x",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"task testing \". Due date: 2026-10-20.",
+      "type": "task_assigned",
+      "link": "/tasks",
+      "relatedId": "tsk_1792324248868",
+      "read": true,
+      "createdAt": "2026-10-18T11:50:48.879Z",
+      "updatedAt": "2026-10-18T12:00:41.200Z"
+    }
+  ]
 }

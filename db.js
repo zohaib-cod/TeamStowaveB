@@ -499,24 +499,15 @@ class Database {
         'audit_logs', 'social_inbox', 'social_accounts', 'social_posts'
       ];
 
-      const usersCount = await this.mongoDb.collection('users').countDocuments();
-      if (usersCount === 0) {
-        console.log('🌱 MongoDB is empty. Seeding initial data into MongoDB Atlas...');
-        for (const col of collections) {
-          const items = this.data[col] || [];
-          if (items.length > 0) {
-            await this.mongoDb.collection(col).insertMany(items.map(i => ({ ...i })));
-          }
-        }
-        if (this.data.settings) {
-          await this.mongoDb.collection('settings').updateOne(
-            { key: 'global_settings' },
-            { $set: { key: 'global_settings', ...this.data.settings } },
-            { upsert: true }
-          );
-        }
-        console.log('✅ Seed data successfully inserted into MongoDB Atlas!');
-        return;
+      // Check if global settings are initialized in MongoDB
+      const settingsDoc = await this.mongoDb.collection('settings').findOne({ key: 'global_settings' });
+      if (!settingsDoc && this.data.settings) {
+        console.log('🌱 MongoDB settings empty. Seeding initial settings into MongoDB Atlas...');
+        await this.mongoDb.collection('settings').updateOne(
+          { key: 'global_settings' },
+          { $set: { key: 'global_settings', ...this.data.settings } },
+          { upsert: true }
+        );
       }
 
       for (const col of collections) {
@@ -524,9 +515,9 @@ class Database {
         this.data[col] = docs.map(({ _id, ...rest }) => rest);
       }
 
-      const settingsDoc = await this.mongoDb.collection('settings').findOne({ key: 'global_settings' });
-      if (settingsDoc) {
-        const { _id, key, ...restSettings } = settingsDoc;
+      const loadedSettings = await this.mongoDb.collection('settings').findOne({ key: 'global_settings' });
+      if (loadedSettings) {
+        const { _id, key, ...restSettings } = loadedSettings;
         this.data.settings = restSettings;
       }
       console.log(`📦 Loaded ${this.data.users?.length || 0} users & ${this.data.tasks?.length || 0} tasks from MongoDB Atlas!`);

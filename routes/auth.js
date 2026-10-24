@@ -222,11 +222,13 @@ router.post('/invite', async (req, res) => {
   const token = crypto.randomBytes(24).toString('hex');
   const expiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString(); // 30 minutes
 
+  const validRole = ['master_admin', 'admin', 'member'].includes(role) ? role : 'member';
+
   const newInvite = {
     id: `inv_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
     email: normalizedEmail,
-    role: role === 'admin' ? 'admin' : 'member',
-    department,
+    role: validRole,
+    department: validRole === 'master_admin' ? (department || 'Executive Leadership & Final Sign-off') : department,
     token,
     status: 'pending', // 'pending' | 'accepted' | 'expired'
     expiresAt,
@@ -238,7 +240,7 @@ router.post('/invite', async (req, res) => {
   db.addItem('invitations', newInvite);
 
   // Construct invite link based on host / origin
-  const origin = req.headers.origin || req.headers.referer?.replace(/\/$/, '') || 'http://localhost:3000';
+  const origin = req.headers.origin || req.headers.referer?.replace(/\/$/, '') || process.env.FRONTEND_URL || 'https://teamstowavef.vercel.app';
   const inviteLink = `${origin}/invite?token=${token}`;
 
   // Send real email via nodemailer
@@ -354,6 +356,9 @@ router.post('/accept-invite', (req, res) => {
     return res.status(400).json({ error: 'An account with this email already exists.' });
   }
 
+  const isMaster = invite.role === 'master_admin';
+  const isAdmin = invite.role === 'admin' || isMaster;
+
   // Create new active user
   const newUser = {
     id: `usr_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
@@ -361,15 +366,21 @@ router.post('/accept-invite', (req, res) => {
     email: invite.email,
     password,
     role: invite.role || 'member',
-    department: invite.department || 'Operations',
-    title: invite.role === 'admin' ? 'Stowave Operations Administrator' : 'Team Specialist',
+    isFirstAdmin: isMaster,
+    isMasterAdmin: isMaster,
+    department: invite.department || (isMaster ? 'Executive Leadership' : 'Operations'),
+    title: isMaster 
+      ? 'Executive Master Admin & Director' 
+      : (invite.role === 'admin' ? 'Stowave Operations Administrator' : 'Team Specialist'),
     avatar: avatar || `https://images.unsplash.com/photo-${1534528741775 + Math.floor(Math.random() * 50000)}?auto=format&fit=crop&w=200&q=80`,
     phone: phone || '+92 300 0000000',
     joinDate: new Date().toISOString().split('T')[0],
     status: 'online',
-    points: 600,
-    bio: bio || `Contributor in ${invite.department || 'Operations'}.`,
-    skills: ['Operations', 'Collaboration', invite.department]
+    points: isMaster ? 3500 : (isAdmin ? 1500 : 600),
+    bio: bio || (isMaster ? 'Executive Master Admin with final sign-off and recognition gifting authority.' : `Contributor in ${invite.department || 'Operations'}.`),
+    skills: isMaster 
+      ? ['Executive Leadership', 'Final Sign-off', 'Gifting & Recognition', 'Operations Strategy'] 
+      : ['Operations', 'Collaboration', invite.department]
   };
 
   db.addItem('users', newUser);

@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "db:local": "node scripts/switch-env.js local",
+    "db:live": "node scripts/switch-env.js live"
   },
   "dependencies": {
     "cloudinary": "^2.11.0",
@@ -14,6 +16,7 @@
     "express": "^4.21.2",
     "mongodb": "^7.7.0",
     "nodemailer": "^10.1.0",
-    "pg": "^8.23.1"
+    "pg": "^8.23.1",
+    "web-push": "^3.6.7"
   }
 }

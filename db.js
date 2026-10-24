@@ -496,13 +496,14 @@ class Database {
       const collections = [
         'users', 'tasks', 'reports', 'surveys', 'survey_responses',
         'peer_ratings', 'shoutouts', 'gifts', 'leaves', 'announcements',
-        'audit_logs', 'social_inbox', 'social_accounts', 'social_posts'
+        'audit_logs', 'social_inbox', 'social_accounts', 'social_posts',
+        'active_presences', 'notifications'
       ];
 
       // Check if global settings are initialized in MongoDB
       const settingsDoc = await this.mongoDb.collection('settings').findOne({ key: 'global_settings' });
       if (!settingsDoc && this.data.settings) {
-        console.log('🌱 MongoDB settings empty. Seeding initial settings into MongoDB Atlas...');
+        console.log('🌱 MongoDB settings empty. Seeding initial settings into MongoDB...');
         await this.mongoDb.collection('settings').updateOne(
           { key: 'global_settings' },
           { $set: { key: 'global_settings', ...this.data.settings } },
@@ -511,8 +512,14 @@ class Database {
       }
 
       for (const col of collections) {
-        const docs = await this.mongoDb.collection(col).find({}).toArray();
-        this.data[col] = docs.map(({ _id, ...rest }) => rest);
+        const count = await this.mongoDb.collection(col).countDocuments();
+        if (count > 0) {
+          const docs = await this.mongoDb.collection(col).find({}).toArray();
+          this.data[col] = docs.map(({ _id, ...rest }) => rest);
+        } else if (Array.isArray(this.data[col]) && this.data[col].length > 0) {
+          console.log(`🌱 Seeding empty MongoDB collection '${col}' (${this.data[col].length} records)...`);
+          await this.mongoDb.collection(col).insertMany(this.data[col].map(i => ({ ...i })));
+        }
       }
 
       const loadedSettings = await this.mongoDb.collection('settings').findOne({ key: 'global_settings' });
@@ -520,7 +527,7 @@ class Database {
         const { _id, key, ...restSettings } = loadedSettings;
         this.data.settings = restSettings;
       }
-      console.log(`📦 Loaded ${this.data.users?.length || 0} users & ${this.data.tasks?.length || 0} tasks from MongoDB Atlas!`);
+      console.log(`📦 Synced ${this.data.users?.length || 0} users & ${this.data.tasks?.length || 0} tasks from MongoDB!`);
     } catch (err) {
       console.error('Error syncing from MongoDB:', err.message);
     }
@@ -647,25 +654,13 @@ class Database {
   }
 
   resetToCleanSlate(adminUser) {
+    // Preserve ALL real registered users so nobody ever has to sign up again!
+    const existingUsers = Array.isArray(this.data?.users) && this.data.users.length > 0 
+      ? this.data.users 
+      : (adminUser ? [adminUser] : []);
+
     const freshData = {
-      users: adminUser ? [adminUser] : [
-        {
-          id: 'usr_admin_1',
-          name: 'Admin (Stowave Director)',
-          email: 'alizohaib.web@gmail.com',
-          password: 'password123',
-          role: 'admin',
-          department: 'Executive Leadership',
-          title: 'Chief Operating Officer & Admin',
-          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-          phone: '+92 329 0010909',
-          joinDate: new Date().toISOString().split('T')[0],
-          status: 'online',
-          points: 1500,
-          bio: 'Strategic administrator overseeing real-time Stowave team operations.',
-          skills: ['Strategy', 'Leadership', 'Operations', 'E-Commerce']
-        }
-      ],
+      users: existingUsers,
       tasks: [],
       reports: [],
       surveys: [],
@@ -709,8 +704,9 @@ class Database {
     this.write(freshData);
 
     if (this.mongoDb) {
+      // NOTE: 'users' is strictly preserved and NEVER deleted during clean slate resets!
       const collections = [
-        'users', 'tasks', 'reports', 'surveys', 'survey_responses',
+        'tasks', 'reports', 'surveys', 'survey_responses',
         'peer_ratings', 'shoutouts', 'gifts', 'leaves', 'announcements',
         'audit_logs', 'social_inbox', 'social_accounts', 'social_posts'
       ];

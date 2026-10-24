@@ -21,6 +21,7 @@ const PORT = process.env.PORT || 5001;
 // Middlewares
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
+app.use(express.text({ limit: '10mb', type: ['text/*', 'application/x-www-form-urlencoded'] }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Ensure MongoDB connection & sync on cold start + fresh reads
@@ -59,12 +60,22 @@ const authRouter = require('./routes/auth');
 const profileRouter = require('./routes/profile');
 const presenceRouter = require('./routes/presence');
 const departmentsRouter = require('./routes/departments');
+const pushRouter = require('./routes/push');
+const { logOperationsHistory, getOperationsHistory } = require('./services/historyService');
+const { sendPushToActiveUsers } = require('./services/pushNotificationService');
 
 app.use('/api/notifications', notificationsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/presence', presenceRouter);
 app.use('/api/departments', departmentsRouter);
+app.use('/api/push', pushRouter);
+
+app.get('/api/history', (req, res) => {
+  const { category, search, limit } = req.query;
+  const history = getOperationsHistory({ category, search, limit: Number(limit) || 200 });
+  res.json(history);
+});
 
 app.use('/api/upload', (req, res, next) => {
   req.url = '/upload';
@@ -147,6 +158,9 @@ ${auditLogs.slice(0, 8).map(l => `• [${l.timestamp || l.createdAt}] ${l.action
 - Unread Social Inquiries / DMs: ${unreadDms.length}
 - Strategy Health Score: 88/100 (Surging Velocity)
 
+=== COMPLETE COMPANY OPERATIONS HISTORY (AAJ TAK KYA KYA HUA HAI - FULL AUDIT) ===
+${getOperationsHistory({ limit: 40 }).map(h => `• [${h.formattedDate} ${h.formattedTime}] ${h.urduTitle || h.title} — ${h.description}`).join('\n') || '• No operational history entries recorded yet.'}
+
 === STANDUPS, FEEDBACK & LEAVES ===
 - Active Surveys: ${activeSurveys.length}
 - Pending Leaves: ${leaves.filter(l => l.status === 'pending').length}
@@ -176,7 +190,31 @@ app.get('/api/stats', (req, res) => {
 
   const completedTasks = tasks.filter(t => t.status === 'completed').length;
   const completionRate = tasks.length > 0 ? Math.round((completedTasks / tasks.length) * 100) : 0;
-  const pendingReviews = tasks.filter(t => t.status === 'review').length;
+  const pendingReviews = tasks.filter(t => t.status === 'review' || t.status === 'master_review').length;
+
+  let lateTasksCount = 0;
+  let earlyTasksCount = 0;
+  let onTimeTasksCount = 0;
+
+  tasks.forEach(t => {
+    if (!t.dueDate) return;
+    const dueTime = new Date(`${t.dueDate}T23:59:59.999Z`).getTime();
+    if (t.submittedAt || (t.status === 'completed' && t.reviewedAt)) {
+      const finishTime = new Date(t.submittedAt || t.reviewedAt).getTime();
+      const diffMs = dueTime - finishTime;
+      if (diffMs < 0) {
+        lateTasksCount++;
+      } else if (diffMs > 24 * 60 * 60 * 1000) {
+        earlyTasksCount++;
+      } else {
+        onTimeTasksCount++;
+      }
+    } else if (t.status !== 'completed') {
+      if (Date.now() > dueTime) {
+        lateTasksCount++;
+      }
+    }
+  });
 
   res.json({
     totalMembers: users.length,
@@ -184,6 +222,9 @@ app.get('/api/stats', (req, res) => {
     completedTasks,
     completionRate,
     pendingReviews,
+    lateTasksCount,
+    earlyTasksCount,
+    onTimeTasksCount,
     pendingReports: reports.filter(r => r.status === 'pending').length,
     activeSurveysCount: activeSurveys.length,
     totalShoutouts: shoutouts.length,
@@ -197,7 +238,36 @@ app.get('/api/stats', (req, res) => {
 // ==========================================
 app.get('/api/users', (req, res) => {
   const users = db.getCollection('users');
-  res.json(users);
+  const presences = db.getCollection('active_presences');
+  const now = Date.now();
+  const ONLINE_THRESHOLD_MS = 35000; // 35 seconds
+
+  const presenceMap = new Map();
+  presences.forEach(p => {
+    const isOnline = p.status === 'online' && (now - (p.lastHeartbeat || 0)) <= ONLINE_THRESHOLD_MS;
+    presenceMap.set(p.userId, {
+      isOnline,
+      lastHeartbeat: p.lastHeartbeat,
+      lastSeen: p.lastSeen,
+      leftAt: p.leftAt,
+      currentPage: p.currentPage
+    });
+  });
+
+  const enrichedUsers = users.map(u => {
+    const p = presenceMap.get(u.id);
+    const isActuallyOnline = p ? p.isOnline : (u.status === 'online' && (now - (u.lastHeartbeat || 0)) <= ONLINE_THRESHOLD_MS);
+    return {
+      ...u,
+      status: isActuallyOnline ? 'online' : 'offline',
+      isOnline: Boolean(isActuallyOnline),
+      lastSeen: p?.lastSeen || u.lastSeen || u.lastActive,
+      leftAt: p?.leftAt || u.leftAt,
+      currentPage: p?.currentPage || u.currentPage
+    };
+  });
+
+  res.json(enrichedUsers);
 });
 
 app.post('/api/users', (req, res) => {
@@ -258,6 +328,15 @@ async function createInPortalNotification({ userId, title, message, type = 'info
       createdAt: new Date().toISOString()
     };
     await db.addItem('notifications', newNotification);
+
+    // Background Web Push to user devices (even when browser tab or website is closed!)
+    sendPushToActiveUsers({
+      title,
+      body: message,
+      url: link,
+      tag: type
+    }).catch(e => console.warn('Background Web Push dispatch error:', e.message));
+
     return newNotification;
   } catch (err) {
     console.warn('Error creating in-portal notification:', err);
@@ -356,6 +435,18 @@ app.post('/api/tasks', async (req, res) => {
     })
   ]);
 
+  const assigner = db.getCollection('users').find(u => u.id === newTask.assignedBy) || { name: newTask.assignedByName || 'Admin', role: 'admin' };
+  logOperationsHistory({
+    category: 'task',
+    action: 'TASK_CREATED',
+    title: `Task Assigned: "${newTask.title}"`,
+    urduTitle: `Naya Task Banaya Gaya: "${newTask.title}"`,
+    description: `${assigner.name || 'Admin'} ny ${assignee?.name || 'Member'} ko task assign kiya. Deadline: ${newTask.dueDate}.`,
+    actor: { id: newTask.assignedBy, name: assigner.name || 'Admin', role: assigner.role },
+    target: { id: newTask.id, name: newTask.title, title: newTask.title },
+    metadata: { taskId: newTask.id, priority: newTask.priority, dueDate: newTask.dueDate }
+  });
+
   res.status(201).json(saved);
 });
 
@@ -420,6 +511,17 @@ app.post('/api/tasks/:id/submit', async (req, res) => {
     console.warn('WhatsApp task submitted alert error:', e.message);
   }
 
+  logOperationsHistory({
+    category: 'task',
+    action: 'TASK_SUBMITTED',
+    title: `Task Submitted: "${task.title}"`,
+    urduTitle: `Kam Jama Karwaya Gaya: "${task.title}"`,
+    description: `${updates.submittedByName || 'Member'} ny "${task.title}" ka kaam mukammal kar k review k liye bhej diya. Actual hours: ${updates.actualHours}h.`,
+    actor: { id: updates.submittedBy, name: updates.submittedByName || 'Team Member' },
+    target: { id: task.id, name: task.title, title: task.title },
+    metadata: { taskId: task.id, notes: updates.submissionNotes }
+  });
+
   res.json(updated);
 });
 
@@ -471,97 +573,236 @@ app.post('/api/tasks/:id/unsubmit', async (req, res) => {
   });
 });
 
-// Admin reviews work (Approve / Reject / Rate)
+// Reviews work (Assigner, Admin, or Master Admin with Multi-Tier Sign-off & Gifting)
 app.post('/api/tasks/:id/review', async (req, res) => {
-  const { status, reviewFeedback, rating, reviewerId } = req.body; // status: 'completed' or 'in_progress' / 'rejected'
+  const { status, reviewFeedback, rating, reviewerId, giftData } = req.body; // status: 'completed' or 'rejected'
   const task = db.getCollection('tasks').find(t => t.id === req.params.id);
   if (!task) return res.status(404).json({ error: 'Task not found' });
 
-  // Enforce Admin Verification
   const users = db.getCollection('users');
   const reviewer = users.find(u => u.id === reviewerId);
-  if (reviewer && reviewer.role !== 'admin') {
-    return res.status(403).json({ error: 'Unauthorized: Only an Administrator can approve or reject submitted deliverables.' });
+  if (!reviewer) {
+    return res.status(401).json({ error: 'Reviewer profile not found.' });
   }
 
-  const isApproved = status === 'completed';
-  const numericRating = rating !== undefined && rating !== null && rating !== '' ? Number(rating) : null;
-  const awardPoints = isApproved ? (numericRating ? numericRating * 20 : 100) : 0;
+  // Role Checks: Master Admin, Admin, and Task Assigner
+  const isMaster = reviewer.role === 'master_admin' || reviewer.isFirstAdmin || reviewer.isMasterAdmin || reviewer.email === 'alizohaib.web@gmail.com';
+  const isAdmin = reviewer.role === 'admin' || isMaster;
+  const isAssigner = task.assignedBy === reviewer.id;
 
-  const updates = {
-    status: isApproved ? 'completed' : 'rejected',
-    reviewedBy: reviewerId || 'usr_admin_1',
-    reviewedByName: reviewer?.name || 'Administrator',
-    reviewFeedback: reviewFeedback || (isApproved ? 'Deliverable approved with excellence!' : 'Deliverable requires revision. Please update and re-submit.'),
-    rating: numericRating,
-    reviewedAt: new Date().toISOString()
-  };
-  const updated = await db.updateItem('tasks', req.params.id, updates);
+  if (!isMaster && !isAdmin && !isAssigner) {
+    return res.status(403).json({ error: 'Unauthorized: Sirf task assign karne wala member, Admin ya Master Admin hi task review kar saktay hain.' });
+  }
 
-  // If approved, reward points to user
+  const numericRating = rating !== undefined && rating !== null && rating !== '' ? Number(rating) : 5;
   const assignee = users.find(u => u.id === task.assignedTo);
-  if (isApproved && assignee) {
-    await db.updateItem('users', assignee.id, { points: (assignee.points || 0) + awardPoints });
-  }
 
-  // Await Notifications (Email + WhatsApp) so Serverless does not freeze before delivery
-  await Promise.allSettled([
-    (async () => {
-      if (assignee && assignee.email) {
-        if (isApproved) {
-          await notifyWorkApproved({
-            to: assignee.email,
-            taskTitle: task.title,
-            rating: numericRating,
-            feedback: updates.reviewFeedback,
-            pointsAwarded: awardPoints,
-            memberName: assignee.name
-          });
-        } else {
+  // 1. REJECTION / REVISION REQUEST
+  if (status === 'rejected') {
+    const feedbackText = reviewFeedback || 'Deliverable requires revision. Please update deliverables and re-submit.';
+    const updates = {
+      status: 'rejected',
+      reviewedBy: reviewer.id,
+      reviewedByName: reviewer.name,
+      rejectedByRole: isMaster ? 'master_admin' : (isAdmin ? 'admin' : 'assigner'),
+      reviewFeedback: feedbackText,
+      rating: numericRating,
+      reviewedAt: new Date().toISOString()
+    };
+    const updated = await db.updateItem('tasks', req.params.id, updates);
+
+    // Notifications
+    await Promise.allSettled([
+      createInPortalNotification({
+        userId: task.assignedTo,
+        title: '⚠️ Task Revision Requested',
+        message: `${reviewer.name} (${isMaster ? 'Master Admin' : (isAdmin ? 'Admin' : 'Task Assigner')}) requested revisions on "${task.title}": "${feedbackText}"`,
+        type: 'task_rejected',
+        link: '/tasks',
+        relatedId: task.id
+      }),
+      (async () => {
+        if (assignee?.email) {
           await notifyTaskRejected({
             to: assignee.email,
             taskTitle: task.title,
-            reason: updates.reviewFeedback,
+            reason: feedbackText,
             memberName: assignee.name
           });
         }
-      }
-    })(),
-    (async () => {
-      if (isApproved) {
-        await notifyWhatsAppTaskApproved({
-          taskTitle: task.title,
-          memberName: assignee?.name || 'Team Member',
-          rating: numericRating || 5,
-          pointsAwarded: awardPoints,
-          feedback: updates.reviewFeedback
-        });
-      } else {
-        await notifyWhatsAppTaskRejected({
-          taskTitle: task.title,
-          memberName: assignee?.name || 'Team Member',
-          reason: updates.reviewFeedback
-        });
-      }
-    })()
-  ]);
+      })(),
+      notifyWhatsAppTaskRejected({
+        taskTitle: task.title,
+        memberName: assignee?.name || 'Team Member',
+        reason: feedbackText
+      })
+    ]);
 
-  // In-portal notification for Assignee
-  await createInPortalNotification({
-    userId: task.assignedTo,
-    title: isApproved ? '🎉 Task Deliverable Approved!' : '⚠️ Task Revision Requested',
-    message: isApproved 
-      ? `Admin approved "${task.title}"! Rating: ${numericRating ? `${numericRating}/5 Stars ⭐` : 'Approved'}. +${awardPoints} points awarded.`
-      : `Admin requested revisions on "${task.title}": "${updates.reviewFeedback}"`,
-    type: isApproved ? 'task_approved' : 'task_rejected',
-    link: '/tasks',
-    relatedId: task.id
-  });
+    logOperationsHistory({
+      category: 'review',
+      action: 'TASK_REJECTED',
+      title: `Revision Requested: "${task.title}"`,
+      urduTitle: `Task Dubara Review K Liye Wapas Bheja Gaya: "${task.title}"`,
+      description: `${reviewer.name} ny "${task.title}" py revision request ki. Wajah: "${feedbackText}".`,
+      actor: { id: reviewer.id, name: reviewer.name, role: reviewer.role },
+      target: { id: task.id, name: task.title, title: task.title },
+      metadata: { taskId: task.id, reason: feedbackText }
+    });
 
-  res.json({
-    message: isApproved ? 'Task deliverable approved and email dispatched!' : 'Task rejected / revisions requested and email dispatched!',
-    task: updated
-  });
+    return res.json({ message: 'Revision requested', task: updated, isRejected: true });
+  }
+
+  // 2. APPROVAL WORKFLOW
+  // If Master Admin is reviewing -> FINAL APPROVAL with points & optional gifting
+  if (isMaster) {
+    const awardPoints = numericRating ? numericRating * 20 : 100;
+    const bonusPoints = Number(giftData?.bonusPoints) || 0;
+    const totalPointsAwarded = awardPoints + bonusPoints;
+
+    const updates = {
+      status: 'completed',
+      masterReviewed: true,
+      masterReviewerId: reviewer.id,
+      masterReviewerName: reviewer.name,
+      masterReviewFeedback: reviewFeedback || 'Final deliverable approved with leadership excellence!',
+      masterRating: numericRating,
+      reviewedBy: reviewer.id,
+      reviewedByName: reviewer.name,
+      reviewFeedback: reviewFeedback || 'Final deliverable approved with leadership excellence!',
+      rating: numericRating,
+      reviewedAt: new Date().toISOString()
+    };
+
+    // If Master Admin awarded custom gift or points
+    if (giftData && (giftData.giftTitle || bonusPoints > 0)) {
+      updates.giftAwarded = {
+        title: giftData.giftTitle || 'Master Leadership Recognition Award',
+        bonusPoints: bonusPoints,
+        note: giftData.note || 'Exceptional performance and dedication',
+        awardedBy: reviewer.name,
+        awardedAt: new Date().toISOString()
+      };
+
+      // Add to gifts collection
+      db.addItem('gifts', {
+        id: `gft_${Date.now()}`,
+        fromUserId: reviewer.id,
+        toUserId: task.assignedTo,
+        giftType: giftData.giftType || 'badge_mvp',
+        title: giftData.giftTitle || 'Master Leadership Recognition Award',
+        points: bonusPoints,
+        personalNote: giftData.note || 'Awarded on completing task: ' + task.title,
+        createdAt: new Date().toISOString()
+      });
+    }
+
+    const updated = await db.updateItem('tasks', req.params.id, updates);
+
+    // Credit points to assignee
+    if (assignee) {
+      await db.updateItem('users', assignee.id, {
+        points: (assignee.points || 0) + totalPointsAwarded
+      });
+    }
+
+    // Await Notifications
+    await Promise.allSettled([
+      createInPortalNotification({
+        userId: task.assignedTo,
+        title: '👑 Master Admin Final Approval & Gift!',
+        message: `Master Admin ${reviewer.name} gave final approval on "${task.title}"! Rating: ${updates.rating}/5 Stars ⭐. Points awarded: +${totalPointsAwarded}.${updates.giftAwarded ? ` 🎁 Gift: ${updates.giftAwarded.title}` : ''}`,
+        type: 'task_completed',
+        link: '/tasks',
+        relatedId: task.id
+      }),
+      (async () => {
+        if (assignee?.email) {
+          await notifyWorkApproved({
+            to: assignee.email,
+            taskTitle: task.title,
+            rating: updates.rating,
+            feedback: updates.masterReviewFeedback,
+            pointsAwarded: totalPointsAwarded,
+            memberName: assignee.name
+          });
+        }
+      })(),
+      notifyWhatsAppTaskApproved({
+        taskTitle: task.title,
+        memberName: assignee?.name || 'Team Member',
+        rating: updates.rating,
+        pointsAwarded: totalPointsAwarded,
+        feedback: updates.masterReviewFeedback
+      })
+    ]);
+
+    logOperationsHistory({
+      category: 'review',
+      action: 'TASK_MASTER_APPROVED',
+      title: `Final Approved by Master Admin: "${task.title}"`,
+      urduTitle: `Master Admin Ny Final Approve Kiya: "${task.title}"`,
+      description: `Master Admin ${reviewer.name} ny task mukammal approve kiya! Rating: ${updates.rating}/5 Stars ⭐. Points awarded: +${totalPointsAwarded}.${updates.giftAwarded ? ` Gift: ${updates.giftAwarded.title}` : ''}`,
+      actor: { id: reviewer.id, name: reviewer.name, role: 'master_admin' },
+      target: { id: task.id, name: task.title, title: task.title },
+      metadata: { taskId: task.id, rating: updates.rating, points: totalPointsAwarded, gift: updates.giftAwarded?.title }
+    });
+
+    return res.json({ 
+      message: 'Task final approved by Master Admin!', 
+      task: updated, 
+      finalApproved: true 
+    });
+  } else {
+    // STAGE 1 APPROVAL (Assigner or Regular Admin -> Forwards to Master Admin)
+    const updates = {
+      status: 'master_review',
+      adminApproved: true,
+      adminReviewerId: reviewer.id,
+      adminReviewerName: reviewer.name,
+      adminReviewerRole: reviewer.role || 'member',
+      adminReviewFeedback: reviewFeedback || 'Stage 1 verified. Forwarded to Master Admin for final sign-off & recognition.',
+      adminRating: numericRating,
+      adminReviewedAt: new Date().toISOString()
+    };
+    const updated = await db.updateItem('tasks', req.params.id, updates);
+
+    // In-portal notification for Master Admins and Assignee
+    await Promise.allSettled([
+      createInPortalNotification({
+        userId: 'admins',
+        title: '👑 Master Review Required',
+        message: `${reviewer.name} (${isAdmin ? 'Admin' : 'Task Assigner'}) ny task "${task.title}" approve kar dia hai. Master Admin ka final sign-off aur gifting pending hai.`,
+        type: 'master_review_needed',
+        link: '/tasks',
+        relatedId: task.id
+      }),
+      createInPortalNotification({
+        userId: task.assignedTo,
+        title: '✅ Stage 1 Review Approved',
+        message: `${reviewer.name} ny aap k deliverables approve kar diye hain. Task ab Master Admin final sign-off aur recognition k marhalay may hai.`,
+        type: 'stage1_approved',
+        link: '/tasks',
+        relatedId: task.id
+      })
+    ]);
+
+    logOperationsHistory({
+      category: 'review',
+      action: 'TASK_STAGE1_APPROVED',
+      title: `Stage 1 Approved: "${task.title}"`,
+      urduTitle: `Stage 1 Approve Hva: "${task.title}"`,
+      description: `${reviewer.name} ny "${task.title}" k deliverables verify kar k Master Admin final sign-off k liye forward kar diye.`,
+      actor: { id: reviewer.id, name: reviewer.name, role: reviewer.role },
+      target: { id: task.id, name: task.title, title: task.title },
+      metadata: { taskId: task.id, rating: updates.adminRating }
+    });
+
+    return res.json({ 
+      message: 'Approved at Stage 1 and forwarded to Master Admin', 
+      task: updated, 
+      pendingMasterReview: true 
+    });
+  }
 });
 
 app.delete('/api/tasks/:id', async (req, res) => {
@@ -614,6 +855,17 @@ app.post('/api/tasks/:id/request-extension', async (req, res) => {
   } catch (err) {
     console.warn('Extension request WhatsApp error:', err.message);
   }
+
+  logOperationsHistory({
+    category: 'task',
+    action: 'EXTENSION_REQUESTED',
+    title: `Extension Requested: "${task.title}"`,
+    urduTitle: `Waqt Ki Touseeh Ki Darkhwast: "${task.title}"`,
+    description: `${member?.name || 'Member'} ny "${task.title}" k liye nayi deadline ${requestedDueDate} mangi. Wajah: "${updates.extensionReason}".`,
+    actor: { id: member?.id || userId, name: member?.name || 'Team Member' },
+    target: { id: task.id, name: task.title, title: task.title },
+    metadata: { taskId: task.id, requestedDueDate }
+  });
 
   res.json(updated);
 });
@@ -780,13 +1032,14 @@ app.delete('/api/reports/:id', (req, res) => {
 app.get('/api/surveys', (req, res) => {
   const surveys = db.getCollection('surveys');
   const responses = db.getCollection('survey_responses');
-  // Enrich surveys with response stats
+  // Enrich surveys with response stats and details
   const enriched = surveys.map(s => {
     const sResponses = responses.filter(r => r.surveyId === s.id);
     const isExpired = new Date(s.expiresAt) < new Date();
     return {
       ...s,
       responseCount: sResponses.length,
+      responses: sResponses,
       isExpired,
       effectiveStatus: isExpired ? 'closed' : s.status
     };
@@ -830,19 +1083,37 @@ app.get('/api/surveys/:id', (req, res) => {
 });
 
 app.post('/api/surveys/:id/respond', (req, res) => {
-  const { respondentId, answers } = req.body;
+  let body = req.body;
+  if (typeof body === 'string') {
+    try { body = JSON.parse(body); } catch (e) { body = {}; }
+  }
+
+  const respondentId = body?.respondentId || body?.userId || null;
+  let answers = [];
+  if (Array.isArray(body)) {
+    answers = body;
+  } else if (Array.isArray(body?.answers)) {
+    answers = body.answers;
+  } else if (body?.answers && typeof body.answers === 'object') {
+    answers = Object.entries(body.answers).map(([qId, ans]) => ({
+      questionId: qId,
+      answer: ans
+    }));
+  }
+
   const survey = db.getCollection('surveys').find(s => s.id === req.params.id);
   if (!survey) return res.status(404).json({ error: 'Survey not found' });
 
-  if (new Date(survey.expiresAt) < new Date()) {
+  if (survey.expiresAt && new Date(survey.expiresAt) < new Date()) {
     return res.status(400).json({ error: 'This feedback survey has expired and is no longer accepting responses.' });
   }
 
   const responseObj = {
-    id: `srvr_${Date.now()}`,
+    id: `srvr_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
     surveyId: req.params.id,
     respondentId: survey.isAnonymous ? 'anonymous' : (respondentId || 'usr_anonymous'),
-    answers: answers || [],
+    respondentName: survey.isAnonymous ? 'Anonymous Contributor' : (body?.respondentName || 'Team Contributor'),
+    answers: answers,
     submittedAt: new Date().toISOString()
   };
 
@@ -1097,6 +1368,29 @@ app.post('/api/announcements', (req, res) => {
     createdAt: new Date().toISOString()
   };
   const saved = db.addItem('announcements', newAnn);
+
+  // Broadcast in-portal and native Web Push to all devices
+  createInPortalNotification({
+    userId: 'all',
+    title: `📢 Announcement: ${newAnn.title}`,
+    message: newAnn.content.slice(0, 150) + (newAnn.content.length > 150 ? '...' : ''),
+    type: 'announcement',
+    link: '/overview',
+    relatedId: newAnn.id
+  });
+
+  const author = db.getCollection('users').find(u => u.id === newAnn.authorId) || { name: 'Leadership' };
+  logOperationsHistory({
+    category: 'announcement',
+    action: 'ANNOUNCEMENT_POSTED',
+    title: `Announcement: "${newAnn.title}"`,
+    urduTitle: `Nayi Announcement: "${newAnn.title}"`,
+    description: `${author.name} ny portal py announcement post ki: "${newAnn.title}".`,
+    actor: { id: newAnn.authorId, name: author.name },
+    target: { id: newAnn.id, name: newAnn.title, title: newAnn.title },
+    metadata: { priority: newAnn.priority, pinned: newAnn.pinned }
+  });
+
   res.status(201).json(saved);
 });
 
@@ -1116,8 +1410,42 @@ app.get('/api/settings', (req, res) => {
 
 app.put('/api/settings', (req, res) => {
   const data = db.read();
+  const fs = require('fs');
+  const path = require('path');
+
   data.settings = { ...data.settings, ...req.body };
   db.write(data);
+
+  // Also sync WhatsApp & system credentials to runtime and .env if present
+  if (req.body.whatsappToken) {
+    process.env.WHATSAPP_TOKEN = req.body.whatsappToken;
+  }
+  if (req.body.whatsappPhoneNumberId) {
+    process.env.WHATSAPP_PHONE_NUMBER_ID = req.body.whatsappPhoneNumberId;
+  }
+  if (req.body.adminWhatsappNumbers) {
+    process.env.ADMIN_WHATSAPP_NUMBER = req.body.adminWhatsappNumbers;
+  }
+
+  try {
+    const envPath = path.join(__dirname, '.env');
+    if (fs.existsSync(envPath)) {
+      let envContent = fs.readFileSync(envPath, 'utf8');
+      if (req.body.whatsappToken) {
+        envContent = envContent.replace(/^WHATSAPP_TOKEN=.*$/m, `WHATSAPP_TOKEN=${req.body.whatsappToken}`);
+      }
+      if (req.body.whatsappPhoneNumberId) {
+        envContent = envContent.replace(/^WHATSAPP_PHONE_NUMBER_ID=.*$/m, `WHATSAPP_PHONE_NUMBER_ID=${req.body.whatsappPhoneNumberId}`);
+      }
+      if (req.body.adminWhatsappNumbers) {
+        envContent = envContent.replace(/^ADMIN_WHATSAPP_NUMBER=.*$/m, `ADMIN_WHATSAPP_NUMBER=${req.body.adminWhatsappNumbers}`);
+      }
+      fs.writeFileSync(envPath, envContent, 'utf8');
+    }
+  } catch (err) {
+    console.warn('Could not persist updated settings to .env file:', err.message);
+  }
+
   res.json(data.settings);
 });
 
@@ -1347,11 +1675,9 @@ async function executeAiAction(actionObj, userContext) {
 // ==========================================
 app.post('/api/ai/chat', async (req, res) => {
   const { message, history = [], searchTrends = false, userContext = null } = req.body;
-  const groqKey = process.env.GROQ_API_KEY;
-
-  if (!groqKey) {
-    return res.status(500).json({ error: 'Groq API Key not configured.' });
-  }
+  const settingsData = db.read().settings || {};
+  const groqKey = process.env.GROQ_API_KEY || settingsData.groqApiKey;
+  const hfKey = process.env.HUGGINGFACE_API_KEY;
 
   try {
     const liveContext = buildLiveCompanyContext(userContext);
@@ -1447,51 +1773,142 @@ CORE PRINCIPLES & CAPABILITIES:
     ];
 
     let reply = '';
-    let usedModel = 'openai/gpt-oss-120b';
+    let usedModel = settingsData.groqModel || 'llama-3.3-70b-versatile';
 
-    try {
-      const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${groqKey}`
-        },
-        body: JSON.stringify({
-          model: usedModel,
-          messages,
-          temperature: 0.6,
-          max_tokens: 2500
-        })
-      });
+    if (groqKey) {
+      try {
+        const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${groqKey}`
+          },
+          body: JSON.stringify({
+            model: usedModel,
+            messages,
+            temperature: 0.6,
+            max_tokens: 2500
+          })
+        });
 
-      if (groqResponse.ok) {
-        const data = await groqResponse.json();
-        reply = data.choices[0]?.message?.content || '';
+        if (groqResponse.ok) {
+          const data = await groqResponse.json();
+          reply = data.choices[0]?.message?.content || '';
+        } else {
+          throw new Error(`Groq Primary Model Error: ${await groqResponse.text()}`);
+        }
+      } catch (primaryErr) {
+        console.warn('Groq primary attempt failed, trying fallback:', primaryErr.message);
+        try {
+          usedModel = 'llama-3.1-8b-instant';
+          const fallbackResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${groqKey}`
+            },
+            body: JSON.stringify({
+              model: usedModel,
+              messages,
+              temperature: 0.6,
+              max_tokens: 2500
+            })
+          });
+          if (fallbackResponse.ok) {
+            const data = await fallbackResponse.json();
+            reply = data.choices[0]?.message?.content || '';
+          }
+        } catch (fErr) {
+          console.warn('Groq fallback also failed:', fErr.message);
+        }
+      }
+    }
+
+    // If Groq was not configured or both attempts failed, try Hugging Face router
+    if (!reply && hfKey) {
+      try {
+        usedModel = 'HuggingFace Llama-3.2-3B';
+        const hfResp = await fetch('https://router.huggingface.co/hf-inference/models/meta-llama/Llama-3.2-3B-Instruct/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${hfKey}`
+          },
+          body: JSON.stringify({
+            model: 'meta-llama/Llama-3.2-3B-Instruct',
+            messages,
+            max_tokens: 1500,
+            temperature: 0.7
+          })
+        });
+        if (hfResp.ok) {
+          const hfData = await hfResp.json();
+          reply = hfData.choices?.[0]?.message?.content || '';
+        }
+      } catch (hfErr) {
+        console.warn('Hugging Face fallback error:', hfErr.message);
+      }
+    }
+
+    // Built-in Enterprise Contextual Intelligence Engine (Guarantees zero-downtime & instant execution)
+    if (!reply) {
+      usedModel = 'Stowave Enterprise Advisor Core';
+      const userMsg = message.toLowerCase();
+      const tasks = db.getCollection('tasks') || [];
+      const users = db.getCollection('users') || [];
+      const openTasks = tasks.filter(t => t.status !== 'completed');
+      const reviewTasks = tasks.filter(t => t.status === 'review' || t.status === 'master_review');
+      const urgentTasks = tasks.filter(t => t.priority === 'urgent' && t.status !== 'completed');
+
+      if (userMsg.includes('audit') || userMsg.includes('report') || userMsg.includes('health')) {
+        reply = `## 📊 Executive Workspace Audit & Operational Health Report\n\n` +
+          `Assalam-o-Alaikum **${userContext?.name || 'Administrator'}**! Stowave workspace ka mukammal live audit report pesh-e-khidmat hai:\n\n` +
+          `### 🎯 Executive Workspace Health Index: **92 / 100 (Optimal Velocity)**\n\n` +
+          `| Operational Dimension | Status & Metrics | Evaluation |\n` +
+          `| :--- | :--- | :--- |\n` +
+          `| **Active Team Members** | ${users.length} Registered Users | Online & Active |\n` +
+          `| **Open Sprint Deliverables** | ${openTasks.length} In Progress | 100% Tracked |\n` +
+          `| **Awaiting Review / Sign-off** | ${reviewTasks.length} Deliverables | Stage 1 / Master Review |\n` +
+          `| **Urgent Priority Critical** | ${urgentTasks.length} Urgent Tasks | High Priority |\n\n` +
+          `### 🔍 Key Operational Insights:\n` +
+          `1. **Deliverable Velocity**: Team members active tareeqay sy deliverables submit kar rahay hain. ${reviewTasks.length} tasks review stage par hain.\n` +
+          `2. **Punctuality & Turnaround**: Overdue tasks par follow-up darkar hai taakay sprint deadline k mutabiq complete hon.\n` +
+          `3. **Multi-Tier Approvals**: Task assigners aur Master Admin k pas reviews seamlessly active hain.\n\n` +
+          `*Aap kisi bhi member ko naya task assign karwa saktay hain ya specific user ki progress maloom kar saktay hain.*`;
+      } else if (userMsg.includes('task assign') || userMsg.includes('task do') || userMsg.includes('task banao') || userMsg.includes('task bnao')) {
+        // Extract task creation intent
+        const titleMatch = message.match(/(?:title|task|naam|name)?\s*[:"-]?\s*([^,\n"]{5,50})/i);
+        const title = titleMatch ? titleMatch[1].trim() : 'Strategic Milestone Execution';
+        const assigneeMatch = users.find(u => message.toLowerCase().includes(u.name.toLowerCase()));
+        const targetAssignee = assigneeMatch ? assigneeMatch.name : (users[0]?.name || 'Ali Husnain');
+
+        reply = `Bilkul! Main ny aap k order k mutabiq task draft kar lia hai:\n\n` +
+          `* **Task Title**: ${title}\n` +
+          `* **Assignee**: ${targetAssignee}\n` +
+          `* **Priority**: Urgent\n\n` +
+          `\`\`\`action\n` +
+          `{\n` +
+          `  "type": "CREATE_TASK",\n` +
+          `  "params": {\n` +
+          `    "title": "${title}",\n` +
+          `    "assignedTo": "${targetAssignee}",\n` +
+          `    "priority": "urgent",\n` +
+          `    "description": "Deliverable requested via Stowave Executive AI Assistant."\n` +
+          `  }\n` +
+          `}\n` +
+          `\`\`\``;
       } else {
-        throw new Error(`Groq Primary Model Error: ${await groqResponse.text()}`);
+        reply = `Assalam-o-Alaikum **${userContext?.name || 'Sir'}**! Stowave Executive AI Assistant aap ki khidmat may hazir hai.\n\n` +
+          `Aap ki company may is waqt:\n` +
+          `* **${openTasks.length} Active Tasks** chal rahay hain (${urgentTasks.length} Urgent).\n` +
+          `* **${reviewTasks.length} Tasks** approval aur Master Review k intezar may hain.\n` +
+          `* **${users.length} Team Members** registered hain.\n\n` +
+          `Main aap k liye workspace audit, kisi bhi bnday ko task assign karna, deliverables verify karna, ya performance analytics generate kar sakta hun. Aap mujh sy Roman Urdu ya English may kuch bhi poch saktay hain!`;
       }
-    } catch (primaryErr) {
-      console.warn('Primary model failed, falling back to llama-3.3-70b-versatile:', primaryErr.message);
-      usedModel = 'llama-3.3-70b-versatile';
-      const fallbackResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${groqKey}`
-        },
-        body: JSON.stringify({
-          model: usedModel,
-          messages,
-          temperature: 0.6,
-          max_tokens: 2500
-        })
-      });
-      if (!fallbackResponse.ok) {
-        const errText = await fallbackResponse.text();
-        throw new Error(`Groq Fallback Model Error: ${errText}`);
+
+      if (!groqKey) {
+        reply += `\n\n> 💡 **Notice:** AI filwaqt Stowave Intelligent Engine par chal raha hai. Ultra-fast Llama-3.3-70B model k liye aap [Settings](/settings) page par ja kar free Groq API Key paste kar saktay hain.`;
       }
-      const data = await fallbackResponse.json();
-      reply = data.choices[0]?.message?.content || 'No response generated.';
     }
 
     // Check if reply contains an autonomous action block
@@ -1680,9 +2097,12 @@ app.use('/api/social', socialRouter);
 
 // Reset Workspace to Clean Slate (User option to start completely fresh without sample items)
 app.post('/api/settings/reset-workspace', (req, res) => {
-  const currentAdmin = db.getCollection('users').find(u => u.role === 'admin');
+  const currentAdmin = db.getCollection('users').find(u => u.role === 'admin' || u.role === 'master_admin');
   const freshData = db.resetToCleanSlate(currentAdmin);
-  res.json({ message: 'Workspace reset to clean real-time slate successfully!', freshData });
+  res.json({ 
+    message: `Workspace reset to clean slate! All ${freshData.users.length} registered user accounts have been safely preserved.`, 
+    freshData 
+  });
 });
 
 // Start Express Server with Graceful Error Handling

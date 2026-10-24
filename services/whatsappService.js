@@ -1,12 +1,19 @@
-/**
- * WhatsApp Cloud API Notification Service
- * Sends automated real-time alerts to configured WhatsApp numbers
- * (e.g., ADMIN_WHATSAPP_NUMBER=923290010909,923184360458)
- */
+const db = require('../db');
+
+function getToken() {
+  const settings = db.getSettings ? db.getSettings() : (db.read()?.settings || {});
+  return settings.whatsappToken || process.env.WHATSAPP_TOKEN;
+}
+
+function getPhoneNumberId() {
+  const settings = db.getSettings ? db.getSettings() : (db.read()?.settings || {});
+  return settings.whatsappPhoneNumberId || process.env.WHATSAPP_PHONE_NUMBER_ID || '1291620604045427';
+}
 
 function getAdminNumbers() {
   const defaultNumbers = ['923290010909', '923184360458'];
-  const envNumbers = process.env.ADMIN_WHATSAPP_NUMBER;
+  const settings = db.getSettings ? db.getSettings() : (db.read()?.settings || {});
+  const envNumbers = settings.adminWhatsappNumbers || process.env.ADMIN_WHATSAPP_NUMBER;
   if (!envNumbers) return defaultNumbers;
 
   const parsed = envNumbers
@@ -28,12 +35,12 @@ function getAdminNumbers() {
  * Send a WhatsApp text notification to a specific number
  */
 async function sendWhatsAppMessage(recipientPhone, messageText) {
-  const token = process.env.WHATSAPP_TOKEN;
-  const phoneId = process.env.WHATSAPP_PHONE_NUMBER_ID || '1141217175751828';
+  const token = getToken();
+  const phoneId = getPhoneNumberId();
 
   if (!token) {
-    console.warn('⚠️ WhatsApp token not configured in .env');
-    return { success: false, error: 'WhatsApp access token is missing in .env' };
+    console.warn('⚠️ WhatsApp token not configured in .env or settings');
+    return { success: false, error: 'WhatsApp access token is missing in .env or settings' };
   }
 
   // Clean phone number: international format without + or spaces (e.g. 923290010909)
@@ -225,14 +232,14 @@ ${message}
  * Health Check: Verify Meta Token & Phone ID
  */
 async function checkWhatsAppHealth() {
-  const token = process.env.WHATSAPP_TOKEN;
-  const phoneId = process.env.WHATSAPP_PHONE_NUMBER_ID || '1141217175751828';
+  const token = getToken();
+  const phoneId = getPhoneNumberId();
   const adminNumbers = getAdminNumbers();
 
   if (!token) {
     return {
       configured: false,
-      status: 'Token Missing in .env',
+      status: 'Token Missing in .env or settings',
       phoneId,
       adminNumbers
     };

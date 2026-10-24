@@ -31,7 +31,7 @@ function formatDuration(ms) {
  * Called periodically (every 12-18s) and on page navigation
  */
 router.post('/heartbeat', (req, res) => {
-  const { userId, name, avatar, role, currentPage = '/', pageTitle } = req.body;
+  let { userId, name, avatar, role, currentPage = '/', pageTitle } = req.body || {};
   if (!userId) {
     return res.status(400).json({ error: 'userId is required' });
   }
@@ -50,6 +50,7 @@ router.post('/heartbeat', (req, res) => {
       pageTitle: pageTitle || existing.pageTitle || currentPage,
       status: 'online',
       lastHeartbeat: now,
+      lastSeen: now, // Always update to current time
       sessionStartedAt: isNewSession ? now : (existing.sessionStartedAt || now),
       updatedAt: new Date().toISOString()
     };
@@ -67,9 +68,23 @@ router.post('/heartbeat', (req, res) => {
       sessionStartedAt: now,
       lastHeartbeat: now,
       lastSeen: now,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     };
     db.addItem('active_presences', newEntry);
+  }
+
+  // Also update user's lastActive timestamp in users collection
+  const allUsers = db.getCollection('users');
+  const u = allUsers.find(x => x.id === userId);
+  if (u) {
+    db.updateItem('users', u.id, {
+      status: 'online',
+      lastActive: now,
+      lastHeartbeat: now,
+      lastSeen: now,
+      updatedAt: new Date().toISOString()
+    });
   }
 
   res.json({ success: true, timestamp: now });
@@ -79,13 +94,21 @@ router.post('/heartbeat', (req, res) => {
  * 2. User Leaves / Unloads page
  */
 router.post('/leave', (req, res) => {
-  let { userId } = req.body;
-  // Fallback if sent as text/beacon
-  if (typeof req.body === 'string') {
-    try {
-      const parsed = JSON.parse(req.body);
-      userId = parsed.userId;
-    } catch (e) {}
+  let userId = null;
+  if (req.body) {
+    if (typeof req.body === 'object' && req.body.userId) {
+      userId = req.body.userId;
+    } else if (typeof req.body === 'string') {
+      try {
+        const parsed = JSON.parse(req.body);
+        userId = parsed.userId;
+      } catch (e) {
+        if (req.body.startsWith('usr_')) userId = req.body.trim();
+      }
+    }
+  }
+  if (!userId && req.query.userId) {
+    userId = req.query.userId;
   }
 
   if (!userId) {
@@ -101,7 +124,19 @@ router.post('/leave', (req, res) => {
       status: 'offline',
       lastSeen: now,
       leftAt: now,
-      lastHeartbeat: now - 45000 // force offline timestamp
+      lastHeartbeat: now - 45000 // force offline threshold
+    });
+  }
+
+  const allUsers = db.getCollection('users');
+  const u = allUsers.find(x => x.id === userId);
+  if (u) {
+    db.updateItem('users', u.id, {
+      status: 'offline',
+      lastActive: now,
+      lastSeen: now,
+      leftAt: now,
+      updatedAt: new Date().toISOString()
     });
   }
 
@@ -126,9 +161,20 @@ router.get('/active', (req, res) => {
     trackedMap.set(p.userId, p);
   });
 
-  // Ensure all registered users have a presence record
+  // Ensure all registered users have a presence record with realistic last seen
   allUsers.forEach(u => {
     if (!trackedMap.has(u.id)) {
+      let userLastActive = u.lastActive || u.lastSeen;
+      if (!userLastActive && u.lastLogin) {
+        userLastActive = new Date(u.lastLogin).getTime();
+      }
+      if (!userLastActive && u.createdAt) {
+        userLastActive = new Date(u.createdAt).getTime();
+      }
+      if (!userLastActive || isNaN(userLastActive)) {
+        userLastActive = now - 3600000; // default 1 hour ago
+      }
+
       trackedMap.set(u.id, {
         userId: u.id,
         name: u.name,
@@ -137,7 +183,7 @@ router.get('/active', (req, res) => {
         currentPage: '/',
         status: 'offline',
         lastHeartbeat: 0,
-        lastSeen: now - 86400000 * 2 // 2 days ago
+        lastSeen: userLastActive
       });
     }
   });
@@ -147,7 +193,17 @@ router.get('/active', (req, res) => {
 
   trackedMap.forEach(p => {
     const isOnline = p.status === 'online' && (now - (p.lastHeartbeat || 0)) <= ONLINE_THRESHOLD_MS;
-    const timeSinceHeartbeat = now - (p.lastHeartbeat || p.lastSeen || now);
+
+    // Determine the most accurate last active timestamp
+    const possibleTimestamps = [
+      p.lastHeartbeat,
+      p.lastSeen,
+      p.leftAt,
+      p.updatedAt ? new Date(p.updatedAt).getTime() : 0
+    ].filter(t => typeof t === 'number' && !isNaN(t) && t > 0);
+
+    const mostRecentActive = possibleTimestamps.length > 0 ? Math.max(...possibleTimestamps) : (now - 300000);
+    const timeSinceActive = Math.max(0, now - mostRecentActive);
     const sessionDuration = p.sessionStartedAt ? formatDuration(now - p.sessionStartedAt) : '1m';
 
     if (isOnline) {
@@ -161,7 +217,7 @@ router.get('/active', (req, res) => {
         pageTitle: p.pageTitle || p.currentPage || 'Dashboard',
         crawlingDescription: `Currently crawling ${p.currentPage || '/'}`,
         activeFor: sessionDuration,
-        lastActiveExact: new Date(p.lastHeartbeat).toISOString()
+        lastActiveExact: new Date(p.lastHeartbeat || now).toISOString()
       });
     } else {
       offlineUsers.push({
@@ -171,8 +227,8 @@ router.get('/active', (req, res) => {
         role: p.role,
         status: 'offline',
         lastPage: p.currentPage || '/',
-        leftAgo: formatTimeAgo(timeSinceHeartbeat),
-        lastSeenExact: p.lastSeen ? new Date(p.lastSeen).toISOString() : new Date(p.lastHeartbeat || now).toISOString()
+        leftAgo: formatTimeAgo(timeSinceActive),
+        lastSeenExact: new Date(mostRecentActive).toISOString()
       });
     }
   });

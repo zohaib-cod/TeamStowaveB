@@ -229,7 +229,8 @@ app.get('/api/stats', (req, res) => {
     activeSurveysCount: activeSurveys.length,
     totalShoutouts: shoutouts.length,
     totalGifts: gifts.length,
-    pendingLeaves: leaves.filter(l => l.status === 'pending').length
+    pendingLeaves: leaves.filter(l => l.status === 'pending').length,
+    announcementsCount: (db.getCollection('announcements') || []).length
   });
 });
 
@@ -1350,53 +1351,304 @@ app.put('/api/leaves/:id/status', (req, res) => {
   res.json(updated);
 });
 
+// ==========================================
+// 7.1 RANDOM AWARENESS & ANNOUNCEMENT TEMPLATES
+// ==========================================
+const RANDOM_AWARENESS_TEMPLATES = [
+  {
+    title: "🛡️ Cybersecurity & 2FA Awareness Protocol",
+    category: "awareness",
+    priority: "high",
+    targetDepartment: "All Team",
+    content: "Team Notice: Please ensure Two-Factor Authentication (2FA) is turned ON for all workspace accounts, Google Drive, and Cloudinary. Never share OTPs or recovery codes across public chats.",
+    tags: ["Security", "2FA", "BestPractices"]
+  },
+  {
+    title: "📦 Packaging & Dispatch 3-Point Quality Inspection",
+    category: "sop",
+    priority: "urgent",
+    targetDepartment: "Warehouse & Operations",
+    content: "Standard SOP Reminder: Every customer parcel must pass 3-point verification (seal check, weight match, and barcode scan) before courier handover to maintain zero transit defects.",
+    tags: ["Operations", "QualityCheck", "Warehouse"]
+  },
+  {
+    title: "⚡ Social Media 15-Minute DM Turnaround SLA",
+    category: "awareness",
+    priority: "high",
+    targetDepartment: "Brand Engagement & Support",
+    content: "Peak Hours SLA: Maintain an average customer first-response time under 15 minutes between 11:00 AM - 8:00 PM. Rapid engagement boosts customer trust and direct sales conversions.",
+    tags: ["CustomerService", "SLA", "Engagement"]
+  },
+  {
+    title: "🎯 Sprint Deliverables & Proof of Work Standard",
+    category: "guideline",
+    priority: "normal",
+    targetDepartment: "All Team",
+    content: "Reminder for all specialists: When submitting deliverables on the Kanban board, always attach proof links, screenshot evidence, or concise voice summaries for fast manager review.",
+    tags: ["Kanban", "Deliverables", "Hygiene"]
+  },
+  {
+    title: "☕ Friday Team Recognition & Kudos Celebration",
+    category: "celebration",
+    priority: "normal",
+    targetDepartment: "All Team",
+    content: "Take 3 minutes today to appreciate a colleague! Send a Kudos badge with collaborative points in the recognition hub to celebrate wins and peer support across the week.",
+    tags: ["Kudos", "Culture", "Wins"]
+  },
+  {
+    title: "🧘 Desk Ergonomics & 5-Minute Hydration Break",
+    category: "awareness",
+    priority: "normal",
+    targetDepartment: "All Team",
+    content: "Team Wellness Reminder: Take a 5-minute screen pause! Hydrate, stretch your shoulders, and practice the 20-20-20 rule. Rested eyes lead to sharper execution.",
+    tags: ["Wellness", "Health", "Focus"]
+  },
+  {
+    title: "💰 COD Payout & Courier Manifest Audit",
+    category: "sop",
+    priority: "high",
+    targetDepartment: "Finance & Logistics",
+    content: "Attention Finance & Accounts: Reconcile today's Cash on Delivery courier payout receipts against delivered consignments before 6:00 PM to eliminate transit discrepancy.",
+    tags: ["Finance", "COD", "Audit"]
+  },
+  {
+    title: "🚀 High-CTR Ad Creatives & Video Hook Refresh",
+    category: "awareness",
+    priority: "normal",
+    targetDepartment: "Marketing & Creative",
+    content: "Marketing Alert: Refresh top-funnel Meta & TikTok creative hooks! Prioritize UGC unboxing and high-energy first-3-second visuals to maintain strong ROAS this weekend.",
+    tags: ["Marketing", "Creatives", "ROAS"]
+  },
+  {
+    title: "📋 EOD Daily Standup Filing Rule (Before 7:30 PM)",
+    category: "guideline",
+    priority: "urgent",
+    targetDepartment: "All Team",
+    content: "Company Policy: File your daily EOD report on the Standups tab before 7:30 PM. Detail tasks completed, any current roadblocks, and tomorrow morning's main focus.",
+    tags: ["Standup", "EOD", "Accountability"]
+  },
+  {
+    title: "🔍 Warehouse Physical Stock Count & Cycle Audit",
+    category: "sop",
+    priority: "high",
+    targetDepartment: "Inventory & Stock",
+    content: "Stock Alert: Weekly physical SKU counting will start tomorrow morning at 10:00 AM. Department leads must freeze internal bin transfers until reconciliation is signed off.",
+    tags: ["Inventory", "StockCount", "SOP"]
+  }
+];
+
+app.get('/api/announcements/random-templates', (req, res) => {
+  res.json(RANDOM_AWARENESS_TEMPLATES);
+});
+
 app.get('/api/announcements', (req, res) => {
-  const ann = db.getCollection('announcements');
-  res.json(ann);
+  const annList = db.getCollection('announcements') || [];
+  const users = db.getCollection('users') || [];
+  const userMap = new Map(users.map(u => [u.id, u]));
+
+  // Enrich announcements with author metadata and ensure valid collections
+  const enriched = annList.map(a => {
+    const author = userMap.get(a.authorId) || {
+      id: a.authorId || 'unknown',
+      name: 'Leadership Team',
+      role: 'admin',
+      avatar: 'https://res.cloudinary.com/dqmjtblih/image/upload/v1792321219/stowave_avatars/vhljiaysakw7lksfyukn.jpg',
+      department: 'Executive'
+    };
+
+    return {
+      ...a,
+      category: a.category || (a.priority === 'urgent' ? 'urgent' : 'awareness'),
+      targetDepartment: a.targetDepartment || 'All Team',
+      acknowledgements: Array.isArray(a.acknowledgements) ? a.acknowledgements : [],
+      reactions: (a.reactions && typeof a.reactions === 'object') ? a.reactions : {
+        thumbsUp: [],
+        heart: [],
+        rocket: [],
+        lightbulb: [],
+        fire: []
+      },
+      tags: Array.isArray(a.tags) ? a.tags : [],
+      author: {
+        id: author.id,
+        name: author.name,
+        role: author.role,
+        avatar: author.avatar,
+        department: author.department
+      }
+    };
+  });
+
+  // Sort: pinned first, then newest first
+  enriched.sort((a, b) => {
+    if (a.pinned && !b.pinned) return -1;
+    if (!a.pinned && b.pinned) return 1;
+    return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
+  });
+
+  res.json(enriched);
 });
 
 app.post('/api/announcements', (req, res) => {
-  const { title, content, priority, pinned, authorId } = req.body;
+  const { title, content, priority, category, targetDepartment, pinned, authorId, tags } = req.body;
   if (!title || !content) return res.status(400).json({ error: 'Title and content required.' });
+
   const newAnn = {
-    id: `ann_${Date.now()}`,
-    title,
-    content,
+    id: `ann_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+    title: title.trim(),
+    content: content.trim(),
     priority: priority || 'normal',
+    category: category || 'awareness',
+    targetDepartment: targetDepartment || 'All Team',
     pinned: Boolean(pinned),
     authorId: authorId || 'usr_admin_1',
+    tags: Array.isArray(tags) ? tags : [],
+    acknowledgements: [],
+    reactions: {
+      thumbsUp: [],
+      heart: [],
+      rocket: [],
+      lightbulb: [],
+      fire: []
+    },
     createdAt: new Date().toISOString()
   };
+
   const saved = db.addItem('announcements', newAnn);
 
   // Broadcast in-portal and native Web Push to all devices
   createInPortalNotification({
     userId: 'all',
-    title: `📢 Announcement: ${newAnn.title}`,
+    title: `📢 [${newAnn.priority.toUpperCase()}] ${newAnn.title}`,
     message: newAnn.content.slice(0, 150) + (newAnn.content.length > 150 ? '...' : ''),
     type: 'announcement',
-    link: '/overview',
+    link: '/#announcements-section',
     relatedId: newAnn.id
   });
 
-  const author = db.getCollection('users').find(u => u.id === newAnn.authorId) || { name: 'Leadership' };
+  const author = db.getCollection('users').find(u => u.id === newAnn.authorId) || { name: 'Leadership', role: 'admin' };
   logOperationsHistory({
     category: 'announcement',
     action: 'ANNOUNCEMENT_POSTED',
     title: `Announcement: "${newAnn.title}"`,
     urduTitle: `Nayi Announcement: "${newAnn.title}"`,
-    description: `${author.name} ny portal py announcement post ki: "${newAnn.title}".`,
+    description: `${author.name} ny team k liye awareness announcement post ki: "${newAnn.title}".`,
     actor: { id: newAnn.authorId, name: author.name },
     target: { id: newAnn.id, name: newAnn.title, title: newAnn.title },
-    metadata: { priority: newAnn.priority, pinned: newAnn.pinned }
+    metadata: { priority: newAnn.priority, pinned: newAnn.pinned, category: newAnn.category }
   });
 
-  res.status(201).json(saved);
+  res.status(201).json({
+    ...saved,
+    author: {
+      id: author.id,
+      name: author.name,
+      role: author.role,
+      avatar: author.avatar
+    }
+  });
 });
 
-app.delete('/api/announcements/:id', (req, res) => {
-  const success = db.deleteItem('announcements', req.params.id);
+app.put('/api/announcements/:id', async (req, res) => {
+  const annId = req.params.id;
+  const existing = (db.getCollection('announcements') || []).find(a => a.id === annId);
+  if (!existing) return res.status(404).json({ error: 'Announcement not found.' });
+
+  const { title, content, priority, category, targetDepartment, pinned, tags } = req.body;
+  const updates = {};
+  if (title !== undefined) updates.title = title.trim();
+  if (content !== undefined) updates.content = content.trim();
+  if (priority !== undefined) updates.priority = priority;
+  if (category !== undefined) updates.category = category;
+  if (targetDepartment !== undefined) updates.targetDepartment = targetDepartment;
+  if (pinned !== undefined) updates.pinned = Boolean(pinned);
+  if (tags !== undefined) updates.tags = Array.isArray(tags) ? tags : [];
+
+  const updated = await db.updateItem('announcements', annId, updates);
+  res.json(updated);
+});
+
+app.post('/api/announcements/:id/acknowledge', async (req, res) => {
+  const annId = req.params.id;
+  const { userId, userName, userAvatar } = req.body;
+  if (!userId) return res.status(400).json({ error: 'userId is required to acknowledge.' });
+
+  const existing = (db.getCollection('announcements') || []).find(a => a.id === annId);
+  if (!existing) return res.status(404).json({ error: 'Announcement not found.' });
+
+  let acknowledgements = Array.isArray(existing.acknowledgements) ? [...existing.acknowledgements] : [];
+  const existingIdx = acknowledgements.findIndex(item => (typeof item === 'string' ? item === userId : item?.userId === userId));
+
+  let isAcknowledged = false;
+  if (existingIdx >= 0) {
+    // Toggle off (unacknowledge)
+    acknowledgements.splice(existingIdx, 1);
+    isAcknowledged = false;
+  } else {
+    // Add acknowledgment
+    acknowledgements.push({
+      userId,
+      userName: userName || 'Team Member',
+      userAvatar: userAvatar || '',
+      acknowledgedAt: new Date().toISOString()
+    });
+    isAcknowledged = true;
+  }
+
+  const updated = await db.updateItem('announcements', annId, { acknowledgements });
+  res.json({ success: true, isAcknowledged, acknowledgements, updated });
+});
+
+app.post('/api/announcements/:id/react', async (req, res) => {
+  const annId = req.params.id;
+  const { userId, emoji } = req.body;
+  const validEmojis = ['thumbsUp', 'heart', 'rocket', 'lightbulb', 'fire'];
+
+  if (!userId || !emoji || !validEmojis.includes(emoji)) {
+    return res.status(400).json({ error: 'Valid userId and emoji (thumbsUp, heart, rocket, lightbulb, fire) required.' });
+  }
+
+  const existing = (db.getCollection('announcements') || []).find(a => a.id === annId);
+  if (!existing) return res.status(404).json({ error: 'Announcement not found.' });
+
+  const reactions = existing.reactions && typeof existing.reactions === 'object'
+    ? { ...existing.reactions }
+    : { thumbsUp: [], heart: [], rocket: [], lightbulb: [], fire: [] };
+
+  validEmojis.forEach(em => {
+    if (!Array.isArray(reactions[em])) reactions[em] = [];
+  });
+
+  const list = reactions[emoji];
+  const userIdx = list.indexOf(userId);
+  if (userIdx >= 0) {
+    list.splice(userIdx, 1);
+  } else {
+    list.push(userId);
+  }
+  reactions[emoji] = list;
+
+  const updated = await db.updateItem('announcements', annId, { reactions });
+  res.json({ success: true, reactions, updated });
+});
+
+app.delete('/api/announcements/:id', async (req, res) => {
+  const existing = (db.getCollection('announcements') || []).find(a => a.id === req.params.id);
+  const success = await db.deleteItem('announcements', req.params.id);
   if (!success) return res.status(404).json({ error: 'Announcement not found' });
+
+  if (existing) {
+    logOperationsHistory({
+      category: 'announcement',
+      action: 'ANNOUNCEMENT_DELETED',
+      title: `Deleted Announcement: "${existing.title}"`,
+      urduTitle: `Announcement Khatam Ki: "${existing.title}"`,
+      description: `Announcement "${existing.title}" workspace sy delete kr di gai.`,
+      actor: { id: req.body?.userId || 'system', name: 'Authorized User' },
+      target: { id: existing.id, name: existing.title, title: existing.title }
+    });
+  }
+
   res.json({ message: 'Deleted' });
 });
 

@@ -12,8 +12,8 @@
       "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792321219/stowave_avatars/vhljiaysakw7lksfyukn.jpg",
       "phone": "+92 329 0010909",
       "joinDate": "2026-10-18",
-      "status": "offline",
-      "points": 3630,
+      "status": "online",
+      "points": 3480,
       "bio": "Primary Administrator & Director at Stowave.",
       "skills": [
         "Strategy",
@@ -26,11 +26,11 @@
       "lastIp": "103.191.123.188",
       "lastLogin": "2026-10-18T17:56:23.085Z",
       "lastLoginFormatted": "Oct 18, 2026, 05:56:23 PM",
-      "lastActive": 1792800694688,
-      "lastHeartbeat": 1792800687483,
-      "lastSeen": 1792800694688,
-      "updatedAt": "2026-10-24T00:11:34.689Z",
-      "leftAt": 1792800694688
+      "lastActive": 1793566166759,
+      "lastHeartbeat": 1793566166759,
+      "lastSeen": 1793566166759,
+      "updatedAt": "2026-11-01T20:49:26.762Z",
+      "leftAt": 1793553623711
     },
     {
       "id": "usr_1792604581388_oacc",
@@ -44,7 +44,7 @@
       "phone": "+92 300 0000000",
       "joinDate": "2026-10-21",
       "status": "online",
-      "points": 780,
+      "points": 630,
       "bio": "Contributor in Daily Social Media Posts Design & Scheduling, Gererate pdf of each step, physical appearance.",
       "skills": [
         "Operations",
@@ -65,14 +65,18 @@
       "phone": "+92 300 0000000",
       "joinDate": "2026-10-21",
       "status": "online",
-      "points": 650,
+      "points": 600,
       "bio": "Contributor in Gererate pdf of each step, Real-time Brand Engagement & Trend Monitoring, Promotional Broadcasts & Customer SMS Alerts, Customer Retention & Re-engagement Campaigns, Weekly Email Newsletter & Offer Dispatch, Abandoned Cart WhatsApp Automated Recovery, Return Parcel (RTO) Inspection & Restocking, Warehouse Stock Physical Counting & Discrepancies, Promotional Ad Banners & High-CTR Creatives, Arrange meetings.",
       "skills": [
         "Operations",
         "Collaboration",
         "Gererate pdf of each step, Real-time Brand Engagement & Trend Monitoring, Promotional Broadcasts & Customer SMS Alerts, Customer Retention & Re-engagement Campaigns, Weekly Email Newsletter & Offer Dispatch, Abandoned Cart WhatsApp Automated Recovery, Return Parcel (RTO) Inspection & Restocking, Warehouse Stock Physical Counting & Discrepancies, Promotional Ad Banners & High-CTR Creatives, Arrange meetings"
       ],
-      "createdAt": "2026-10-21T17:49:17.142Z"
+      "createdAt": "2026-10-21T17:49:17.142Z",
+      "lastActive": 1793455017010,
+      "lastHeartbeat": 1793455017010,
+      "lastSeen": 1793455017010,
+      "updatedAt": "2026-10-31T13:56:57.011Z"
     },
     {
       "id": "usr_1792324121131_qjg8",
@@ -85,7 +89,7 @@
       "avatar": "https://images.unsplash.com/photo-1534528766780?auto=format&fit=crop&w=200&q=80",
       "phone": "+92 300 1234567",
       "joinDate": "2026-10-18",
-      "status": "offline",
+      "status": "online",
       "points": 450,
       "bio": "Specialist in Operations, Quality Standards, and Reconciliation at Stowave.",
       "skills": [
@@ -94,102 +98,141 @@
         "Reconciliation",
         "Auditing"
       ],
-      "createdAt": "2026-10-18T11:48:41.133Z"
+      "createdAt": "2026-10-18T11:48:41.133Z",
+      "lastActive": 1793073342763,
+      "lastHeartbeat": 1793073342763,
+      "lastSeen": 1793073342763,
+      "updatedAt": "2026-10-27T03:55:42.763Z"
     }
   ],
   "tasks": [
     {
-      "id": "tsk_tmpl_1792691711659_s3yg",
-      "title": "[Executive Approvals & Checking [MUST]] Mandatory Document Verification & Application Approval",
-      "description": "Notebook Operational Procedure: Transaction approvals, mandatory document checking [MUST], and executive authorization.",
-      "departmentId": "executive_approvals",
-      "departmentName": "Executive Approvals & Checking [MUST]",
-      "assignedTo": "usr_1792320516422_nv0x",
+      "id": "tsk_1792833538864",
+      "title": "Design 10 posts",
+      "description": "tell me how much you want time to finish this work ?",
+      "assignedTo": "usr_1792604581388_oacc",
       "assignedBy": "usr_1792320516422_nv0x",
-      "priority": "urgent",
-      "status": "completed",
-      "dueDate": "2026-10-24",
-      "createdAt": "2026-10-22T17:55:11.659Z",
-      "estimatedHours": 6,
-      "actualHours": 6,
+      "assignedByName": "Ali Zohaib",
+      "priority": "medium",
+      "status": "todo",
+      "dueDate": "2026-10-31",
+      "createdAt": "2026-10-24T09:18:58.864Z",
+      "estimatedHours": 8,
+      "actualHours": 0,
       "tags": [
-        "Executive Approvals & Checking [MUST]",
-        "Notebook Workflow"
+        "Strategic",
+        "Q4-Milestone"
       ],
-      "documentUrl": "",
-      "checklist": [
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "https://res.cloudinary.com/dqmjtblih/video/upload/v1792833490/task_briefing_voice/stzusxbcikblj83sxpfb.webm",
+      "attachments": [
         {
-          "id": "chk_2vrxh2",
-          "text": "Verify transaction in/out application accuracy",
-          "completed": true
-        },
-        {
-          "id": "chk_f9sdzo",
-          "text": "Checking document verification [MUST requirement]",
-          "completed": true
-        },
-        {
-          "id": "chk_wz4erj",
-          "text": "Official administrative authorization & digital signature",
-          "completed": true
+          "type": "voice",
+          "url": "https://res.cloudinary.com/dqmjtblih/video/upload/v1792833490/task_briefing_voice/stzusxbcikblj83sxpfb.webm"
         }
       ],
-      "submissionNotes": "greate\n",
+      "submissionNotes": "",
       "submissionLink": "",
-      "reviewedBy": "usr_1792320516422_nv0x",
-      "reviewFeedback": "Outstanding deliverable! Approved.",
-      "rating": 5,
-      "submissionAttachments": [],
       "submissionImages": [],
       "submissionPdfs": [],
       "submissionVoice": "",
-      "submittedAt": "2026-10-22T18:01:30.750Z",
-      "submittedBy": "usr_1792320516422_nv0x",
-      "submittedByName": "Ali Zohaib",
-      "reviewedAt": "2026-10-22T18:01:41.637Z",
-      "reviewedByName": "Ali Zohaib",
-      "updatedAt": "2026-10-23T22:21:13.760Z"
+      "submissionAttachments": [],
+      "reviewedBy": null,
+      "reviewFeedback": null,
+      "rating": null
     },
     {
-      "id": "tsk_1792796103239",
-      "title": "Ali Husnain ko task assign karo: Social Media Reel",
-      "description": "Deliverable requested via Stowave Executive AI Assistant.",
-      "assignedTo": "usr_1792604581388_oacc",
-      "assignedBy": "usr_admin_1",
-      "assignedByName": "Administrator",
-      "priority": "urgent",
-      "status": "completed",
+      "id": "tsk_1792833757909",
+      "title": "Generate Pdf",
+      "description": "Ap kb sy start kr ry hain? ap bhi monday sy start kr len.....\n",
+      "assignedTo": "usr_1792324121131_qjg8",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "high",
+      "status": "todo",
       "dueDate": "2026-10-26",
-      "createdAt": "2026-10-23T22:55:03.239Z",
+      "createdAt": "2026-10-24T09:22:37.909Z",
       "estimatedHours": 8,
-      "actualHours": 17,
+      "actualHours": 0,
       "tags": [
-        "AI-Assigned",
-        "Daily Social Media Posts Design & Scheduling, Gererate pdf of each step, physical appearance"
+        "generate a full history pdf"
       ],
       "images": [],
       "pdfs": [],
       "voiceUrl": "",
       "attachments": [],
-      "submissionNotes": "Possimus natus in v",
-      "submissionLink": "https://www.lyfepavisygageq.cc",
+      "submissionNotes": "",
+      "submissionLink": "",
       "submissionImages": [],
       "submissionPdfs": [],
       "submissionVoice": "",
       "submissionAttachments": [],
-      "reviewedBy": "usr_1792320516422_nv0x",
-      "reviewFeedback": "Outstanding deliverable! Approved.",
-      "rating": 5,
-      "submittedAt": "2026-10-23T23:33:52.360Z",
-      "submittedBy": "usr_1792320516422_nv0x",
-      "submittedByName": "Ali Zohaib",
-      "masterRating": 5,
-      "masterReviewFeedback": "Outstanding deliverable! Approved.",
-      "masterReviewed": true,
-      "masterReviewerId": "usr_1792320516422_nv0x",
-      "masterReviewerName": "Ali Zohaib",
-      "reviewedAt": "2026-10-23T23:34:48.606Z",
-      "reviewedByName": "Ali Zohaib"
+      "reviewedBy": null,
+      "reviewFeedback": null,
+      "rating": null
+    },
+    {
+      "id": "tsk_1793553547717",
+      "title": "pdf generate",
+      "description": "sir kal sb log pls apni details pdf ready kr k task submit krvaye  ",
+      "assignedTo": "usr_1792604581388_oacc",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "urgent",
+      "status": "todo",
+      "dueDate": "2026-11-02",
+      "createdAt": "2026-11-01T17:19:07.717Z",
+      "estimatedHours": 8,
+      "actualHours": 0,
+      "tags": [
+        "Strategic",
+        "Q4-Milestone"
+      ],
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "",
+      "attachments": [],
+      "submissionNotes": "",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": null,
+      "reviewFeedback": null,
+      "rating": null
+    },
+    {
+      "id": "tsk_1793553573392",
+      "title": "pdf genrate",
+      "description": "sir kal sb log pls apni details pdf ready kr k task submit krvaye  ",
+      "assignedTo": "usr_1792604957142_k0b7",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "urgent",
+      "status": "todo",
+      "dueDate": "2026-11-02",
+      "createdAt": "2026-11-01T17:19:33.392Z",
+      "estimatedHours": 8,
+      "actualHours": 0,
+      "tags": [
+        "Strategic",
+        "Q4-Milestone"
+      ],
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "",
+      "attachments": [],
+      "submissionNotes": "",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": null,
+      "reviewFeedback": null,
+      "rating": null
     }
   ],
   "reports": [],
@@ -309,27 +352,97 @@
       "message": "you did good this week ",
       "category": "teamwork",
       "reactions": {
-        "claps": 2,
-        "hearts": 3,
-        "fire": 4
+        "claps": 3,
+        "hearts": 2,
+        "fire": 1
       },
       "createdAt": "2026-10-22T18:06:19.358Z"
     }
   ],
   "gifts": [],
   "leaves": [],
-  "announcements": [
-    {
-      "id": "ann_stowave_welcome",
-      "title": "🚀 Stowave Workspace Initialized (100% Real-Time)",
-      "content": "Welcome to your real-time Stowave company portal. All dummy data has been removed. Use \"+ Assign Task\" or \"+ Add Team Member\" to begin.",
-      "priority": "urgent",
-      "pinned": true,
-      "authorId": "usr_admin_1",
-      "createdAt": "2026-10-20T12:30:28.087Z"
-    }
-  ],
+  "announcements": [],
   "audit_logs": [
+    {
+      "id": "log_1793565968750",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Deleted Announcement: \"hello je\"",
+      "timestamp": "2026-11-01T20:46:08.750Z",
+      "createdAt": "2026-11-01T20:46:08.750Z"
+    },
+    {
+      "id": "log_1793565964322",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Deleted Announcement: \"🚀 Stowave Workspace Initialized (100% Real-Time)\"",
+      "timestamp": "2026-11-01T20:46:04.322Z",
+      "createdAt": "2026-11-01T20:46:04.322Z"
+    },
+    {
+      "id": "log_1793565961500",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Deleted Announcement: \"🛡️ 2FA Security & Session Timeout Awareness\"",
+      "timestamp": "2026-11-01T20:46:01.500Z",
+      "createdAt": "2026-11-01T20:46:01.500Z"
+    },
+    {
+      "id": "log_1793565958961",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Deleted Announcement: \"Perspiciatis volupt\"",
+      "timestamp": "2026-11-01T20:45:58.961Z",
+      "createdAt": "2026-11-01T20:45:58.962Z"
+    },
+    {
+      "id": "log_1793565909815",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Announcement: \"Perspiciatis volupt\"",
+      "timestamp": "2026-11-01T20:45:09.815Z",
+      "createdAt": "2026-11-01T20:45:09.815Z"
+    },
+    {
+      "id": "log_1793565909806",
+      "userId": "system",
+      "action": "CREATE_ANNOUNCEMENTS",
+      "details": "Created new item in announcements: Perspiciatis volupt",
+      "timestamp": "2026-11-01T20:45:09.806Z",
+      "createdAt": "2026-11-01T20:45:09.806Z"
+    },
+    {
+      "id": "log_1793565909795",
+      "userId": "all",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📢 [HIGH] Perspiciatis volupt",
+      "timestamp": "2026-11-01T20:45:09.797Z",
+      "createdAt": "2026-11-01T20:45:09.797Z"
+    },
+    {
+      "id": "log_1793565884790",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Announcement: \"hello je\"",
+      "timestamp": "2026-11-01T20:44:44.790Z",
+      "createdAt": "2026-11-01T20:44:44.790Z"
+    },
+    {
+      "id": "log_1793565884784",
+      "userId": "system",
+      "action": "CREATE_ANNOUNCEMENTS",
+      "details": "Created new item in announcements: hello je",
+      "timestamp": "2026-11-01T20:44:44.784Z",
+      "createdAt": "2026-11-01T20:44:44.784Z"
+    },
+    {
+      "id": "log_1793565884776",
+      "userId": "all",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📢 [HIGH] hello je",
+      "timestamp": "2026-11-01T20:44:44.776Z",
+      "createdAt": "2026-11-01T20:44:44.776Z"
+    },
     {
       "id": "log_1792499428087",
       "userId": "usr_admin_1",
@@ -554,134 +667,238 @@
       "createdAt": "2026-10-23T20:49:29.600Z"
     },
     {
-      "id": "log_1792794495193",
-      "userId": "system",
-      "action": "CREATE_SURVEY_RESPONSES",
-      "details": "Created new item in survey_responses: srvr_1792794495168_bt3w",
-      "timestamp": "2026-10-23T22:28:15.193Z",
-      "createdAt": "2026-10-23T22:28:15.193Z"
+      "id": "log_1792801185772",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1792801180591_lvjg",
+      "timestamp": "2026-10-24T00:19:45.772Z",
+      "createdAt": "2026-10-24T00:19:45.772Z"
     },
     {
-      "id": "log_1792794962836",
-      "userId": "system",
-      "action": "CREATE_SURVEY_RESPONSES",
-      "details": "Created new item in survey_responses: srvr_1792794962832_vfhi",
-      "timestamp": "2026-10-23T22:36:02.836Z",
-      "createdAt": "2026-10-23T22:36:02.836Z"
+      "id": "log_1792801201956",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1792801197494_bqei",
+      "timestamp": "2026-10-24T00:20:01.956Z",
+      "createdAt": "2026-10-24T00:20:01.956Z"
     },
     {
-      "id": "log_1792795310387",
-      "userId": "system",
-      "action": "CREATE_SURVEY_RESPONSES",
-      "details": "Created new item in survey_responses: srvr_1792795310381_9m16",
-      "timestamp": "2026-10-23T22:41:50.387Z",
-      "createdAt": "2026-10-23T22:41:50.387Z"
+      "id": "log_1792833320325",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1792833319572_hvzv",
+      "timestamp": "2026-10-24T09:15:20.325Z",
+      "createdAt": "2026-10-24T09:15:20.325Z"
     },
     {
-      "id": "log_1792795903834",
-      "userId": "system",
-      "action": "CREATE_SURVEY_RESPONSES",
-      "details": "Created new item in survey_responses: srvr_1792795903824_72gi",
-      "timestamp": "2026-10-23T22:51:43.834Z",
-      "createdAt": "2026-10-23T22:51:43.834Z"
+      "id": "log_1792833362320",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1792833361784_a5nv",
+      "timestamp": "2026-10-24T09:16:02.320Z",
+      "createdAt": "2026-10-24T09:16:02.320Z"
     },
     {
-      "id": "log_1792796103242",
-      "userId": "usr_admin_1",
+      "id": "log_1792833375890",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1792833367908_vqom",
+      "timestamp": "2026-10-24T09:16:15.890Z",
+      "createdAt": "2026-10-24T09:16:15.890Z"
+    },
+    {
+      "id": "log_1792833394376",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1792833384185_iwxr",
+      "timestamp": "2026-10-24T09:16:34.376Z",
+      "createdAt": "2026-10-24T09:16:34.376Z"
+    },
+    {
+      "id": "log_1792833539056",
+      "userId": "usr_1792320516422_nv0x",
       "action": "CREATE_TASKS",
-      "details": "Created new item in tasks: Ali Husnain ko task assign karo: Social Media Reel",
-      "timestamp": "2026-10-23T22:55:03.242Z",
-      "createdAt": "2026-10-23T22:55:03.242Z"
+      "details": "Created new item in tasks: Design 10 posts",
+      "timestamp": "2026-10-24T09:18:59.056Z",
+      "createdAt": "2026-10-24T09:18:59.056Z"
     },
     {
-      "id": "log_1792796103250",
+      "id": "log_1792833539436",
       "userId": "usr_1792604581388_oacc",
       "action": "CREATE_NOTIFICATIONS",
-      "details": "Created new item in notifications: 🚨 New Task Assigned by AI",
-      "timestamp": "2026-10-23T22:55:03.250Z",
-      "createdAt": "2026-10-23T22:55:03.250Z"
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-10-24T09:18:59.436Z",
+      "createdAt": "2026-10-24T09:18:59.436Z"
     },
     {
-      "id": "log_1792796104485",
-      "userId": "ai_copilot",
-      "action": "AI_CREATE_TASK",
-      "details": "AI created and assigned task: \"Ali Husnain ko task assign karo: Social Media Reel\" to Ali Husnain",
-      "timestamp": "2026-10-23T22:55:04.485Z",
-      "createdAt": "2026-10-23T22:55:04.485Z"
+      "id": "log_1792833541865",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"Design 10 posts\"",
+      "timestamp": "2026-10-24T09:19:01.865Z",
+      "createdAt": "2026-10-24T09:19:01.865Z"
     },
     {
-      "id": "log_1792796379142",
+      "id": "log_1792833758099",
       "userId": "usr_1792320516422_nv0x",
-      "action": "CREATE_PEER_RATINGS",
-      "details": "Created new item in peer_ratings: pr_1792796379110",
-      "timestamp": "2026-10-23T22:59:39.142Z",
-      "createdAt": "2026-10-23T22:59:39.142Z"
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Generate Pdf",
+      "timestamp": "2026-10-24T09:22:38.099Z",
+      "createdAt": "2026-10-24T09:22:38.099Z"
     },
     {
-      "id": "log_1792797750431",
+      "id": "log_1792833758478",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-10-24T09:22:38.478Z",
+      "createdAt": "2026-10-24T09:22:38.478Z"
+    },
+    {
+      "id": "log_1792833760221",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"Generate Pdf\"",
+      "timestamp": "2026-10-24T09:22:40.221Z",
+      "createdAt": "2026-10-24T09:22:40.221Z"
+    },
+    {
+      "id": "log_1792834131225",
       "userId": "system",
       "action": "CREATE_INVITATIONS",
-      "details": "Created new item in invitations: inv_1792797750386_iset",
-      "timestamp": "2026-10-23T23:22:30.431Z",
-      "createdAt": "2026-10-23T23:22:30.431Z"
+      "details": "Created new item in invitations: inv_1792834131026_2iv5",
+      "timestamp": "2026-10-24T09:28:51.225Z",
+      "createdAt": "2026-10-24T09:28:51.225Z"
     },
     {
-      "id": "log_1792798318399",
-      "userId": "system",
-      "action": "CREATE_SURVEYS",
-      "details": "Created new item in surveys: hello",
-      "timestamp": "2026-10-23T23:31:58.400Z",
-      "createdAt": "2026-10-23T23:31:58.400Z"
+      "id": "log_1792834453868",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1792834452636_nu73",
+      "timestamp": "2026-10-24T09:34:13.868Z",
+      "createdAt": "2026-10-24T09:34:13.868Z"
     },
     {
-      "id": "log_1792798345360",
-      "userId": "system",
-      "action": "CREATE_SURVEY_RESPONSES",
-      "details": "Created new item in survey_responses: srvr_1792798345350_b264",
-      "timestamp": "2026-10-23T23:32:25.360Z",
-      "createdAt": "2026-10-23T23:32:25.360Z"
+      "id": "log_1793553547937",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: pdf generate",
+      "timestamp": "2026-11-01T17:19:07.937Z",
+      "createdAt": "2026-11-01T17:19:07.937Z"
     },
     {
-      "id": "log_1792798432370",
-      "userId": "admins",
-      "action": "CREATE_NOTIFICATIONS",
-      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
-      "timestamp": "2026-10-23T23:33:52.370Z",
-      "createdAt": "2026-10-23T23:33:52.370Z"
-    },
-    {
-      "id": "log_1792798488707",
+      "id": "log_1793553548375",
       "userId": "usr_1792604581388_oacc",
       "action": "CREATE_NOTIFICATIONS",
-      "details": "Created new item in notifications: 👑 Master Admin Final Approval & Gift!",
-      "timestamp": "2026-10-23T23:34:48.707Z",
-      "createdAt": "2026-10-23T23:34:48.707Z"
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-01T17:19:08.375Z",
+      "createdAt": "2026-11-01T17:19:08.375Z"
     },
     {
-      "id": "log_1792799230933",
-      "userId": "usr_1792320516422_nv0x",
-      "action": "CREATE_PUSH_SUBSCRIPTIONS",
-      "details": "Created new item in push_subscriptions: sub_1792799230901_x42f",
-      "timestamp": "2026-10-23T23:47:10.933Z",
-      "createdAt": "2026-10-23T23:47:10.933Z"
+      "id": "log_1793553549919",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"pdf generate\"",
+      "timestamp": "2026-11-01T17:19:09.919Z",
+      "createdAt": "2026-11-01T17:19:09.919Z"
     },
     {
-      "id": "log_1792799231224",
+      "id": "log_1793553549952",
       "userId": "usr_1792320516422_nv0x",
       "action": "CREATE_PUSH_SUBSCRIPTIONS",
-      "details": "Created new item in push_subscriptions: sub_1792799231222_jgqk",
-      "timestamp": "2026-10-23T23:47:11.224Z",
-      "createdAt": "2026-10-23T23:47:11.224Z"
+      "details": "Created new item in push_subscriptions: sub_1793553458572_yzuf",
+      "timestamp": "2026-11-01T17:19:09.952Z",
+      "createdAt": "2026-11-01T17:19:09.952Z"
+    },
+    {
+      "id": "log_1793553573583",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: pdf genrate",
+      "timestamp": "2026-11-01T17:19:33.583Z",
+      "createdAt": "2026-11-01T17:19:33.583Z"
+    },
+    {
+      "id": "log_1793553573961",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-01T17:19:33.961Z",
+      "createdAt": "2026-11-01T17:19:33.961Z"
+    },
+    {
+      "id": "log_1793553576137",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"pdf genrate\"",
+      "timestamp": "2026-11-01T17:19:36.137Z",
+      "createdAt": "2026-11-01T17:19:36.137Z"
+    },
+    {
+      "id": "log_1793553621411",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793553605121_9ik9",
+      "timestamp": "2026-11-01T17:20:21.411Z",
+      "createdAt": "2026-11-01T17:20:21.411Z"
+    },
+    {
+      "id": "log_1793553629309",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793553623055_a6ny",
+      "timestamp": "2026-11-01T17:20:29.309Z",
+      "createdAt": "2026-11-01T17:20:29.309Z"
+    },
+    {
+      "id": "log_1793553810300",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793553809990_cy5w",
+      "timestamp": "2026-11-01T17:23:30.300Z",
+      "createdAt": "2026-11-01T17:23:30.300Z"
+    },
+    {
+      "id": "log_1793563153838",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793563137926_80n1",
+      "timestamp": "2026-11-01T19:59:13.838Z",
+      "createdAt": "2026-11-01T19:59:13.838Z"
+    },
+    {
+      "id": "log_1793564159006",
+      "userId": "system",
+      "action": "CREATE_ANNOUNCEMENTS",
+      "details": "Created new item in announcements: 🛡️ 2FA Security & Session Timeout Awareness",
+      "timestamp": "2026-11-01T20:15:59.006Z",
+      "createdAt": "2026-11-01T20:15:59.006Z"
+    },
+    {
+      "id": "log_1793564159852",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Announcement: \"🛡️ 2FA Security & Session Timeout Awareness\"",
+      "timestamp": "2026-11-01T20:15:59.852Z",
+      "createdAt": "2026-11-01T20:15:59.852Z"
+    },
+    {
+      "id": "log_1793564159865",
+      "userId": "all",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📢 [HIGH] 🛡️ 2FA Security & Session Timeout Awareness",
+      "timestamp": "2026-11-01T20:15:59.865Z",
+      "createdAt": "2026-11-01T20:15:59.865Z"
     }
   ],
   "settings": {
+    "companyName": "Stowave",
+    "updatedAt": "2026-10-16T16:06:58.414Z",
     "apifyApiKey": "",
     "apifyUserId": "",
-    "companyName": "Stowave",
     "companyTagline": "Modern Team Strategy, E-Commerce Operations & Automation",
     "groqModel": "openai/gpt-oss-120b",
     "timezone": "UTC+5 (PKT)",
-    "updatedAt": "2026-10-16T16:06:58.414Z",
     "visionModel": "qwen/qwen3.8-27b"
   },
   "social_inbox": [],
@@ -689,35 +906,318 @@
   "social_posts": [],
   "active_presences": [
     {
-      "id": "prs_usr_1792324121131_qjg8",
-      "userId": "usr_1792324121131_qjg8",
-      "name": "Ali Haider",
-      "avatar": "https://images.unsplash.com/photo-1534528766780?auto=format&fit=crop&w=200&q=80",
-      "role": "member",
-      "currentPage": "/tasks",
-      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
-      "status": "online",
-      "sessionStartedAt": 1792324123264,
-      "lastHeartbeat": 1792327684728,
-      "lastSeen": 1792324123264,
-      "createdAt": "2026-10-18T11:48:43.264Z",
-      "updatedAt": "2026-10-18T12:48:04.728Z"
-    },
-    {
       "id": "prs_usr_1792320516422_nv0x",
       "userId": "usr_1792320516422_nv0x",
       "name": "Ali Zohaib",
       "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792321219/stowave_avatars/vhljiaysakw7lksfyukn.jpg",
       "role": "admin",
-      "currentPage": "/operations",
+      "currentPage": "/announcements",
       "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
-      "status": "offline",
-      "sessionStartedAt": 1792800451721,
-      "lastHeartbeat": 1792800649688,
-      "lastSeen": 1792800694688,
+      "status": "online",
+      "sessionStartedAt": 1793565809752,
+      "lastHeartbeat": 1793566166759,
+      "lastSeen": 1793566166759,
       "createdAt": "2026-10-18T10:48:37.952Z",
-      "updatedAt": "2026-10-24T00:11:34.688Z",
-      "leftAt": 1792800694688
+      "updatedAt": "2026-11-01T20:49:26.759Z",
+      "leftAt": 1793553623711
+    },
+    {
+      "id": "prs_usr_1792324121131_qjg8",
+      "userId": "usr_1792324121131_qjg8",
+      "name": "Ali Haider",
+      "avatar": "https://images.unsplash.com/photo-1534528766780?auto=format&fit=crop&w=200&q=80",
+      "role": "member",
+      "currentPage": "/tasks/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1793073327468,
+      "lastHeartbeat": 1793073342763,
+      "lastSeen": 1793073342763,
+      "createdAt": "2026-10-18T11:48:43.264Z",
+      "updatedAt": "2026-10-27T03:55:42.763Z"
+    },
+    {
+      "id": "prs_usr_admin_1",
+      "userId": "usr_admin_1",
+      "name": "Ali Zohaib",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "role": "admin",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792348145833,
+      "lastHeartbeat": 1792348145850,
+      "lastSeen": 1792347862749,
+      "createdAt": "2026-10-18T18:24:22.749Z",
+      "updatedAt": "2026-10-18T18:29:05.850Z"
+    },
+    {
+      "id": "prs_usr_admin_1",
+      "userId": "usr_admin_1",
+      "name": "Ali Zohaib",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "role": "admin",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792347862750,
+      "lastHeartbeat": 1792347862750,
+      "lastSeen": 1792347862750,
+      "createdAt": "2026-10-18T18:24:22.750Z"
+    },
+    {
+      "id": "prs_usr_admin_1",
+      "userId": "usr_admin_1",
+      "name": "Ali Zohaib",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "role": "admin",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792348054980,
+      "lastHeartbeat": 1792348054980,
+      "lastSeen": 1792348054980,
+      "createdAt": "2026-10-18T18:27:34.980Z"
+    },
+    {
+      "id": "prs_usr_admin_1",
+      "userId": "usr_admin_1",
+      "name": "Ali Zohaib",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "role": "admin",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792348145833,
+      "lastHeartbeat": 1792348145833,
+      "lastSeen": 1792348145833,
+      "createdAt": "2026-10-18T18:29:05.833Z"
+    },
+    {
+      "id": "prs_usr_1792604581388_oacc",
+      "userId": "usr_1792604581388_oacc",
+      "name": "Ali Husnain",
+      "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792604956/stowave_avatars/vswt4pvspzuc9ayqygqq.jpg",
+      "role": "member",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792787882091,
+      "lastHeartbeat": 1792787882091,
+      "lastSeen": 1792604587789,
+      "createdAt": "2026-10-21T17:43:07.789Z",
+      "updatedAt": "2026-10-23T20:38:02.091Z"
+    },
+    {
+      "id": "prs_usr_1792604581388_oacc",
+      "userId": "usr_1792604581388_oacc",
+      "name": "Ali Husnain",
+      "avatar": "https://images.unsplash.com/photo-1534528765449?auto=format&fit=crop&w=200&q=80",
+      "role": "member",
+      "currentPage": "/team",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792604622446,
+      "lastHeartbeat": 1792604622446,
+      "lastSeen": 1792604622446,
+      "createdAt": "2026-10-21T17:43:42.446Z"
+    },
+    {
+      "id": "prs_usr_1792604581388_oacc",
+      "userId": "usr_1792604581388_oacc",
+      "name": "Ali Husnain",
+      "avatar": "https://images.unsplash.com/photo-1534528765449?auto=format&fit=crop&w=200&q=80",
+      "role": "member",
+      "currentPage": "/team",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792604637451,
+      "lastHeartbeat": 1792604637451,
+      "lastSeen": 1792604637451,
+      "createdAt": "2026-10-21T17:43:57.451Z"
+    },
+    {
+      "id": "prs_usr_1792604957142_k0b7",
+      "userId": "usr_1792604957142_k0b7",
+      "name": "Saif urrehmaan",
+      "avatar": "https://images.unsplash.com/photo-1534528762657?auto=format&fit=crop&w=200&q=80",
+      "role": "member",
+      "currentPage": "/tasks/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1793454851961,
+      "lastHeartbeat": 1793455017010,
+      "lastSeen": 1793455017010,
+      "createdAt": "2026-10-21T17:49:20.588Z",
+      "updatedAt": "2026-10-31T13:56:57.010Z"
+    },
+    {
+      "id": "prs_usr_1792604957142_k0b7",
+      "userId": "usr_1792604957142_k0b7",
+      "name": "Saif urrehmaan",
+      "avatar": "https://images.unsplash.com/photo-1534528762657?auto=format&fit=crop&w=200&q=80",
+      "role": "member",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792604975614,
+      "lastHeartbeat": 1792604975614,
+      "lastSeen": 1792604975614,
+      "createdAt": "2026-10-21T17:49:35.614Z"
+    },
+    {
+      "id": "prs_usr_1792604957142_k0b7",
+      "userId": "usr_1792604957142_k0b7",
+      "name": "Saif urrehmaan",
+      "avatar": "https://images.unsplash.com/photo-1534528762657?auto=format&fit=crop&w=200&q=80",
+      "role": "member",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792605021478,
+      "lastHeartbeat": 1792605021478,
+      "lastSeen": 1792605021478,
+      "createdAt": "2026-10-21T17:50:21.478Z"
+    },
+    {
+      "id": "prs_usr_1792604957142_k0b7",
+      "userId": "usr_1792604957142_k0b7",
+      "name": "Saif urrehmaan",
+      "avatar": "https://images.unsplash.com/photo-1534528762657?auto=format&fit=crop&w=200&q=80",
+      "role": "member",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792605109155,
+      "lastHeartbeat": 1792605109155,
+      "lastSeen": 1792605109155,
+      "createdAt": "2026-10-21T17:51:49.155Z"
+    },
+    {
+      "id": "prs_usr_1792604957142_k0b7",
+      "userId": "usr_1792604957142_k0b7",
+      "name": "Saif urrehmaan",
+      "avatar": "https://images.unsplash.com/photo-1534528762657?auto=format&fit=crop&w=200&q=80",
+      "role": "member",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792605139086,
+      "lastHeartbeat": 1792605139086,
+      "lastSeen": 1792605139086,
+      "createdAt": "2026-10-21T17:52:19.086Z"
+    },
+    {
+      "id": "prs_usr_1792604957142_k0b7",
+      "userId": "usr_1792604957142_k0b7",
+      "name": "Saif urrehmaan",
+      "avatar": "https://images.unsplash.com/photo-1534528762657?auto=format&fit=crop&w=200&q=80",
+      "role": "member",
+      "currentPage": "/operations/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792605287530,
+      "lastHeartbeat": 1792605287530,
+      "lastSeen": 1792605287530,
+      "createdAt": "2026-10-21T17:54:47.530Z"
+    },
+    {
+      "id": "prs_usr_1792604957142_k0b7",
+      "userId": "usr_1792604957142_k0b7",
+      "name": "Saif urrehmaan",
+      "avatar": "https://images.unsplash.com/photo-1534528762657?auto=format&fit=crop&w=200&q=80",
+      "role": "member",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792605438400,
+      "lastHeartbeat": 1792605438400,
+      "lastSeen": 1792605438400,
+      "createdAt": "2026-10-21T17:57:18.400Z"
+    },
+    {
+      "id": "prs_usr_1792604581388_oacc",
+      "userId": "usr_1792604581388_oacc",
+      "name": "Ali Husnain",
+      "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792604956/stowave_avatars/vswt4pvspzuc9ayqygqq.jpg",
+      "role": "member",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792787649143,
+      "lastHeartbeat": 1792787649143,
+      "lastSeen": 1792787649143,
+      "createdAt": "2026-10-23T20:34:09.143Z"
+    },
+    {
+      "id": "prs_usr_1792604581388_oacc",
+      "userId": "usr_1792604581388_oacc",
+      "name": "Ali Husnain",
+      "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792604956/stowave_avatars/vswt4pvspzuc9ayqygqq.jpg",
+      "role": "member",
+      "currentPage": "/surveys",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792787660292,
+      "lastHeartbeat": 1792787660292,
+      "lastSeen": 1792787660292,
+      "createdAt": "2026-10-23T20:34:20.292Z"
+    },
+    {
+      "id": "prs_usr_1792604581388_oacc",
+      "userId": "usr_1792604581388_oacc",
+      "name": "Ali Husnain",
+      "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792604956/stowave_avatars/vswt4pvspzuc9ayqygqq.jpg",
+      "role": "member",
+      "currentPage": "/surveys",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792787675300,
+      "lastHeartbeat": 1792787675300,
+      "lastSeen": 1792787675300,
+      "createdAt": "2026-10-23T20:34:35.300Z"
+    },
+    {
+      "id": "prs_usr_1792604581388_oacc",
+      "userId": "usr_1792604581388_oacc",
+      "name": "Ali Husnain",
+      "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792604956/stowave_avatars/vswt4pvspzuc9ayqygqq.jpg",
+      "role": "member",
+      "currentPage": "/team",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792787720612,
+      "lastHeartbeat": 1792787720612,
+      "lastSeen": 1792787720612,
+      "createdAt": "2026-10-23T20:35:20.612Z"
+    },
+    {
+      "id": "prs_usr_1792604581388_oacc",
+      "userId": "usr_1792604581388_oacc",
+      "name": "Ali Husnain",
+      "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792604956/stowave_avatars/vswt4pvspzuc9ayqygqq.jpg",
+      "role": "member",
+      "currentPage": "/team",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792787766627,
+      "lastHeartbeat": 1792787766627,
+      "lastSeen": 1792787766627,
+      "createdAt": "2026-10-23T20:36:06.628Z"
+    },
+    {
+      "id": "prs_usr_1792604581388_oacc",
+      "userId": "usr_1792604581388_oacc",
+      "name": "Ali Husnain",
+      "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792604956/stowave_avatars/vswt4pvspzuc9ayqygqq.jpg",
+      "role": "member",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1792787867100,
+      "lastHeartbeat": 1792787867100,
+      "lastSeen": 1792787867100,
+      "createdAt": "2026-10-23T20:37:47.100Z"
     }
   ],
   "invitations": [
@@ -802,7 +1302,7 @@
       "type": "task_submitted",
       "link": "/tasks",
       "relatedId": "tsk_1792349655275",
-      "read": true,
+      "read": false,
       "createdAt": "2026-10-18T19:02:48.672Z"
     },
     {
@@ -815,17 +1315,6 @@
       "relatedId": "tsk_1792356668523",
       "read": false,
       "createdAt": "2026-10-18T20:51:08.525Z"
-    },
-    {
-      "id": "notif_1792362074272_vfm8n",
-      "userId": "usr_1792320516422_nv0x",
-      "title": "🎉 Task Deliverable Approved!",
-      "message": "Admin approved \"Hello testing \"! Rating: 5/5 Stars ⭐. +100 points awarded.",
-      "type": "task_approved",
-      "link": "/tasks",
-      "relatedId": "tsk_1792349655275",
-      "read": true,
-      "createdAt": "2026-10-18T22:21:14.272Z"
     },
     {
       "id": "notif_1792362163603_plb4i",
@@ -861,70 +1350,81 @@
       "createdAt": "2026-10-18T22:41:04.884Z"
     },
     {
-      "id": "notif_1792692090952_ppkkw",
-      "userId": "admins",
-      "title": "📤 Task Deliverables Submitted",
-      "message": "Ali Zohaib has submitted deliverables for \"[Executive Approvals & Checking [MUST]] Mandatory Document Verification & Application Approval\". Click to review.",
-      "type": "task_submitted",
-      "link": "/tasks",
-      "relatedId": "tsk_tmpl_1792691711659_s3yg",
-      "read": true,
-      "createdAt": "2026-10-22T18:01:30.952Z"
-    },
-    {
-      "id": "notif_1792692103951_5axfr",
-      "userId": "usr_1792320516422_nv0x",
-      "title": "🎉 Task Deliverable Approved!",
-      "message": "Admin approved \"[Executive Approvals & Checking [MUST]] Mandatory Document Verification & Application Approval\"! Rating: 5/5 Stars ⭐. +100 points awarded.",
-      "type": "task_approved",
-      "link": "/tasks",
-      "relatedId": "tsk_tmpl_1792691711659_s3yg",
-      "read": true,
-      "createdAt": "2026-10-22T18:01:43.951Z"
-    },
-    {
-      "id": "notif_1792692104166_37yu9",
-      "userId": "usr_1792320516422_nv0x",
-      "title": "🎉 Task Deliverable Approved!",
-      "message": "Admin approved \"[Executive Approvals & Checking [MUST]] Mandatory Document Verification & Application Approval\"! Rating: 4/5 Stars ⭐. +80 points awarded.",
-      "type": "task_approved",
-      "link": "/tasks",
-      "relatedId": "tsk_tmpl_1792691711659_s3yg",
-      "read": true,
-      "createdAt": "2026-10-22T18:01:44.166Z"
-    },
-    {
-      "id": "notif_1792796103248_l0pcn",
+      "id": "notif_1792833539245_yt9aj",
       "userId": "usr_1792604581388_oacc",
-      "title": "🚨 New Task Assigned by AI",
-      "message": "You have been assigned: \"Ali Husnain ko task assign karo: Social Media Reel\". Due date: 2026-10-26.",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"Design 10 posts\". Due date: 2026-10-31.",
       "type": "task_assigned",
       "link": "/tasks",
-      "relatedId": "tsk_1792796103239",
+      "relatedId": "tsk_1792833538864",
       "read": false,
-      "createdAt": "2026-10-23T22:55:03.248Z"
+      "createdAt": "2026-10-24T09:18:59.245Z"
     },
     {
-      "id": "notif_1792798432361_l0g0y",
-      "userId": "admins",
-      "title": "📤 Task Deliverables Submitted",
-      "message": "Ali Zohaib has submitted deliverables for \"Ali Husnain ko task assign karo: Social Media Reel\". Click to review.",
-      "type": "task_submitted",
+      "id": "notif_1792833758289_x9po8",
+      "userId": "usr_1792324121131_qjg8",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"Generate Pdf\". Due date: 2026-10-26.",
+      "type": "task_assigned",
       "link": "/tasks",
-      "relatedId": "tsk_1792796103239",
+      "relatedId": "tsk_1792833757909",
       "read": false,
-      "createdAt": "2026-10-23T23:33:52.361Z"
+      "createdAt": "2026-10-24T09:22:38.289Z"
     },
     {
-      "id": "notif_1792798488616_cd51n",
+      "id": "notif_1793553548157_brh28",
       "userId": "usr_1792604581388_oacc",
-      "title": "👑 Master Admin Final Approval & Gift!",
-      "message": "Master Admin Ali Zohaib gave final approval on \"Ali Husnain ko task assign karo: Social Media Reel\"! Rating: 5/5 Stars ⭐. Points awarded: +100.",
-      "type": "task_completed",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"pdf generate\". Due date: 2026-11-02.",
+      "type": "task_assigned",
       "link": "/tasks",
-      "relatedId": "tsk_1792796103239",
+      "relatedId": "tsk_1793553547717",
       "read": false,
-      "createdAt": "2026-10-23T23:34:48.616Z"
+      "createdAt": "2026-11-01T17:19:08.157Z"
+    },
+    {
+      "id": "notif_1793553573772_1qlck",
+      "userId": "usr_1792604957142_k0b7",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"pdf genrate\". Due date: 2026-11-02.",
+      "type": "task_assigned",
+      "link": "/tasks",
+      "relatedId": "tsk_1793553573392",
+      "read": false,
+      "createdAt": "2026-11-01T17:19:33.772Z"
+    },
+    {
+      "id": "notif_1793564158892_v0fsf",
+      "userId": "all",
+      "title": "📢 [HIGH] 🛡️ 2FA Security & Session Timeout Awareness",
+      "message": "All team members must ensure two-factor authentication is active on Google Drive & Stowave portal. Session timeouts have been enforced for safety.",
+      "type": "announcement",
+      "link": "/#announcements-section",
+      "relatedId": "ann_1793564158890_ijkf",
+      "read": false,
+      "createdAt": "2026-11-01T20:15:58.892Z"
+    },
+    {
+      "id": "notif_1793565884581_04rf2",
+      "userId": "all",
+      "title": "📢 [HIGH] hello je",
+      "message": "kia hal je",
+      "type": "announcement",
+      "link": "/#announcements-section",
+      "relatedId": "ann_1793565884572_i87h",
+      "read": false,
+      "createdAt": "2026-11-01T20:44:44.581Z"
+    },
+    {
+      "id": "notif_1793565909706_7yha2",
+      "userId": "all",
+      "title": "📢 [HIGH] Perspiciatis volupt",
+      "message": "Aut nostrud perferen",
+      "type": "announcement",
+      "link": "/#announcements-section",
+      "relatedId": "ann_1793565909703_xy52",
+      "read": false,
+      "createdAt": "2026-11-01T20:45:09.706Z"
     }
   ],
   "push_subscriptions": [
@@ -940,26 +1440,199 @@
           "auth": "xDl_OzPhvXmp6Vl6NP9klg"
         }
       },
-      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
-      "lastActive": 1792800687524,
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+      "lastActive": 1793565926791,
       "createdAt": "2026-10-23T23:47:11.222Z",
-      "updatedAt": "2026-10-24T00:11:27.524Z"
+      "updatedAt": "2026-11-01T20:45:26.791Z"
+    }
+  ],
+  "operations_history": [
+    {
+      "id": "hist_1793565968679_o3zv",
+      "category": "announcement",
+      "action": "ANNOUNCEMENT_DELETED",
+      "title": "Deleted Announcement: \"hello je\"",
+      "urduTitle": "Announcement Khatam Ki: \"hello je\"",
+      "description": "Announcement \"hello je\" workspace sy delete kr di gai.",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Authorized User",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": "ann_1793565884572_i87h",
+        "name": "hello je",
+        "title": "hello je"
+      },
+      "metadata": {},
+      "timestamp": "2026-11-01T20:46:08.679Z",
+      "formattedTime": "01:46 AM",
+      "formattedDate": "Nov 2, 2026",
+      "epoch": 1793565968679,
+      "createdAt": "2026-11-01T20:46:08.680Z"
     },
     {
-      "id": "sub_1792799230901_x42f",
-      "userId": "usr_1792320516422_nv0x",
-      "userEmail": "",
-      "subscription": {
-        "endpoint": "https://fcm.googleapis.com/fcm/send/d9gcu0PXLNg:APA91bH7lwmO7NNrTE204Gw3cDwk7c1Tv_LNjy7j14De-p36ZD_yop0LfyjNeVwB2JQpd4YTX2cc3yqmbG8y5yhP2E3Ar6HUPvWRos6ZzhR52e3NeDdTy8GLDft4q5eaPwi9ifGDHYe_",
-        "expirationTime": null,
-        "keys": {
-          "p256dh": "BNzAqiS5vexBC4a9OjfaT3FZ3Iz0zbMG57FxNv1GAKemVr4-XlRaEdpWLvuh9U9nbWYAyQebpKBxAoqB4cLaXXc",
-          "auth": "d1-QD-Z-eE6zjXHRL0yeNQ"
-        }
+      "id": "hist_1793565964243_1x2q",
+      "category": "announcement",
+      "action": "ANNOUNCEMENT_DELETED",
+      "title": "Deleted Announcement: \"🚀 Stowave Workspace Initialized (100% Real-Time)\"",
+      "urduTitle": "Announcement Khatam Ki: \"🚀 Stowave Workspace Initialized (100% Real-Time)\"",
+      "description": "Announcement \"🚀 Stowave Workspace Initialized (100% Real-Time)\" workspace sy delete kr di gai.",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Authorized User",
+        "role": "admin",
+        "avatar": "/icon.png"
       },
-      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
-      "lastActive": 1792799230901,
-      "createdAt": "2026-10-23T23:47:10.901Z"
+      "target": {
+        "id": "ann_stowave_welcome",
+        "name": "🚀 Stowave Workspace Initialized (100% Real-Time)",
+        "title": "🚀 Stowave Workspace Initialized (100% Real-Time)"
+      },
+      "metadata": {},
+      "timestamp": "2026-11-01T20:46:04.243Z",
+      "formattedTime": "01:46 AM",
+      "formattedDate": "Nov 2, 2026",
+      "epoch": 1793565964243,
+      "createdAt": "2026-11-01T20:46:04.245Z"
+    },
+    {
+      "id": "hist_1793565961425_p8rw",
+      "category": "announcement",
+      "action": "ANNOUNCEMENT_DELETED",
+      "title": "Deleted Announcement: \"🛡️ 2FA Security & Session Timeout Awareness\"",
+      "urduTitle": "Announcement Khatam Ki: \"🛡️ 2FA Security & Session Timeout Awareness\"",
+      "description": "Announcement \"🛡️ 2FA Security & Session Timeout Awareness\" workspace sy delete kr di gai.",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Authorized User",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": "ann_1793564158890_ijkf",
+        "name": "🛡️ 2FA Security & Session Timeout Awareness",
+        "title": "🛡️ 2FA Security & Session Timeout Awareness"
+      },
+      "metadata": {},
+      "timestamp": "2026-11-01T20:46:01.425Z",
+      "formattedTime": "01:46 AM",
+      "formattedDate": "Nov 2, 2026",
+      "epoch": 1793565961425,
+      "createdAt": "2026-11-01T20:46:01.426Z"
+    },
+    {
+      "id": "hist_1793565958885_co5e",
+      "category": "announcement",
+      "action": "ANNOUNCEMENT_DELETED",
+      "title": "Deleted Announcement: \"Perspiciatis volupt\"",
+      "urduTitle": "Announcement Khatam Ki: \"Perspiciatis volupt\"",
+      "description": "Announcement \"Perspiciatis volupt\" workspace sy delete kr di gai.",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Authorized User",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": "ann_1793565909703_xy52",
+        "name": "Perspiciatis volupt",
+        "title": "Perspiciatis volupt"
+      },
+      "metadata": {},
+      "timestamp": "2026-11-01T20:45:58.885Z",
+      "formattedTime": "01:45 AM",
+      "formattedDate": "Nov 2, 2026",
+      "epoch": 1793565958885,
+      "createdAt": "2026-11-01T20:45:58.886Z"
+    },
+    {
+      "id": "hist_1793565909710_vest",
+      "category": "announcement",
+      "action": "ANNOUNCEMENT_POSTED",
+      "title": "Announcement: \"Perspiciatis volupt\"",
+      "urduTitle": "Nayi Announcement: \"Perspiciatis volupt\"",
+      "description": "Ali Zohaib ny team k liye awareness announcement post ki: \"Perspiciatis volupt\".",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Ali Zohaib",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": "ann_1793565909703_xy52",
+        "name": "Perspiciatis volupt",
+        "title": "Perspiciatis volupt"
+      },
+      "metadata": {
+        "priority": "high",
+        "pinned": false,
+        "category": "urgent"
+      },
+      "timestamp": "2026-11-01T20:45:09.709Z",
+      "formattedTime": "01:45 AM",
+      "formattedDate": "Nov 2, 2026",
+      "epoch": 1793565909709,
+      "createdAt": "2026-11-01T20:45:09.711Z"
+    },
+    {
+      "id": "hist_1793565884587_b6jr",
+      "category": "announcement",
+      "action": "ANNOUNCEMENT_POSTED",
+      "title": "Announcement: \"hello je\"",
+      "urduTitle": "Nayi Announcement: \"hello je\"",
+      "description": "Ali Zohaib ny team k liye awareness announcement post ki: \"hello je\".",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Ali Zohaib",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": "ann_1793565884572_i87h",
+        "name": "hello je",
+        "title": "hello je"
+      },
+      "metadata": {
+        "priority": "high",
+        "pinned": false,
+        "category": "sop"
+      },
+      "timestamp": "2026-11-01T20:44:44.587Z",
+      "formattedTime": "01:44 AM",
+      "formattedDate": "Nov 2, 2026",
+      "epoch": 1793565884587,
+      "createdAt": "2026-11-01T20:44:44.694Z"
+    },
+    {
+      "id": "hist_1793564158893_fmtg",
+      "category": "announcement",
+      "action": "ANNOUNCEMENT_POSTED",
+      "title": "Announcement: \"🛡️ 2FA Security & Session Timeout Awareness\"",
+      "urduTitle": "Nayi Announcement: \"🛡️ 2FA Security & Session Timeout Awareness\"",
+      "description": "Leadership ny team k liye awareness announcement post ki: \"🛡️ 2FA Security & Session Timeout Awareness\".",
+      "actor": {
+        "id": "usr_admin_1",
+        "name": "Leadership",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": "ann_1793564158890_ijkf",
+        "name": "🛡️ 2FA Security & Session Timeout Awareness",
+        "title": "🛡️ 2FA Security & Session Timeout Awareness"
+      },
+      "metadata": {
+        "priority": "high",
+        "pinned": true,
+        "category": "awareness"
+      },
+      "timestamp": "2026-11-01T20:15:58.893Z",
+      "formattedTime": "01:15 AM",
+      "formattedDate": "Nov 2, 2026",
+      "epoch": 1793564158893,
+      "createdAt": "2026-11-01T20:15:58.913Z"
     }
   ]
 }

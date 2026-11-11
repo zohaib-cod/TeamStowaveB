@@ -218,9 +218,9 @@ router.post('/invite', async (req, res) => {
     return res.status(400).json({ error: 'A team member with this email already has an active account.' });
   }
 
-  // Generate 30-minute token
+  // Generate 7-day secure token (valid for 7 days to eliminate premature expiration)
   const token = crypto.randomBytes(24).toString('hex');
-  const expiresAt = new Date(Date.now() + 30 * 60 * 1000).toISOString(); // 30 minutes
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(); // 7 days validity
 
   const validRole = ['master_admin', 'admin', 'member'].includes(role) ? role : 'member';
 
@@ -261,7 +261,7 @@ router.post('/invite', async (req, res) => {
       `👤 *Recipient:* ${normalizedEmail}\n` +
       `👑 *Role:* ${newInvite.role.toUpperCase()}\n` +
       `🏢 *Department:* ${newInvite.department || 'General'}\n` +
-      `⏳ *Expires In:* 30 mins\n\n` +
+      `⏳ *Expires In:* 7 Days\n\n` +
       `🔗 *Invite Link:* ${inviteLink}`,
       'TEAM INVITATION'
     ).catch(e => console.warn('Invite WhatsApp dispatch error:', e.message));
@@ -270,7 +270,7 @@ router.post('/invite', async (req, res) => {
   }
 
   res.status(201).json({
-    message: `Invitation successfully created for ${normalizedEmail}. Link is valid for 30 minutes.`,
+    message: `Invitation successfully created for ${normalizedEmail}. Link is valid for 7 days.`,
     invitation: newInvite,
     inviteLink,
     emailDispatched
@@ -280,14 +280,33 @@ router.post('/invite', async (req, res) => {
 /**
  * 4. Verify Invitation Token
  */
-router.get('/verify-invite', (req, res) => {
+router.get('/verify-invite', async (req, res) => {
   const { token } = req.query;
   if (!token) {
     return res.status(400).json({ valid: false, error: 'Token is required.' });
   }
 
-  const invitations = db.getCollection('invitations');
-  const invite = invitations.find(i => i.token === token);
+  // Ensure collection is fresh from MongoDB if connected
+  if (db.mongoDb) {
+    try {
+      await db.syncCollection('invitations');
+    } catch (e) {}
+  }
+
+  let invitations = db.getCollection('invitations') || [];
+  let invite = invitations.find(i => i.token === token);
+
+  // Direct MongoDB fallback check to prevent cold start miss
+  if (!invite && db.mongoDb) {
+    try {
+      const doc = await db.mongoDb.collection('invitations').findOne({ token });
+      if (doc) {
+        const { _id, ...cleanDoc } = doc;
+        invite = cleanDoc;
+        invitations.push(cleanDoc);
+      }
+    } catch (e) {}
+  }
 
   if (!invite) {
     return res.status(404).json({ valid: false, error: 'Invitation not found or link is invalid.' });
@@ -304,7 +323,7 @@ router.get('/verify-invite', (req, res) => {
     return res.status(410).json({
       valid: false,
       isExpired: true,
-      error: 'This invitation link expired (links are valid for 30 minutes). Please contact your administrator.'
+      error: 'This invitation link has expired. Please contact your administrator for a fresh invite link.'
     });
   }
 
@@ -328,14 +347,32 @@ router.get('/verify-invite', (req, res) => {
 /**
  * 5. Accept Invitation & Create Account
  */
-router.post('/accept-invite', (req, res) => {
+router.post('/accept-invite', async (req, res) => {
   const { token, name, password, avatar, phone, bio } = req.body;
   if (!token || !name || !password) {
     return res.status(400).json({ error: 'Token, name, and password are required.' });
   }
 
-  const invitations = db.getCollection('invitations');
-  const invite = invitations.find(i => i.token === token);
+  if (db.mongoDb) {
+    try {
+      await db.syncCollection('invitations');
+      await db.syncCollection('users');
+    } catch (e) {}
+  }
+
+  let invitations = db.getCollection('invitations') || [];
+  let invite = invitations.find(i => i.token === token);
+
+  if (!invite && db.mongoDb) {
+    try {
+      const doc = await db.mongoDb.collection('invitations').findOne({ token });
+      if (doc) {
+        const { _id, ...cleanDoc } = doc;
+        invite = cleanDoc;
+        invitations.push(cleanDoc);
+      }
+    } catch (e) {}
+  }
 
   if (!invite) {
     return res.status(404).json({ error: 'Invitation not found.' });
@@ -347,7 +384,7 @@ router.post('/accept-invite', (req, res) => {
 
   if (new Date(invite.expiresAt) < new Date()) {
     db.updateItem('invitations', invite.id, { status: 'expired' });
-    return res.status(410).json({ error: 'This invitation expired after 30 minutes. Please request a new invite.' });
+    return res.status(410).json({ error: 'This invitation link has expired. Please request a new invite.' });
   }
 
   // Check if user already exists
@@ -402,8 +439,13 @@ router.post('/accept-invite', (req, res) => {
 /**
  * 6. Get All Invitations (Admin only)
  */
-router.get('/invitations', (req, res) => {
-  const invitations = db.getCollection('invitations');
+router.get('/invitations', async (req, res) => {
+  if (db.mongoDb) {
+    try {
+      await db.syncCollection('invitations');
+    } catch (e) {}
+  }
+  const invitations = db.getCollection('invitations') || [];
   const now = new Date();
 
   // Annotate active/expired status dynamically

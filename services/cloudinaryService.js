@@ -32,7 +32,35 @@ async function uploadMedia(fileData, folder = 'team_management') {
   }
 }
 
+/**
+ * Parse any Cloudinary URL to extract cloudName, resourceType, publicId, and format
+ */
+function parseCloudinaryUrl(url) {
+  if (!url || typeof url !== 'string') return null;
+  const match = url.match(/res\.cloudinary\.com\/([^/]+)\/(image|video|raw)\/upload\/(?:(?:s--[^-]+--|c_[^/]+|[a-z]_[^/]+)\/)*(?:v\d+\/)?(.+?)(?:\.([a-zA-Z0-9]+))?$/);
+  if (!match) return null;
+  return {
+    cloudName: match[1],
+    resourceType: match[2],
+    publicId: match[3],
+    format: match[4] || (match[2] === 'raw' ? '' : 'pdf')
+  };
+}
+
+/**
+ * Generate authenticated private download URL that bypasses ACL / delivery restrictions
+ */
+function getPrivateDownloadUrl(publicId, format = 'pdf', resourceType = 'image', expiresInSeconds = 7200) {
+  return cloudinary.utils.private_download_url(publicId, format, {
+    resource_type: resourceType,
+    type: 'upload',
+    expires_at: Math.floor(Date.now() / 1000) + expiresInSeconds
+  });
+}
+
 module.exports = {
   cloudinary,
-  uploadMedia
+  uploadMedia,
+  parseCloudinaryUrl,
+  getPrivateDownloadUrl
 };

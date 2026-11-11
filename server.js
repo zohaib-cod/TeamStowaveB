@@ -45,6 +45,8 @@ app.use(async (req, res, next) => {
         await db.syncCollection('notifications');
       } else if (req.path.startsWith('/api/reports')) {
         await db.syncCollection('reports');
+      } else if (req.path.startsWith('/api/auth/invitations') || req.path.startsWith('/api/auth/verify-invite')) {
+        await db.syncCollection('invitations');
       }
     } catch (err) {
       // Non-blocking
@@ -80,6 +82,102 @@ app.get('/api/history', (req, res) => {
 app.use('/api/upload', (req, res, next) => {
   req.url = '/upload';
   notificationsRouter(req, res, next);
+});
+
+const { parseCloudinaryUrl, getPrivateDownloadUrl } = require('./services/cloudinaryService');
+const https = require('https');
+const http = require('http');
+
+// Direct Authenticated File Download Proxy (Bypasses Cloudinary ACL/401 restrictions)
+app.get('/api/download-file', async (req, res) => {
+  const fileUrl = req.query.url;
+  const rawFileName = req.query.filename || req.query.name || 'document.pdf';
+  const cleanFileName = rawFileName.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const isInline = req.query.inline === 'true';
+
+  if (!fileUrl) {
+    return res.status(400).send('File URL is required');
+  }
+
+  try {
+    // If it's a data URI (base64)
+    if (fileUrl.startsWith('data:')) {
+      const parts = fileUrl.split(';base64,');
+      const mime = parts[0].replace('data:', '') || 'application/octet-stream';
+      const buffer = Buffer.from(parts[1], 'base64');
+      res.setHeader('Content-Type', mime);
+      res.setHeader('Content-Disposition', `${isInline ? 'inline' : 'attachment'}; filename="${cleanFileName}"`);
+      return res.send(buffer);
+    }
+
+    let downloadUrl = fileUrl;
+    const parsed = parseCloudinaryUrl(fileUrl);
+    if (parsed) {
+      downloadUrl = getPrivateDownloadUrl(parsed.publicId, parsed.format, parsed.resourceType, 7200);
+    }
+
+    const client = downloadUrl.startsWith('https') ? https : http;
+    client.get(downloadUrl, (remoteRes) => {
+      if (remoteRes.statusCode >= 400) {
+        return res.redirect(fileUrl);
+      }
+      res.setHeader('Content-Type', remoteRes.headers['content-type'] || 'application/octet-stream');
+      res.setHeader('Content-Disposition', `${isInline ? 'inline' : 'attachment'}; filename="${cleanFileName}"`);
+      if (remoteRes.headers['content-length']) {
+        res.setHeader('Content-Length', remoteRes.headers['content-length']);
+      }
+      remoteRes.pipe(res);
+    }).on('error', (err) => {
+      console.error('Download stream error:', err);
+      res.redirect(fileUrl);
+    });
+  } catch (err) {
+    console.error('Error in /api/download-file:', err);
+    res.redirect(fileUrl);
+  }
+});
+
+// Inline PDF/media viewer endpoint
+app.get('/api/view-file', (req, res) => {
+  req.query.inline = 'true';
+  const fileUrl = req.query.url;
+  const rawFileName = req.query.filename || req.query.name || 'document.pdf';
+  const cleanFileName = rawFileName.replace(/[^a-zA-Z0-9._-]/g, '_');
+
+  if (!fileUrl) {
+    return res.status(400).send('File URL is required');
+  }
+
+  try {
+    if (fileUrl.startsWith('data:')) {
+      const parts = fileUrl.split(';base64,');
+      const mime = parts[0].replace('data:', '') || 'application/pdf';
+      const buffer = Buffer.from(parts[1], 'base64');
+      res.setHeader('Content-Type', mime);
+      res.setHeader('Content-Disposition', `inline; filename="${cleanFileName}"`);
+      return res.send(buffer);
+    }
+
+    let viewUrl = fileUrl;
+    const parsed = parseCloudinaryUrl(fileUrl);
+    if (parsed) {
+      viewUrl = getPrivateDownloadUrl(parsed.publicId, parsed.format, parsed.resourceType, 7200);
+    }
+
+    const client = viewUrl.startsWith('https') ? https : http;
+    client.get(viewUrl, (remoteRes) => {
+      if (remoteRes.statusCode >= 400) {
+        return res.redirect(fileUrl);
+      }
+      res.setHeader('Content-Type', remoteRes.headers['content-type'] || 'application/pdf');
+      res.setHeader('Content-Disposition', `inline; filename="${cleanFileName}"`);
+      remoteRes.pipe(res);
+    }).on('error', () => {
+      res.redirect(fileUrl);
+    });
+  } catch (err) {
+    res.redirect(fileUrl);
+  }
 });
 
 // Helper: build live context for AI
@@ -452,8 +550,40 @@ app.post('/api/tasks', async (req, res) => {
 });
 
 app.put('/api/tasks/:id', async (req, res) => {
+  const existing = (db.getCollection('tasks') || []).find(t => t.id === req.params.id);
   const updated = await db.updateItem('tasks', req.params.id, req.body);
   if (!updated) return res.status(404).json({ error: 'Task not found' });
+
+  // If status transitioned to in_progress
+  if (req.body.status === 'in_progress' && existing && existing.status !== 'in_progress') {
+    const users = db.getCollection('users') || [];
+    const actorId = req.body.userId || updated.assignedTo;
+    const actor = users.find(u => u.id === actorId) || { name: req.body.userName || 'Team Member', role: 'member' };
+    
+    logOperationsHistory({
+      category: 'task',
+      action: 'TASK_IN_PROGRESS',
+      title: `Work Started: "${updated.title}"`,
+      urduTitle: `Kaam Shuru: "${updated.title}"`,
+      description: `${actor.name} ny "${updated.title}" par kaam shuru kar diya hai. Status: In Progress.`,
+      actor: { id: actorId, name: actor.name, role: actor.role },
+      target: { id: updated.id, name: updated.title, title: updated.title },
+      metadata: { taskId: updated.id, startedAt: req.body.startedAt || new Date().toISOString() }
+    });
+
+    // Notify task assigner if different from actor
+    if (updated.assignedBy && updated.assignedBy !== actorId) {
+      createInPortalNotification({
+        userId: updated.assignedBy,
+        title: '⚡ Task In Progress',
+        message: `${actor.name} has started working on "${updated.title}".`,
+        type: 'task_started',
+        link: '/tasks',
+        relatedId: updated.id
+      }).catch(() => {});
+    }
+  }
+
   res.json(updated);
 });
 

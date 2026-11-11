@@ -497,7 +497,7 @@ class Database {
         'users', 'tasks', 'reports', 'surveys', 'survey_responses',
         'peer_ratings', 'shoutouts', 'gifts', 'leaves', 'announcements',
         'audit_logs', 'social_inbox', 'social_accounts', 'social_posts',
-        'active_presences', 'notifications'
+        'active_presences', 'notifications', 'invitations'
       ];
 
       // Check if global settings are initialized in MongoDB

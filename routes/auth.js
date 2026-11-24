@@ -112,7 +112,7 @@ router.post('/login', (req, res) => {
 
     const token = `jwt_${newAdmin.id}_${Date.now()}`;
     return res.status(201).json({
-      message: `👑 Mubarak ho! Aap sb sy pehly login huye hain, is liye aap is workspace k Primary Admin ban gaye hain! Welcome, ${newAdmin.name}!`,
+      message: `Administrator account initialized successfully. Welcome to Stowave, ${newAdmin.name}!`,
       user: newAdmin,
       token,
       becameAdmin: true
@@ -123,12 +123,12 @@ router.post('/login', (req, res) => {
 
   if (!user) {
     return res.status(401).json({ 
-      error: 'Koi bhi bnda is may account bnaye baghair login nahi kar sakta. (No account found with this email. Please ask your administrator to send you an invitation link.)' 
+      error: 'No account found with this email. Please ask your administrator to send you an invitation link.' 
     });
   }
 
   if (user.password !== password) {
-    return res.status(401).json({ error: 'Ghalat password (Incorrect password). Barah-e-karam apna durust password darj karein.' });
+    return res.status(401).json({ error: 'Incorrect password. Please enter your valid credentials.' });
   }
 
   // Update status to online

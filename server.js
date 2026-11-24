@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
 const db = require('./db');
@@ -45,6 +46,8 @@ app.use(async (req, res, next) => {
         await db.syncCollection('notifications');
       } else if (req.path.startsWith('/api/reports')) {
         await db.syncCollection('reports');
+      } else if (req.path.startsWith('/api/attendance')) {
+        await db.syncCollection('attendance');
       } else if (req.path.startsWith('/api/auth/invitations') || req.path.startsWith('/api/auth/verify-invite')) {
         await db.syncCollection('invitations');
       }
@@ -63,6 +66,7 @@ const profileRouter = require('./routes/profile');
 const presenceRouter = require('./routes/presence');
 const departmentsRouter = require('./routes/departments');
 const pushRouter = require('./routes/push');
+const attendanceRouter = require('./routes/attendance');
 const { logOperationsHistory, getOperationsHistory } = require('./services/historyService');
 const { sendPushToActiveUsers } = require('./services/pushNotificationService');
 
@@ -72,6 +76,7 @@ app.use('/api/profile', profileRouter);
 app.use('/api/presence', presenceRouter);
 app.use('/api/departments', departmentsRouter);
 app.use('/api/push', pushRouter);
+app.use('/api/attendance', attendanceRouter);
 
 app.get('/api/history', (req, res) => {
   const { category, search, limit } = req.query;
@@ -394,8 +399,13 @@ app.post('/api/users', (req, res) => {
   res.status(201).json(saved);
 });
 
-app.put('/api/users/:id', (req, res) => {
-  const updated = db.updateItem('users', req.params.id, req.body);
+app.put('/api/users/:id', async (req, res) => {
+  const updates = { ...req.body };
+  if (updates.role) {
+    updates.isMasterAdmin = updates.role === 'master_admin';
+    updates.isFirstAdmin = updates.role === 'master_admin';
+  }
+  const updated = await db.updateItem('users', req.params.id, updates);
   if (!updated) return res.status(404).json({ error: 'User not found' });
   res.json(updated);
 });
@@ -717,7 +727,7 @@ app.post('/api/tasks/:id/review', async (req, res) => {
   }
 
   // Role Checks: Master Admin, Admin, and Task Assigner
-  const isMaster = reviewer.role === 'master_admin' || reviewer.isFirstAdmin || reviewer.isMasterAdmin || reviewer.email === 'alizohaib.web@gmail.com';
+  const isMaster = reviewer.role === 'master_admin' || Boolean(reviewer.isMasterAdmin);
   const isAdmin = reviewer.role === 'admin' || isMaster;
   const isAssigner = task.assignedBy === reviewer.id;
 
@@ -1450,18 +1460,27 @@ app.get('/api/leaves', (req, res) => {
 });
 
 app.post('/api/leaves', (req, res) => {
-  const { userId, type, startDate, endDate, reason } = req.body;
+  const { userId, userName, type, startDate, endDate, reason } = req.body;
   if (!userId || !startDate || !endDate) {
     return res.status(400).json({ error: 'User ID, start date, and end date required.' });
+  }
+  // Auto-resolve userName from users collection if not provided
+  let resolvedName = userName;
+  if (!resolvedName) {
+    const users = db.getCollection('users') || [];
+    const user = users.find(u => u.id === userId);
+    resolvedName = user ? (user.name || user.email) : 'Team Member';
   }
   const newLeave = {
     id: `lev_${Date.now()}`,
     userId,
+    userName: resolvedName,
     type: type || 'casual',
     startDate,
     endDate,
     reason: reason || 'Personal leave request',
     status: 'pending',
+    submittedAt: new Date().toISOString(),
     reviewedBy: null,
     reviewedAt: null
   };
@@ -1619,20 +1638,26 @@ app.get('/api/announcements', (req, res) => {
   res.json(enriched);
 });
 
-app.post('/api/announcements', (req, res) => {
-  const { title, content, priority, category, targetDepartment, pinned, authorId, tags } = req.body;
-  if (!title || !content) return res.status(400).json({ error: 'Title and content required.' });
+app.post('/api/announcements', async (req, res) => {
+  const { title, content, priority, category, targetDepartment, pinned, authorId, tags, mentionedUserIds, isQuickMessage } = req.body;
+  if (!content || !content.trim()) return res.status(400).json({ error: 'Message content is required.' });
+
+  const users = db.getCollection('users') || [];
+  const author = users.find(u => u.id === (authorId || 'usr_admin_1')) || { id: authorId || 'usr_admin_1', name: 'Team Member', role: 'member' };
+  const cleanMentionIds = Array.isArray(mentionedUserIds) ? [...new Set(mentionedUserIds.filter(Boolean))] : [];
 
   const newAnn = {
     id: `ann_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-    title: title.trim(),
+    title: (title && title.trim()) ? title.trim() : (isQuickMessage ? `${author.name} posted a message` : 'Team Update'),
     content: content.trim(),
     priority: priority || 'normal',
     category: category || 'awareness',
     targetDepartment: targetDepartment || 'All Team',
     pinned: Boolean(pinned),
+    isQuickMessage: Boolean(isQuickMessage),
     authorId: authorId || 'usr_admin_1',
     tags: Array.isArray(tags) ? tags : [],
+    mentionedUserIds: cleanMentionIds,
     acknowledgements: [],
     reactions: {
       thumbsUp: [],
@@ -1644,28 +1669,42 @@ app.post('/api/announcements', (req, res) => {
     createdAt: new Date().toISOString()
   };
 
-  const saved = db.addItem('announcements', newAnn);
+  const saved = await db.addItem('announcements', newAnn);
 
-  // Broadcast in-portal and native Web Push to all devices
-  createInPortalNotification({
-    userId: 'all',
-    title: `📢 [${newAnn.priority.toUpperCase()}] ${newAnn.title}`,
-    message: newAnn.content.slice(0, 150) + (newAnn.content.length > 150 ? '...' : ''),
-    type: 'announcement',
-    link: '/#announcements-section',
-    relatedId: newAnn.id
-  });
+  // If specific members are tagged, send targeted mention notifications; otherwise broadcast to all
+  if (cleanMentionIds.length > 0) {
+    await Promise.allSettled(
+      cleanMentionIds.map(uid =>
+        createInPortalNotification({
+          userId: uid,
+          title: `💬 ${author.name} mentioned you in Directives`,
+          message: newAnn.content.slice(0, 150) + (newAnn.content.length > 150 ? '...' : ''),
+          type: 'announcement_mention',
+          link: '/announcements',
+          relatedId: newAnn.id
+        })
+      )
+    );
+  } else {
+    createInPortalNotification({
+      userId: 'all',
+      title: isQuickMessage ? `💬 ${author.name}` : `📢 [${newAnn.priority.toUpperCase()}] ${newAnn.title}`,
+      message: newAnn.content.slice(0, 150) + (newAnn.content.length > 150 ? '...' : ''),
+      type: 'announcement',
+      link: '/announcements',
+      relatedId: newAnn.id
+    });
+  }
 
-  const author = db.getCollection('users').find(u => u.id === newAnn.authorId) || { name: 'Leadership', role: 'admin' };
   logOperationsHistory({
     category: 'announcement',
     action: 'ANNOUNCEMENT_POSTED',
-    title: `Announcement: "${newAnn.title}"`,
-    urduTitle: `Nayi Announcement: "${newAnn.title}"`,
-    description: `${author.name} ny team k liye awareness announcement post ki: "${newAnn.title}".`,
+    title: `Directive: "${newAnn.title}"`,
+    urduTitle: `Nayi Directive: "${newAnn.title}"`,
+    description: `${author.name} posted in Directives: "${newAnn.content.slice(0, 80)}".`,
     actor: { id: newAnn.authorId, name: author.name },
     target: { id: newAnn.id, name: newAnn.title, title: newAnn.title },
-    metadata: { priority: newAnn.priority, pinned: newAnn.pinned, category: newAnn.category }
+    metadata: { priority: newAnn.priority, pinned: newAnn.pinned, category: newAnn.category, mentionedUserIds: cleanMentionIds }
   });
 
   res.status(201).json({
@@ -1746,17 +1785,17 @@ app.post('/api/announcements/:id/react', async (req, res) => {
     : { thumbsUp: [], heart: [], rocket: [], lightbulb: [], fire: [] };
 
   validEmojis.forEach(em => {
-    if (!Array.isArray(reactions[em])) reactions[em] = [];
+    reactions[em] = Array.isArray(reactions[em]) ? [...new Set(reactions[em])] : [];
   });
 
-  const list = reactions[emoji];
-  const userIdx = list.indexOf(userId);
-  if (userIdx >= 0) {
-    list.splice(userIdx, 1);
-  } else {
-    list.push(userId);
+  // Enforce 1 impression/reaction per user across all emojis
+  const alreadyReactedThis = reactions[emoji].includes(userId);
+  validEmojis.forEach(em => {
+    reactions[em] = reactions[em].filter(id => id !== userId);
+  });
+  if (!alreadyReactedThis) {
+    reactions[emoji].push(userId);
   }
-  reactions[emoji] = list;
 
   const updated = await db.updateItem('announcements', annId, { reactions });
   res.json({ success: true, reactions, updated });

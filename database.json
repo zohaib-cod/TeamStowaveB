@@ -6,7 +6,7 @@
       "email": "alizohaib.web@gmail.com",
       "password": "12345",
       "role": "admin",
-      "isFirstAdmin": true,
+      "isFirstAdmin": false,
       "department": "Executive Leadership",
       "title": "Primary Administrator & Director",
       "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792321219/stowave_avatars/vhljiaysakw7lksfyukn.jpg",
@@ -26,11 +26,12 @@
       "lastIp": "103.191.123.188",
       "lastLogin": "2026-10-18T17:56:23.085Z",
       "lastLoginFormatted": "Oct 18, 2026, 05:56:23 PM",
-      "lastActive": 1793566166759,
-      "lastHeartbeat": 1793566166759,
-      "lastSeen": 1793566166759,
-      "updatedAt": "2026-11-01T20:49:26.762Z",
-      "leftAt": 1793553623711
+      "lastActive": 1795561672204,
+      "lastHeartbeat": 1795561672204,
+      "lastSeen": 1795561672204,
+      "updatedAt": "2026-11-24T23:07:52.212Z",
+      "leftAt": 1795559629681,
+      "isMasterAdmin": false
     },
     {
       "id": "usr_1792604581388_oacc",
@@ -44,14 +45,19 @@
       "phone": "+92 300 0000000",
       "joinDate": "2026-10-21",
       "status": "online",
-      "points": 630,
+      "points": 1130,
       "bio": "Contributor in Daily Social Media Posts Design & Scheduling, Gererate pdf of each step, physical appearance.",
       "skills": [
         "Operations",
         "Collaboration",
         "Daily Social Media Posts Design & Scheduling, Gererate pdf of each step, physical appearance"
       ],
-      "createdAt": "2026-10-21T17:43:01.388Z"
+      "createdAt": "2026-10-21T17:43:01.388Z",
+      "lastActive": 1794906930610,
+      "lastHeartbeat": 1794906930610,
+      "lastSeen": 1794906930610,
+      "updatedAt": "2026-11-17T09:15:30.611Z",
+      "leftAt": 1793815120745
     },
     {
       "id": "usr_1792604957142_k0b7",
@@ -65,7 +71,7 @@
       "phone": "+92 300 0000000",
       "joinDate": "2026-10-21",
       "status": "online",
-      "points": 600,
+      "points": 660,
       "bio": "Contributor in Gererate pdf of each step, Real-time Brand Engagement & Trend Monitoring, Promotional Broadcasts & Customer SMS Alerts, Customer Retention & Re-engagement Campaigns, Weekly Email Newsletter & Offer Dispatch, Abandoned Cart WhatsApp Automated Recovery, Return Parcel (RTO) Inspection & Restocking, Warehouse Stock Physical Counting & Discrepancies, Promotional Ad Banners & High-CTR Creatives, Arrange meetings.",
       "skills": [
         "Operations",
@@ -73,10 +79,11 @@
         "Gererate pdf of each step, Real-time Brand Engagement & Trend Monitoring, Promotional Broadcasts & Customer SMS Alerts, Customer Retention & Re-engagement Campaigns, Weekly Email Newsletter & Offer Dispatch, Abandoned Cart WhatsApp Automated Recovery, Return Parcel (RTO) Inspection & Restocking, Warehouse Stock Physical Counting & Discrepancies, Promotional Ad Banners & High-CTR Creatives, Arrange meetings"
       ],
       "createdAt": "2026-10-21T17:49:17.142Z",
-      "lastActive": 1793455017010,
-      "lastHeartbeat": 1793455017010,
-      "lastSeen": 1793455017010,
-      "updatedAt": "2026-10-31T13:56:57.011Z"
+      "lastActive": 1794941431886,
+      "lastHeartbeat": 1794941431886,
+      "lastSeen": 1794941431886,
+      "updatedAt": "2026-11-17T18:50:31.888Z",
+      "leftAt": 1794941354409
     },
     {
       "id": "usr_1792324121131_qjg8",
@@ -99,10 +106,40 @@
         "Auditing"
       ],
       "createdAt": "2026-10-18T11:48:41.133Z",
-      "lastActive": 1793073342763,
-      "lastHeartbeat": 1793073342763,
-      "lastSeen": 1793073342763,
-      "updatedAt": "2026-10-27T03:55:42.763Z"
+      "lastActive": 1794944395705,
+      "lastHeartbeat": 1794944395705,
+      "lastSeen": 1794944395705,
+      "updatedAt": "2026-11-17T19:39:55.706Z",
+      "leftAt": 1794917777558
+    },
+    {
+      "id": "usr_1794902772635_kfin",
+      "name": "Waqar Hassan",
+      "email": "waqarhassan03164955@gmail.com",
+      "password": "123456789",
+      "role": "master_admin",
+      "isFirstAdmin": true,
+      "isMasterAdmin": true,
+      "department": "Budget Authorizations & Major Expenditure Approvals, Ad Campaigns, Creative Assets & Discount Sign-off, Notebook Operational Procedure & Authorization, Daily Bank Balances & Payment Reconciliation, Company Expense Invoices & Vendor Settlement, Profit & Loss Margin Weekly Documentation, Courier COD (Cash on Delivery) Payout Audit, Team Hiring, Contract Review & Leave Approvals",
+      "title": "Executive Master Admin & Director",
+      "avatar": "https://images.unsplash.com/photo-1534528750653?auto=format&fit=crop&w=200&q=80",
+      "phone": "+92 300 0000000",
+      "joinDate": "2026-11-17",
+      "status": "online",
+      "points": 3500,
+      "bio": "Executive Master Admin with final sign-off and recognition gifting authority.",
+      "skills": [
+        "Executive Leadership",
+        "Final Sign-off",
+        "Gifting & Recognition",
+        "Operations Strategy"
+      ],
+      "createdAt": "2026-11-17T08:06:12.635Z",
+      "lastActive": 1795370416145,
+      "lastHeartbeat": 1795370416145,
+      "lastSeen": 1795370416145,
+      "updatedAt": "2026-11-22T18:00:16.148Z",
+      "leftAt": 1795370383812
     }
   ],
   "tasks": [
@@ -114,11 +151,11 @@
       "assignedBy": "usr_1792320516422_nv0x",
       "assignedByName": "Ali Zohaib",
       "priority": "medium",
-      "status": "todo",
+      "status": "completed",
       "dueDate": "2026-10-31",
       "createdAt": "2026-10-24T09:18:58.864Z",
       "estimatedHours": 8,
-      "actualHours": 0,
+      "actualHours": 8,
       "tags": [
         "Strategic",
         "Q4-Milestone"
@@ -132,15 +169,32 @@
           "url": "https://res.cloudinary.com/dqmjtblih/video/upload/v1792833490/task_briefing_voice/stzusxbcikblj83sxpfb.webm"
         }
       ],
-      "submissionNotes": "",
+      "submissionNotes": "sorry for late bhai jan",
       "submissionLink": "",
       "submissionImages": [],
       "submissionPdfs": [],
       "submissionVoice": "",
       "submissionAttachments": [],
-      "reviewedBy": null,
-      "reviewFeedback": null,
-      "rating": null
+      "reviewedBy": "usr_1792320516422_nv0x",
+      "reviewFeedback": "Outstanding deliverable! Approved.",
+      "rating": 5,
+      "submittedAt": "2026-11-04T17:04:01.988Z",
+      "submittedBy": "usr_1792604581388_oacc",
+      "submittedByName": "Ali Husnain",
+      "giftAwarded": {
+        "title": "Master Leadership Recognition Award",
+        "bonusPoints": 100,
+        "note": "Exceptional performance and dedication",
+        "awardedBy": "Ali Zohaib",
+        "awardedAt": "2026-11-05T14:49:43.926Z"
+      },
+      "masterRating": 5,
+      "masterReviewFeedback": "Outstanding deliverable! Approved.",
+      "masterReviewed": true,
+      "masterReviewerId": "usr_1792320516422_nv0x",
+      "masterReviewerName": "Ali Zohaib",
+      "reviewedAt": "2026-11-05T14:49:43.925Z",
+      "reviewedByName": "Ali Zohaib"
     },
     {
       "id": "tsk_1792833757909",
@@ -180,9 +234,182 @@
       "assignedBy": "usr_1792320516422_nv0x",
       "assignedByName": "Ali Zohaib",
       "priority": "urgent",
-      "status": "todo",
+      "status": "completed",
       "dueDate": "2026-11-02",
       "createdAt": "2026-11-01T17:19:07.717Z",
+      "estimatedHours": 8,
+      "actualHours": 8,
+      "tags": [
+        "Strategic",
+        "Q4-Milestone"
+      ],
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "",
+      "attachments": [],
+      "submissionNotes": "PDF my performance ",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [
+        {
+          "url": "https://res.cloudinary.com/dqmjtblih/image/upload/v1793623927/task_documents/abdzkkqrxjhtmr0v3ksu.pdf",
+          "name": "STOWAVE_Work_Journey.pdf",
+          "size": "0.03 MB"
+        }
+      ],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": "usr_1792320516422_nv0x",
+      "reviewFeedback": "Outstanding deliverable! Approved.",
+      "rating": 5,
+      "submittedAt": "2026-11-02T12:52:48.927Z",
+      "submittedBy": "usr_1792604581388_oacc",
+      "submittedByName": "Ali Husnain",
+      "giftAwarded": {
+        "title": "star contributor",
+        "bonusPoints": 100,
+        "note": "Exceptional performance and dedication",
+        "awardedBy": "Ali Zohaib",
+        "awardedAt": "2026-11-02T14:11:47.536Z"
+      },
+      "masterRating": 5,
+      "masterReviewFeedback": "Outstanding deliverable! Approved.",
+      "masterReviewed": true,
+      "masterReviewerId": "usr_1792320516422_nv0x",
+      "masterReviewerName": "Ali Zohaib",
+      "reviewedAt": "2026-11-02T14:11:47.536Z",
+      "reviewedByName": "Ali Zohaib"
+    },
+    {
+      "id": "tsk_1793553573392",
+      "title": "pdf genrate",
+      "description": "sir kal sb log pls apni details pdf ready kr k task submit krvaye  ",
+      "assignedTo": "usr_1792604957142_k0b7",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "urgent",
+      "status": "completed",
+      "dueDate": "2026-11-02",
+      "createdAt": "2026-11-01T17:19:33.392Z",
+      "estimatedHours": 8,
+      "actualHours": 8,
+      "tags": [
+        "Strategic",
+        "Q4-Milestone"
+      ],
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "",
+      "attachments": [],
+      "submissionNotes": "Ok",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [
+        {
+          "url": "https://res.cloudinary.com/dqmjtblih/image/upload/v1794941400/task_documents/lbofm6gasegfcxxqoabx.pdf",
+          "name": "Saif_ur_Rehman_Business_Journey.pdf",
+          "size": "0.03 MB"
+        }
+      ],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": "usr_1792320516422_nv0x",
+      "reviewFeedback": "Outstanding deliverable! Approved.",
+      "rating": 3,
+      "submittedAt": "2026-11-17T18:50:22.765Z",
+      "submittedBy": "usr_1792604957142_k0b7",
+      "submittedByName": "Saif urrehmaan",
+      "masterRating": 3,
+      "masterReviewFeedback": "Outstanding deliverable! Approved.",
+      "masterReviewed": true,
+      "masterReviewerId": "usr_1792320516422_nv0x",
+      "masterReviewerName": "Ali Zohaib",
+      "reviewedAt": "2026-11-17T21:06:09.139Z",
+      "reviewedByName": "Ali Zohaib"
+    },
+    {
+      "id": "tsk_1793629424391",
+      "title": "Wesbite audite",
+      "description": "Please check website mistakes and website designs and upload a task for me then i will submit my task.",
+      "assignedTo": "usr_1792604957142_k0b7",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "urgent",
+      "status": "todo",
+      "dueDate": "2026-11-03",
+      "createdAt": "2026-11-02T14:23:44.391Z",
+      "estimatedHours": 8,
+      "actualHours": 0,
+      "tags": [
+        "General"
+      ],
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "",
+      "attachments": [],
+      "submissionNotes": "",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": null,
+      "reviewFeedback": null,
+      "rating": null
+    },
+    {
+      "id": "tsk_1793987648614",
+      "title": "10 posts",
+      "description": "bhai ezzywalk k liye posts bna den 10 ",
+      "assignedTo": "usr_1792604581388_oacc",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "urgent",
+      "status": "todo",
+      "dueDate": "2026-11-10",
+      "createdAt": "2026-11-06T17:54:08.614Z",
+      "estimatedHours": 8,
+      "actualHours": 0,
+      "tags": [
+        "General"
+      ],
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "",
+      "attachments": [],
+      "submissionNotes": "",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": null,
+      "reviewFeedback": null,
+      "rating": null,
+      "extensionReason": "Shop pa kam ha bhai bs es wacha sa",
+      "extensionRequested": true,
+      "extensionRequestedAt": "2026-11-07T16:43:06.391Z",
+      "extensionRequestedBy": "usr_1792604581388_oacc",
+      "extensionRequestedByName": "Ali Husnain",
+      "extensionStatus": "approved",
+      "requestedDueDate": "2026-11-10",
+      "requestedHours": 0,
+      "extensionReviewNotes": "Approved! Please complete deliverables on time.",
+      "extensionReviewedAt": "2026-11-07T17:01:49.408Z",
+      "extensionReviewedBy": "usr_1792320516422_nv0x",
+      "extensionReviewedByName": "Ali Zohaib"
+    },
+    {
+      "id": "tsk_1794323436381",
+      "title": "Physical Apperance",
+      "description": "please physical stock ko dekhen aur btayen shirts si pari hai ya ni aur usy si jaga rkhvaye ",
+      "assignedTo": "usr_1792604581388_oacc",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "medium",
+      "status": "todo",
+      "dueDate": "2026-11-13",
+      "createdAt": "2026-11-10T15:10:36.381Z",
       "estimatedHours": 8,
       "actualHours": 0,
       "tags": [
@@ -204,16 +431,16 @@
       "rating": null
     },
     {
-      "id": "tsk_1793553573392",
-      "title": "pdf genrate",
-      "description": "sir kal sb log pls apni details pdf ready kr k task submit krvaye  ",
-      "assignedTo": "usr_1792604957142_k0b7",
+      "id": "tsk_1794323468404",
+      "title": "physical Appearance",
+      "description": "please physical stock ko dekhen aur btayen shirts si pari hai ya ni aur usy si jaga rkhvaye ",
+      "assignedTo": "usr_1792324121131_qjg8",
       "assignedBy": "usr_1792320516422_nv0x",
       "assignedByName": "Ali Zohaib",
-      "priority": "urgent",
+      "priority": "medium",
       "status": "todo",
-      "dueDate": "2026-11-02",
-      "createdAt": "2026-11-01T17:19:33.392Z",
+      "dueDate": "2026-11-13",
+      "createdAt": "2026-11-10T15:11:08.404Z",
       "estimatedHours": 8,
       "actualHours": 0,
       "tags": [
@@ -233,10 +460,215 @@
       "reviewedBy": null,
       "reviewFeedback": null,
       "rating": null
+    },
+    {
+      "id": "tsk_1794865908670",
+      "title": "Email Marketing ",
+      "description": "Assalam-o-alaikum sir ap ny 20 emails scrap kr k deni hai jo log online shopping may interested hain aur isy search krny k liye ap youTube sy ya Ai sy tutorial dekh skty hain [How to scrap email for engaged shpper]",
+      "assignedTo": "usr_1792604957142_k0b7",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "high",
+      "status": "todo",
+      "dueDate": "2026-11-19",
+      "createdAt": "2026-11-16T21:51:48.670Z",
+      "estimatedHours": 8,
+      "actualHours": 0,
+      "tags": [
+        "General"
+      ],
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "",
+      "attachments": [],
+      "submissionNotes": "",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": null,
+      "reviewFeedback": null,
+      "rating": null
+    },
+    {
+      "id": "tsk_1794865979703",
+      "title": "Ezzywalk posts",
+      "description": "Ap bhi 15 posts bna k den please ",
+      "assignedTo": "usr_1792604581388_oacc",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "high",
+      "status": "todo",
+      "dueDate": "2026-11-19",
+      "createdAt": "2026-11-16T21:52:59.703Z",
+      "estimatedHours": 8,
+      "actualHours": 0,
+      "tags": [
+        "best of luck"
+      ],
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "",
+      "attachments": [],
+      "submissionNotes": "",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": null,
+      "reviewFeedback": null,
+      "rating": null
+    },
+    {
+      "id": "tsk_1794956309804",
+      "title": "print agreement ",
+      "description": "kal please agreement print krva dena",
+      "assignedTo": "usr_1794902772635_kfin",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "urgent",
+      "status": "todo",
+      "dueDate": "2026-11-18",
+      "createdAt": "2026-11-17T22:58:29.804Z",
+      "estimatedHours": 12,
+      "actualHours": 0,
+      "tags": [
+        "General"
+      ],
+      "images": [],
+      "pdfs": [
+        {
+          "url": "https://res.cloudinary.com/dqmjtblih/image/upload/v1794956291/task_briefing_documents/eqxces8xwmlc6r3i72l6.pdf",
+          "name": "Stowave_Founders_Agreement.pdf",
+          "size": "0.35 MB"
+        }
+      ],
+      "voiceUrl": "",
+      "attachments": [
+        {
+          "url": "https://res.cloudinary.com/dqmjtblih/image/upload/v1794956291/task_briefing_documents/eqxces8xwmlc6r3i72l6.pdf",
+          "name": "Stowave_Founders_Agreement.pdf",
+          "size": "0.35 MB"
+        }
+      ],
+      "submissionNotes": "",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": null,
+      "reviewFeedback": null,
+      "rating": null
+    },
+    {
+      "id": "tsk_1794998201654",
+      "title": "One Pdf ",
+      "description": "sb ki pdf a gyi hai ap please ab apni aur sb ki mila k aik achi si pdf bnaye jis may data ho each and everything ho main apni bhi is task k sath attach kr ra hun tou sari pdf download kr k bna dy ",
+      "assignedTo": "usr_1792324121131_qjg8",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "medium",
+      "status": "todo",
+      "dueDate": "2026-11-21",
+      "createdAt": "2026-11-18T10:36:41.654Z",
+      "estimatedHours": 8,
+      "actualHours": 0,
+      "tags": [
+        "Strategic",
+        "Q4-Milestone"
+      ],
+      "images": [],
+      "pdfs": [
+        {
+          "url": "https://res.cloudinary.com/dqmjtblih/image/upload/v1794998168/task_briefing_documents/ly6bsp5xwybieoydzj5k.pdf",
+          "name": "Stowave_Journey_Ali_Zohaib.pdf",
+          "size": "2.43 MB"
+        }
+      ],
+      "voiceUrl": "",
+      "attachments": [
+        {
+          "url": "https://res.cloudinary.com/dqmjtblih/image/upload/v1794998168/task_briefing_documents/ly6bsp5xwybieoydzj5k.pdf",
+          "name": "Stowave_Journey_Ali_Zohaib.pdf",
+          "size": "2.43 MB"
+        }
+      ],
+      "submissionNotes": "",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": null,
+      "reviewFeedback": null,
+      "rating": null
+    },
+    {
+      "id": "tsk_1795172854737",
+      "title": "testing",
+      "description": "this is a testign video phhase ",
+      "assignedTo": "usr_1792604581388_oacc",
+      "assignedBy": "usr_1792320516422_nv0x",
+      "assignedByName": "Ali Zohaib",
+      "priority": "urgent",
+      "status": "todo",
+      "dueDate": "2026-11-22",
+      "createdAt": "2026-11-20T11:07:34.737Z",
+      "estimatedHours": 8,
+      "actualHours": 0,
+      "tags": [
+        "best of luck"
+      ],
+      "images": [],
+      "pdfs": [],
+      "voiceUrl": "",
+      "attachments": [],
+      "submissionNotes": "",
+      "submissionLink": "",
+      "submissionImages": [],
+      "submissionPdfs": [],
+      "submissionVoice": "",
+      "submissionAttachments": [],
+      "reviewedBy": null,
+      "reviewFeedback": null,
+      "rating": null
     }
   ],
   "reports": [],
-  "surveys": [],
+  "surveys": [
+    {
+      "id": "srv_1793628311821",
+      "title": "leadership review",
+      "description": "please share thoughts about leadership",
+      "targetType": "admin_behaviour",
+      "durationHours": 48,
+      "expiresAt": "2026-11-04T14:05:11.821Z",
+      "isAnonymous": true,
+      "questions": [
+        {
+          "id": "q1",
+          "text": "How transparent and supportive was leadership communication this week?",
+          "type": "rating"
+        },
+        {
+          "id": "q2",
+          "text": "Did you experience any blockers or micro-management that slowed down your execution?",
+          "type": "text"
+        },
+        {
+          "id": "q3",
+          "text": "How would you rate psychological safety and team morale right now?",
+          "type": "rating"
+        }
+      ],
+      "createdBy": "usr_1792320516422_nv0x",
+      "createdAt": "2026-11-02T14:05:11.821Z",
+      "status": "active"
+    }
+  ],
   "survey_responses": [
     {
       "id": "srvr_1792794495168_bt3w",
@@ -359,90 +791,161 @@
       "createdAt": "2026-10-22T18:06:19.358Z"
     }
   ],
-  "gifts": [],
-  "leaves": [],
-  "announcements": [],
+  "gifts": [
+    {
+      "id": "gft_1793628707536",
+      "fromUserId": "usr_1792320516422_nv0x",
+      "toUserId": "usr_1792604581388_oacc",
+      "giftType": "badge_mvp",
+      "title": "star contributor",
+      "points": 100,
+      "personalNote": "Awarded on completing task: pdf generate",
+      "createdAt": "2026-11-02T14:11:47.536Z"
+    },
+    {
+      "id": "gft_1793890183926",
+      "fromUserId": "usr_1792320516422_nv0x",
+      "toUserId": "usr_1792604581388_oacc",
+      "giftType": "badge_mvp",
+      "title": "Master Leadership Recognition Award",
+      "points": 100,
+      "personalNote": "Awarded on completing task: Design 10 posts",
+      "createdAt": "2026-11-05T14:49:43.926Z"
+    },
+    {
+      "id": "gft_1795173518355",
+      "fromUserId": "usr_1792320516422_nv0x",
+      "toUserId": "usr_1792604581388_oacc",
+      "giftType": "trophy",
+      "title": "Executive MVP Award",
+      "points": 100,
+      "personalNote": "good work husnain",
+      "createdAt": "2026-11-20T11:18:38.355Z"
+    }
+  ],
+  "leaves": [
+    {
+      "id": "lev_1795554186780",
+      "userId": "usr_1792320516422_nv0x",
+      "userName": "Ali Zohaib",
+      "type": "casual",
+      "startDate": "2026-11-26",
+      "endDate": "2026-11-27",
+      "reason": "Test API fix",
+      "status": "rejected",
+      "submittedAt": "2026-11-24T21:03:06.780Z",
+      "reviewedBy": "usr_1792320516422_nv0x",
+      "reviewedAt": "2026-11-24T22:27:12.751Z",
+      "createdAt": "2026-11-24T21:03:06.781Z"
+    },
+    {
+      "id": "lev_1795559226649",
+      "userId": "usr_1792320516422_nv0x",
+      "userName": "Ali Zohaib",
+      "type": "casual",
+      "startDate": "2026-11-26",
+      "endDate": "2026-11-26",
+      "reason": "jkj",
+      "status": "rejected",
+      "submittedAt": "2026-11-24T22:27:06.649Z",
+      "reviewedBy": "usr_1792320516422_nv0x",
+      "reviewedAt": "2026-11-24T22:27:11.251Z",
+      "createdAt": "2026-11-24T22:27:06.649Z"
+    }
+  ],
+  "announcements": [
+    {
+      "id": "ann_stowave_welcome",
+      "title": "🚀 Stowave Workspace Initialized (100% Real-Time)",
+      "content": "Welcome to your real-time Stowave company portal. All dummy data has been removed. Use \"+ Assign Task\" or \"+ Add Team Member\" to begin.",
+      "priority": "urgent",
+      "pinned": true,
+      "authorId": "usr_admin_1",
+      "createdAt": "2026-10-20T12:30:28.087Z",
+      "reactions": {
+        "thumbsUp": [],
+        "heart": [],
+        "rocket": [],
+        "lightbulb": [],
+        "fire": []
+      }
+    },
+    {
+      "id": "ann_stowave_welcome",
+      "title": "🚀 Stowave Workspace Initialized (100% Real-Time)",
+      "content": "Welcome to your real-time Stowave company portal. All dummy data has been removed. Use \"+ Assign Task\" or \"+ Add Team Member\" to begin.",
+      "priority": "urgent",
+      "pinned": true,
+      "authorId": "usr_admin_1",
+      "createdAt": "2026-10-20T12:30:28.087Z"
+    },
+    {
+      "id": "ann_stowave_welcome",
+      "title": "🚀 Stowave Workspace Initialized (100% Real-Time)",
+      "content": "Welcome to your real-time Stowave company portal. All dummy data has been removed. Use \"+ Assign Task\" or \"+ Add Team Member\" to begin.",
+      "priority": "urgent",
+      "pinned": true,
+      "authorId": "usr_admin_1",
+      "createdAt": "2026-10-20T12:30:28.087Z"
+    },
+    {
+      "id": "ann_1793628910334_8xxi",
+      "title": "Late Panelty",
+      "content": "bhai jan hum ny kch decide kia hai agar koi bnda time py kam ni dy ga us py burden barha dia jaye jaye ga",
+      "priority": "normal",
+      "category": "general",
+      "targetDepartment": "All Team",
+      "pinned": true,
+      "authorId": "usr_1792320516422_nv0x",
+      "tags": [],
+      "acknowledgements": [
+        {
+          "userId": "usr_1792604581388_oacc",
+          "userName": "Ali Husnain",
+          "userAvatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792604956/stowave_avatars/vswt4pvspzuc9ayqygqq.jpg",
+          "acknowledgedAt": "2026-11-04T17:10:33.778Z"
+        },
+        {
+          "userId": "usr_1792320516422_nv0x",
+          "userName": "Ali Zohaib",
+          "userAvatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792321219/stowave_avatars/vhljiaysakw7lksfyukn.jpg",
+          "acknowledgedAt": "2026-11-20T11:11:14.440Z"
+        }
+      ],
+      "reactions": {
+        "thumbsUp": [
+          "usr_1792320516422_nv0x",
+          "usr_1792604581388_oacc"
+        ],
+        "heart": [],
+        "rocket": [],
+        "lightbulb": [],
+        "fire": []
+      },
+      "createdAt": "2026-11-02T14:15:10.334Z"
+    },
+    {
+      "id": "ann_1795173057353_gbyu",
+      "title": "testing",
+      "content": "acha aaj hum ny decide kia hai k aaj rat ko meeting ho ge",
+      "priority": "high",
+      "category": "urgent",
+      "targetDepartment": "All Team",
+      "pinned": true,
+      "authorId": "usr_1792320516422_nv0x",
+      "tags": [],
+      "acknowledgements": [],
+      "reactions": {
+        "thumbsUp": [],
+        "heart": [],
+        "rocket": [],
+        "lightbulb": [],
+        "fire": []
+      },
+      "createdAt": "2026-11-20T11:10:57.353Z"
+    }
+  ],
   "audit_logs": [
-    {
-      "id": "log_1793565968750",
-      "userId": "system",
-      "action": "CREATE_OPERATIONS_HISTORY",
-      "details": "Created new item in operations_history: Deleted Announcement: \"hello je\"",
-      "timestamp": "2026-11-01T20:46:08.750Z",
-      "createdAt": "2026-11-01T20:46:08.750Z"
-    },
-    {
-      "id": "log_1793565964322",
-      "userId": "system",
-      "action": "CREATE_OPERATIONS_HISTORY",
-      "details": "Created new item in operations_history: Deleted Announcement: \"🚀 Stowave Workspace Initialized (100% Real-Time)\"",
-      "timestamp": "2026-11-01T20:46:04.322Z",
-      "createdAt": "2026-11-01T20:46:04.322Z"
-    },
-    {
-      "id": "log_1793565961500",
-      "userId": "system",
-      "action": "CREATE_OPERATIONS_HISTORY",
-      "details": "Created new item in operations_history: Deleted Announcement: \"🛡️ 2FA Security & Session Timeout Awareness\"",
-      "timestamp": "2026-11-01T20:46:01.500Z",
-      "createdAt": "2026-11-01T20:46:01.500Z"
-    },
-    {
-      "id": "log_1793565958961",
-      "userId": "system",
-      "action": "CREATE_OPERATIONS_HISTORY",
-      "details": "Created new item in operations_history: Deleted Announcement: \"Perspiciatis volupt\"",
-      "timestamp": "2026-11-01T20:45:58.961Z",
-      "createdAt": "2026-11-01T20:45:58.962Z"
-    },
-    {
-      "id": "log_1793565909815",
-      "userId": "system",
-      "action": "CREATE_OPERATIONS_HISTORY",
-      "details": "Created new item in operations_history: Announcement: \"Perspiciatis volupt\"",
-      "timestamp": "2026-11-01T20:45:09.815Z",
-      "createdAt": "2026-11-01T20:45:09.815Z"
-    },
-    {
-      "id": "log_1793565909806",
-      "userId": "system",
-      "action": "CREATE_ANNOUNCEMENTS",
-      "details": "Created new item in announcements: Perspiciatis volupt",
-      "timestamp": "2026-11-01T20:45:09.806Z",
-      "createdAt": "2026-11-01T20:45:09.806Z"
-    },
-    {
-      "id": "log_1793565909795",
-      "userId": "all",
-      "action": "CREATE_NOTIFICATIONS",
-      "details": "Created new item in notifications: 📢 [HIGH] Perspiciatis volupt",
-      "timestamp": "2026-11-01T20:45:09.797Z",
-      "createdAt": "2026-11-01T20:45:09.797Z"
-    },
-    {
-      "id": "log_1793565884790",
-      "userId": "system",
-      "action": "CREATE_OPERATIONS_HISTORY",
-      "details": "Created new item in operations_history: Announcement: \"hello je\"",
-      "timestamp": "2026-11-01T20:44:44.790Z",
-      "createdAt": "2026-11-01T20:44:44.790Z"
-    },
-    {
-      "id": "log_1793565884784",
-      "userId": "system",
-      "action": "CREATE_ANNOUNCEMENTS",
-      "details": "Created new item in announcements: hello je",
-      "timestamp": "2026-11-01T20:44:44.784Z",
-      "createdAt": "2026-11-01T20:44:44.784Z"
-    },
-    {
-      "id": "log_1793565884776",
-      "userId": "all",
-      "action": "CREATE_NOTIFICATIONS",
-      "details": "Created new item in notifications: 📢 [HIGH] hello je",
-      "timestamp": "2026-11-01T20:44:44.776Z",
-      "createdAt": "2026-11-01T20:44:44.776Z"
-    },
     {
       "id": "log_1792499428087",
       "userId": "usr_admin_1",
@@ -889,13 +1392,1573 @@
       "details": "Created new item in notifications: 📢 [HIGH] 🛡️ 2FA Security & Session Timeout Awareness",
       "timestamp": "2026-11-01T20:15:59.865Z",
       "createdAt": "2026-11-01T20:15:59.865Z"
+    },
+    {
+      "id": "log_1793565884776",
+      "userId": "all",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📢 [HIGH] hello je",
+      "timestamp": "2026-11-01T20:44:44.776Z",
+      "createdAt": "2026-11-01T20:44:44.776Z"
+    },
+    {
+      "id": "log_1793565884784",
+      "userId": "system",
+      "action": "CREATE_ANNOUNCEMENTS",
+      "details": "Created new item in announcements: hello je",
+      "timestamp": "2026-11-01T20:44:44.784Z",
+      "createdAt": "2026-11-01T20:44:44.784Z"
+    },
+    {
+      "id": "log_1793565884790",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Announcement: \"hello je\"",
+      "timestamp": "2026-11-01T20:44:44.790Z",
+      "createdAt": "2026-11-01T20:44:44.790Z"
+    },
+    {
+      "id": "log_1793565909795",
+      "userId": "all",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📢 [HIGH] Perspiciatis volupt",
+      "timestamp": "2026-11-01T20:45:09.797Z",
+      "createdAt": "2026-11-01T20:45:09.797Z"
+    },
+    {
+      "id": "log_1793565909806",
+      "userId": "system",
+      "action": "CREATE_ANNOUNCEMENTS",
+      "details": "Created new item in announcements: Perspiciatis volupt",
+      "timestamp": "2026-11-01T20:45:09.806Z",
+      "createdAt": "2026-11-01T20:45:09.806Z"
+    },
+    {
+      "id": "log_1793565909815",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Announcement: \"Perspiciatis volupt\"",
+      "timestamp": "2026-11-01T20:45:09.815Z",
+      "createdAt": "2026-11-01T20:45:09.815Z"
+    },
+    {
+      "id": "log_1793565958961",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Deleted Announcement: \"Perspiciatis volupt\"",
+      "timestamp": "2026-11-01T20:45:58.961Z",
+      "createdAt": "2026-11-01T20:45:58.962Z"
+    },
+    {
+      "id": "log_1793565961500",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Deleted Announcement: \"🛡️ 2FA Security & Session Timeout Awareness\"",
+      "timestamp": "2026-11-01T20:46:01.500Z",
+      "createdAt": "2026-11-01T20:46:01.500Z"
+    },
+    {
+      "id": "log_1793565964322",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Deleted Announcement: \"🚀 Stowave Workspace Initialized (100% Real-Time)\"",
+      "timestamp": "2026-11-01T20:46:04.322Z",
+      "createdAt": "2026-11-01T20:46:04.322Z"
+    },
+    {
+      "id": "log_1793565968750",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Deleted Announcement: \"hello je\"",
+      "timestamp": "2026-11-01T20:46:08.750Z",
+      "createdAt": "2026-11-01T20:46:08.750Z"
+    },
+    {
+      "id": "log_1793566317162",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793566316970_q2gj",
+      "timestamp": "2026-11-01T20:51:57.162Z",
+      "createdAt": "2026-11-01T20:51:57.162Z"
+    },
+    {
+      "id": "log_1793566329552",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Deleted Announcement: \"🚀 Stowave Workspace Initialized (100% Real-Time)\"",
+      "timestamp": "2026-11-01T20:52:09.552Z",
+      "createdAt": "2026-11-01T20:52:09.552Z"
+    },
+    {
+      "id": "log_1793566344827",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793566338812_msoh",
+      "timestamp": "2026-11-01T20:52:24.827Z",
+      "createdAt": "2026-11-01T20:52:24.827Z"
+    },
+    {
+      "id": "log_1793618849043",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793618847848_obtn",
+      "timestamp": "2026-11-02T11:27:29.044Z",
+      "createdAt": "2026-11-02T11:27:29.044Z"
+    },
+    {
+      "id": "log_1793618850009",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793618847955_tkl3",
+      "timestamp": "2026-11-02T11:27:30.009Z",
+      "createdAt": "2026-11-02T11:27:30.009Z"
+    },
+    {
+      "id": "log_1793623666652",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793623647196_6rj5",
+      "timestamp": "2026-11-02T12:47:46.652Z",
+      "createdAt": "2026-11-02T12:47:46.652Z"
+    },
+    {
+      "id": "log_1793623690247",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Testing ",
+      "timestamp": "2026-11-02T12:48:10.247Z",
+      "createdAt": "2026-11-02T12:48:10.247Z"
+    },
+    {
+      "id": "log_1793623690688",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-02T12:48:10.688Z",
+      "createdAt": "2026-11-02T12:48:10.688Z"
+    },
+    {
+      "id": "log_1793623692446",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"Testing \"",
+      "timestamp": "2026-11-02T12:48:12.446Z",
+      "createdAt": "2026-11-02T12:48:12.446Z"
+    },
+    {
+      "id": "log_1793623771910",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
+      "timestamp": "2026-11-02T12:49:31.910Z",
+      "createdAt": "2026-11-02T12:49:31.910Z"
+    },
+    {
+      "id": "log_1793623772584",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Submitted: \"Testing \"",
+      "timestamp": "2026-11-02T12:49:32.584Z",
+      "createdAt": "2026-11-02T12:49:32.584Z"
+    },
+    {
+      "id": "log_1793623969368",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
+      "timestamp": "2026-11-02T12:52:49.368Z",
+      "createdAt": "2026-11-02T12:52:49.368Z"
+    },
+    {
+      "id": "log_1793623970053",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Submitted: \"pdf generate\"",
+      "timestamp": "2026-11-02T12:52:50.053Z",
+      "createdAt": "2026-11-02T12:52:50.053Z"
+    },
+    {
+      "id": "log_1793627968954",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793627953535_brme",
+      "timestamp": "2026-11-02T13:59:28.954Z",
+      "createdAt": "2026-11-02T13:59:28.954Z"
+    },
+    {
+      "id": "log_1793628112681",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Deleted Announcement: \"🚀 Stowave Workspace Initialized (100% Real-Time)\"",
+      "timestamp": "2026-11-02T14:01:52.681Z",
+      "createdAt": "2026-11-02T14:01:52.682Z"
+    },
+    {
+      "id": "log_1793628312239",
+      "userId": "system",
+      "action": "CREATE_SURVEYS",
+      "details": "Created new item in surveys: leadership review",
+      "timestamp": "2026-11-02T14:05:12.239Z",
+      "createdAt": "2026-11-02T14:05:12.239Z"
+    },
+    {
+      "id": "log_1793628312332",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793628153132_1m9m",
+      "timestamp": "2026-11-02T14:05:12.332Z",
+      "createdAt": "2026-11-02T14:05:12.332Z"
+    },
+    {
+      "id": "log_1793628473897",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793628472732_fypt",
+      "timestamp": "2026-11-02T14:07:53.897Z",
+      "createdAt": "2026-11-02T14:07:53.897Z"
+    },
+    {
+      "id": "log_1793628567684",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793628559232_a4ex",
+      "timestamp": "2026-11-02T14:09:27.684Z",
+      "createdAt": "2026-11-02T14:09:27.684Z"
+    },
+    {
+      "id": "log_1793628707784",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_GIFTS",
+      "details": "Created new item in gifts: star contributor",
+      "timestamp": "2026-11-02T14:11:47.784Z",
+      "createdAt": "2026-11-02T14:11:47.784Z"
+    },
+    {
+      "id": "log_1793628708176",
+      "userId": "usr_1792604581388_oacc",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 👑 Master Admin Final Approval & Gift!",
+      "timestamp": "2026-11-02T14:11:48.176Z",
+      "createdAt": "2026-11-02T14:11:48.176Z"
+    },
+    {
+      "id": "log_1793628710791",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Final Approved by Master Admin: \"pdf generate\"",
+      "timestamp": "2026-11-02T14:11:50.791Z",
+      "createdAt": "2026-11-02T14:11:50.791Z"
+    },
+    {
+      "id": "log_1793628910684",
+      "userId": "all",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📢 [NORMAL] Late Panelty",
+      "timestamp": "2026-11-02T14:15:10.684Z",
+      "createdAt": "2026-11-02T14:15:10.684Z"
+    },
+    {
+      "id": "log_1793628910686",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Announcement: \"Late Panelty\"",
+      "timestamp": "2026-11-02T14:15:10.686Z",
+      "createdAt": "2026-11-02T14:15:10.686Z"
+    },
+    {
+      "id": "log_1793628910688",
+      "userId": "system",
+      "action": "CREATE_ANNOUNCEMENTS",
+      "details": "Created new item in announcements: Late Panelty",
+      "timestamp": "2026-11-02T14:15:10.688Z",
+      "createdAt": "2026-11-02T14:15:10.688Z"
+    },
+    {
+      "id": "log_1793629021466",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793629020303_k5ap",
+      "timestamp": "2026-11-02T14:17:01.466Z",
+      "createdAt": "2026-11-02T14:17:01.466Z"
+    },
+    {
+      "id": "log_1793629317680",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Website Audit",
+      "timestamp": "2026-11-02T14:21:57.680Z",
+      "createdAt": "2026-11-02T14:21:57.680Z"
+    },
+    {
+      "id": "log_1793629318090",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-02T14:21:58.090Z",
+      "createdAt": "2026-11-02T14:21:58.090Z"
+    },
+    {
+      "id": "log_1793629321324",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"Website Audit\"",
+      "timestamp": "2026-11-02T14:22:01.324Z",
+      "createdAt": "2026-11-02T14:22:01.324Z"
+    },
+    {
+      "id": "log_1793629424581",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Wesbite audite",
+      "timestamp": "2026-11-02T14:23:44.581Z",
+      "createdAt": "2026-11-02T14:23:44.581Z"
+    },
+    {
+      "id": "log_1793629424962",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-02T14:23:44.962Z",
+      "createdAt": "2026-11-02T14:23:44.962Z"
+    },
+    {
+      "id": "log_1793629426463",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"Wesbite audite\"",
+      "timestamp": "2026-11-02T14:23:46.463Z",
+      "createdAt": "2026-11-02T14:23:46.463Z"
+    },
+    {
+      "id": "log_1793630055133",
+      "userId": "system",
+      "action": "CREATE_INVITATIONS",
+      "details": "Created new item in invitations: inv_1793630054910_m5dc",
+      "timestamp": "2026-11-02T14:34:15.133Z",
+      "createdAt": "2026-11-02T14:34:15.133Z"
+    },
+    {
+      "id": "log_1793630396034",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793630367685_bzxo",
+      "timestamp": "2026-11-02T14:39:56.034Z",
+      "createdAt": "2026-11-02T14:39:56.034Z"
+    },
+    {
+      "id": "log_1793630508070",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793630471853_v2a4",
+      "timestamp": "2026-11-02T14:41:48.070Z",
+      "createdAt": "2026-11-02T14:41:48.070Z"
+    },
+    {
+      "id": "log_1793631272718",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793631272377_80h5",
+      "timestamp": "2026-11-02T14:54:32.718Z",
+      "createdAt": "2026-11-02T14:54:32.718Z"
+    },
+    {
+      "id": "log_1793631402963",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793631342920_iwez",
+      "timestamp": "2026-11-02T14:56:42.963Z",
+      "createdAt": "2026-11-02T14:56:42.963Z"
+    },
+    {
+      "id": "log_1793631646976",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793631631678_yndi",
+      "timestamp": "2026-11-02T15:00:46.976Z",
+      "createdAt": "2026-11-02T15:00:46.976Z"
+    },
+    {
+      "id": "log_1793716844733",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793716840333_xeg2",
+      "timestamp": "2026-11-03T14:40:44.733Z",
+      "createdAt": "2026-11-03T14:40:44.733Z"
+    },
+    {
+      "id": "log_1793716974975",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793716921511_llxm",
+      "timestamp": "2026-11-03T14:42:54.975Z",
+      "createdAt": "2026-11-03T14:42:54.975Z"
+    },
+    {
+      "id": "log_1793718368796",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793718354151_j64v",
+      "timestamp": "2026-11-03T15:06:08.796Z",
+      "createdAt": "2026-11-03T15:06:08.796Z"
+    },
+    {
+      "id": "log_1793718406487",
+      "userId": "system",
+      "action": "CREATE_INVITATIONS",
+      "details": "Created new item in invitations: inv_1793718406273_lkte",
+      "timestamp": "2026-11-03T15:06:46.487Z",
+      "createdAt": "2026-11-03T15:06:46.487Z"
+    },
+    {
+      "id": "log_1793718554100",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793718539183_5sez",
+      "timestamp": "2026-11-03T15:09:14.100Z",
+      "createdAt": "2026-11-03T15:09:14.100Z"
+    },
+    {
+      "id": "log_1793721946935",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793721938120_q5yv",
+      "timestamp": "2026-11-03T16:05:46.935Z",
+      "createdAt": "2026-11-03T16:05:46.935Z"
+    },
+    {
+      "id": "log_1793722091957",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793722061958_xxo3",
+      "timestamp": "2026-11-03T16:08:11.957Z",
+      "createdAt": "2026-11-03T16:08:11.957Z"
+    },
+    {
+      "id": "log_1793810292040",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793810129595_84a3",
+      "timestamp": "2026-11-04T16:38:12.040Z",
+      "createdAt": "2026-11-04T16:38:12.040Z"
+    },
+    {
+      "id": "log_1793811842399",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
+      "timestamp": "2026-11-04T17:04:02.399Z",
+      "createdAt": "2026-11-04T17:04:02.399Z"
+    },
+    {
+      "id": "log_1793811843170",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Submitted: \"Design 10 posts\"",
+      "timestamp": "2026-11-04T17:04:03.170Z",
+      "createdAt": "2026-11-04T17:04:03.170Z"
+    },
+    {
+      "id": "log_1793820902572",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793820899814_a2tg",
+      "timestamp": "2026-11-04T19:35:02.572Z",
+      "createdAt": "2026-11-04T19:35:02.572Z"
+    },
+    {
+      "id": "log_1793821016884",
+      "userId": "system",
+      "action": "CREATE_INVITATIONS",
+      "details": "Created new item in invitations: inv_1793821016673_4k99",
+      "timestamp": "2026-11-04T19:36:56.884Z",
+      "createdAt": "2026-11-04T19:36:56.884Z"
+    },
+    {
+      "id": "log_1793821308574",
+      "userId": "system",
+      "action": "CREATE_INVITATIONS",
+      "details": "Created new item in invitations: inv_1793821308359_nzox",
+      "timestamp": "2026-11-04T19:41:48.574Z",
+      "createdAt": "2026-11-04T19:41:48.574Z"
+    },
+    {
+      "id": "log_1793890151678",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793890151278_ovjy",
+      "timestamp": "2026-11-05T14:49:11.679Z",
+      "createdAt": "2026-11-05T14:49:11.679Z"
+    },
+    {
+      "id": "log_1793890184142",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_GIFTS",
+      "details": "Created new item in gifts: Master Leadership Recognition Award",
+      "timestamp": "2026-11-05T14:49:44.142Z",
+      "createdAt": "2026-11-05T14:49:44.142Z"
+    },
+    {
+      "id": "log_1793890184598",
+      "userId": "usr_1792604581388_oacc",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 👑 Master Admin Final Approval & Gift!",
+      "timestamp": "2026-11-05T14:49:44.598Z",
+      "createdAt": "2026-11-05T14:49:44.598Z"
+    },
+    {
+      "id": "log_1793890185586",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Final Approved by Master Admin: \"Design 10 posts\"",
+      "timestamp": "2026-11-05T14:49:45.586Z",
+      "createdAt": "2026-11-05T14:49:45.586Z"
+    },
+    {
+      "id": "log_1793890185602",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793890158382_g9z7",
+      "timestamp": "2026-11-05T14:49:45.602Z",
+      "createdAt": "2026-11-05T14:49:45.602Z"
+    },
+    {
+      "id": "log_1793899837055",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793899836758_8o37",
+      "timestamp": "2026-11-05T17:30:37.055Z",
+      "createdAt": "2026-11-05T17:30:37.055Z"
+    },
+    {
+      "id": "log_1793971593254",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793971569370_kjpl",
+      "timestamp": "2026-11-06T13:26:33.254Z",
+      "createdAt": "2026-11-06T13:26:33.254Z"
+    },
+    {
+      "id": "log_1793971906608",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793971876626_cmi8",
+      "timestamp": "2026-11-06T13:31:46.608Z",
+      "createdAt": "2026-11-06T13:31:46.608Z"
+    },
+    {
+      "id": "log_1793971967321",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793971937593_yrzj",
+      "timestamp": "2026-11-06T13:32:47.321Z",
+      "createdAt": "2026-11-06T13:32:47.321Z"
+    },
+    {
+      "id": "log_1793972638110",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793972637633_j8ic",
+      "timestamp": "2026-11-06T13:43:58.110Z",
+      "createdAt": "2026-11-06T13:43:58.110Z"
+    },
+    {
+      "id": "log_1793972790786",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793972788891_jikt",
+      "timestamp": "2026-11-06T13:46:30.786Z",
+      "createdAt": "2026-11-06T13:46:30.786Z"
+    },
+    {
+      "id": "log_1793987601104",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793987586153_fiyz",
+      "timestamp": "2026-11-06T17:53:21.104Z",
+      "createdAt": "2026-11-06T17:53:21.104Z"
+    },
+    {
+      "id": "log_1793987648822",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: 10 posts",
+      "timestamp": "2026-11-06T17:54:08.822Z",
+      "createdAt": "2026-11-06T17:54:08.822Z"
+    },
+    {
+      "id": "log_1793987649224",
+      "userId": "usr_1792604581388_oacc",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-06T17:54:09.224Z",
+      "createdAt": "2026-11-06T17:54:09.224Z"
+    },
+    {
+      "id": "log_1793987650859",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"10 posts\"",
+      "timestamp": "2026-11-06T17:54:10.859Z",
+      "createdAt": "2026-11-06T17:54:10.859Z"
+    },
+    {
+      "id": "log_1793987711904",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1793987666095_nnsn",
+      "timestamp": "2026-11-06T17:55:11.904Z",
+      "createdAt": "2026-11-06T17:55:11.904Z"
+    },
+    {
+      "id": "log_1794060139979",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794060133856_9gby",
+      "timestamp": "2026-11-07T14:02:19.979Z",
+      "createdAt": "2026-11-07T14:02:19.979Z"
+    },
+    {
+      "id": "log_1794060215304",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794060214887_5iid",
+      "timestamp": "2026-11-07T14:03:35.304Z",
+      "createdAt": "2026-11-07T14:03:35.304Z"
+    },
+    {
+      "id": "log_1794060222523",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794060222331_jeym",
+      "timestamp": "2026-11-07T14:03:42.524Z",
+      "createdAt": "2026-11-07T14:03:42.524Z"
+    },
+    {
+      "id": "log_1794060420288",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794060420083_nq1y",
+      "timestamp": "2026-11-07T14:07:00.288Z",
+      "createdAt": "2026-11-07T14:07:00.288Z"
+    },
+    {
+      "id": "log_1794060466419",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794060451402_lefj",
+      "timestamp": "2026-11-07T14:07:46.419Z",
+      "createdAt": "2026-11-07T14:07:46.419Z"
+    },
+    {
+      "id": "log_1794060474122",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794060471097_nco4",
+      "timestamp": "2026-11-07T14:07:54.122Z",
+      "createdAt": "2026-11-07T14:07:54.122Z"
+    },
+    {
+      "id": "log_1794069786805",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: ⏳ Deadline Extension Requested",
+      "timestamp": "2026-11-07T16:43:06.805Z",
+      "createdAt": "2026-11-07T16:43:06.805Z"
+    },
+    {
+      "id": "log_1794069787689",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Extension Requested: \"10 posts\"",
+      "timestamp": "2026-11-07T16:43:07.689Z",
+      "createdAt": "2026-11-07T16:43:07.689Z"
+    },
+    {
+      "id": "log_1794070822455",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794070696777_umc9",
+      "timestamp": "2026-11-07T17:00:22.455Z",
+      "createdAt": "2026-11-07T17:00:22.455Z"
+    },
+    {
+      "id": "log_1794070825849",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794070822534_25l5",
+      "timestamp": "2026-11-07T17:00:25.849Z",
+      "createdAt": "2026-11-07T17:00:25.849Z"
+    },
+    {
+      "id": "log_1794070825866",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794070691203_ssub",
+      "timestamp": "2026-11-07T17:00:25.866Z",
+      "createdAt": "2026-11-07T17:00:25.866Z"
+    },
+    {
+      "id": "log_1794070830676",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794070829200_udsr",
+      "timestamp": "2026-11-07T17:00:30.676Z",
+      "createdAt": "2026-11-07T17:00:30.676Z"
+    },
+    {
+      "id": "log_1794070906890",
+      "userId": "usr_1792604581388_oacc",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: ✅ Deadline Extension Approved!",
+      "timestamp": "2026-11-07T17:01:46.890Z",
+      "createdAt": "2026-11-07T17:01:46.890Z"
+    },
+    {
+      "id": "log_1794070909814",
+      "userId": "usr_1792604581388_oacc",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: ✅ Deadline Extension Approved!",
+      "timestamp": "2026-11-07T17:01:49.814Z",
+      "createdAt": "2026-11-07T17:01:49.814Z"
+    },
+    {
+      "id": "log_1794323338226",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794323337890_rmdc",
+      "timestamp": "2026-11-10T15:08:58.226Z",
+      "createdAt": "2026-11-10T15:08:58.226Z"
+    },
+    {
+      "id": "log_1794323436604",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Physical Apperance",
+      "timestamp": "2026-11-10T15:10:36.604Z",
+      "createdAt": "2026-11-10T15:10:36.604Z"
+    },
+    {
+      "id": "log_1794323437032",
+      "userId": "usr_1792604581388_oacc",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-10T15:10:37.032Z",
+      "createdAt": "2026-11-10T15:10:37.032Z"
+    },
+    {
+      "id": "log_1794323440608",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"Physical Apperance\"",
+      "timestamp": "2026-11-10T15:10:40.608Z",
+      "createdAt": "2026-11-10T15:10:40.608Z"
+    },
+    {
+      "id": "log_1794323468613",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: physical Appearance",
+      "timestamp": "2026-11-10T15:11:08.613Z",
+      "createdAt": "2026-11-10T15:11:08.613Z"
+    },
+    {
+      "id": "log_1794323469031",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-10T15:11:09.031Z",
+      "createdAt": "2026-11-10T15:11:09.031Z"
+    },
+    {
+      "id": "log_1794323472483",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"physical Appearance\"",
+      "timestamp": "2026-11-10T15:11:12.483Z",
+      "createdAt": "2026-11-10T15:11:12.483Z"
+    },
+    {
+      "id": "log_1794399233125",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794399232741_t3cf",
+      "timestamp": "2026-11-11T12:13:53.125Z",
+      "createdAt": "2026-11-11T12:13:53.125Z"
+    },
+    {
+      "id": "log_1794399280713",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794399240910_15x5",
+      "timestamp": "2026-11-11T12:14:40.713Z",
+      "createdAt": "2026-11-11T12:14:40.713Z"
+    },
+    {
+      "id": "log_1794405470222",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794405463431_aqmn",
+      "timestamp": "2026-11-11T13:57:50.222Z",
+      "createdAt": "2026-11-11T13:57:50.222Z"
+    },
+    {
+      "id": "log_1794405486892",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794405471912_q4jy",
+      "timestamp": "2026-11-11T13:58:06.892Z",
+      "createdAt": "2026-11-11T13:58:06.892Z"
+    },
+    {
+      "id": "log_1794405719738",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794405712284_5m2m",
+      "timestamp": "2026-11-11T14:01:59.738Z",
+      "createdAt": "2026-11-11T14:01:59.738Z"
+    },
+    {
+      "id": "log_1794405748957",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794405719053_9ac6",
+      "timestamp": "2026-11-11T14:02:28.957Z",
+      "createdAt": "2026-11-11T14:02:28.957Z"
+    },
+    {
+      "id": "log_1794405835623",
+      "userId": "system",
+      "action": "CREATE_INVITATIONS",
+      "details": "Created new item in invitations: inv_1794405835405_ip4l",
+      "timestamp": "2026-11-11T14:03:55.623Z",
+      "createdAt": "2026-11-11T14:03:55.624Z"
+    },
+    {
+      "id": "log_1794418963140",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794418961906_uo7a",
+      "timestamp": "2026-11-11T17:42:43.140Z",
+      "createdAt": "2026-11-11T17:42:43.140Z"
+    },
+    {
+      "id": "log_1794418965038",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794418963160_3wxf",
+      "timestamp": "2026-11-11T17:42:45.038Z",
+      "createdAt": "2026-11-11T17:42:45.038Z"
+    },
+    {
+      "id": "log_1794418991758",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794418965615_dm4t",
+      "timestamp": "2026-11-11T17:43:11.758Z",
+      "createdAt": "2026-11-11T17:43:11.758Z"
+    },
+    {
+      "id": "log_1794680387187",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794680386852_8m71",
+      "timestamp": "2026-11-14T18:19:47.187Z",
+      "createdAt": "2026-11-14T18:19:47.187Z"
+    },
+    {
+      "id": "log_1794811231153",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794811215178_5nvp",
+      "timestamp": "2026-11-16T06:40:31.153Z",
+      "createdAt": "2026-11-16T06:40:31.153Z"
+    },
+    {
+      "id": "log_1794865467589",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794865456838_1lt8",
+      "timestamp": "2026-11-16T21:44:27.589Z",
+      "createdAt": "2026-11-16T21:44:27.589Z"
+    },
+    {
+      "id": "log_1794865477506",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794865468169_3n54",
+      "timestamp": "2026-11-16T21:44:37.506Z",
+      "createdAt": "2026-11-16T21:44:37.506Z"
+    },
+    {
+      "id": "log_1794865484800",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794865477524_44sz",
+      "timestamp": "2026-11-16T21:44:44.800Z",
+      "createdAt": "2026-11-16T21:44:44.800Z"
+    },
+    {
+      "id": "log_1794865781651",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794865685593_wo9x",
+      "timestamp": "2026-11-16T21:49:41.651Z",
+      "createdAt": "2026-11-16T21:49:41.651Z"
+    },
+    {
+      "id": "log_1794865908888",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Email Marketing ",
+      "timestamp": "2026-11-16T21:51:48.888Z",
+      "createdAt": "2026-11-16T21:51:48.888Z"
+    },
+    {
+      "id": "log_1794865909268",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-16T21:51:49.268Z",
+      "createdAt": "2026-11-16T21:51:49.268Z"
+    },
+    {
+      "id": "log_1794865910731",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"Email Marketing \"",
+      "timestamp": "2026-11-16T21:51:50.731Z",
+      "createdAt": "2026-11-16T21:51:50.731Z"
+    },
+    {
+      "id": "log_1794865979893",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: Ezzywalk posts",
+      "timestamp": "2026-11-16T21:52:59.893Z",
+      "createdAt": "2026-11-16T21:52:59.893Z"
+    },
+    {
+      "id": "log_1794865980273",
+      "userId": "usr_1792604581388_oacc",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-16T21:53:00.273Z",
+      "createdAt": "2026-11-16T21:53:00.273Z"
+    },
+    {
+      "id": "log_1794865981685",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"Ezzywalk posts\"",
+      "timestamp": "2026-11-16T21:53:01.685Z",
+      "createdAt": "2026-11-16T21:53:01.685Z"
+    },
+    {
+      "id": "log_1794902628106",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794902619982_87ls",
+      "timestamp": "2026-11-17T08:03:48.106Z",
+      "createdAt": "2026-11-17T08:03:48.106Z"
+    },
+    {
+      "id": "log_1794902724841",
+      "userId": "system",
+      "action": "CREATE_INVITATIONS",
+      "details": "Created new item in invitations: inv_1794902724614_6ibo",
+      "timestamp": "2026-11-17T08:05:24.841Z",
+      "createdAt": "2026-11-17T08:05:24.841Z"
+    },
+    {
+      "id": "log_1794902772846",
+      "userId": "system",
+      "action": "CREATE_USERS",
+      "details": "Created new item in users: Executive Master Admin & Director",
+      "timestamp": "2026-11-17T08:06:12.846Z",
+      "createdAt": "2026-11-17T08:06:12.846Z"
+    },
+    {
+      "id": "log_1794902779873",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_ACTIVE_PRESENCES",
+      "details": "Created new item in active_presences: Waqar Hassan",
+      "timestamp": "2026-11-17T08:06:19.873Z",
+      "createdAt": "2026-11-17T08:06:19.873Z"
+    },
+    {
+      "id": "log_1794902788828",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794902777174_3wjj",
+      "timestamp": "2026-11-17T08:06:28.828Z",
+      "createdAt": "2026-11-17T08:06:28.828Z"
+    },
+    {
+      "id": "log_1794902809018",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_ACTIVE_PRESENCES",
+      "details": "Created new item in active_presences: Waqar Hassan",
+      "timestamp": "2026-11-17T08:06:49.018Z",
+      "createdAt": "2026-11-17T08:06:49.018Z"
+    },
+    {
+      "id": "log_1794902912158",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794902812402_swrt",
+      "timestamp": "2026-11-17T08:08:32.158Z",
+      "createdAt": "2026-11-17T08:08:32.158Z"
+    },
+    {
+      "id": "log_1794903262867",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794902912782_y3v0",
+      "timestamp": "2026-11-17T08:14:22.867Z",
+      "createdAt": "2026-11-17T08:14:22.867Z"
+    },
+    {
+      "id": "log_1794904099949",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794904099539_c15k",
+      "timestamp": "2026-11-17T08:28:19.949Z",
+      "createdAt": "2026-11-17T08:28:19.949Z"
+    },
+    {
+      "id": "log_1794917776660",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794917776411_9kv7",
+      "timestamp": "2026-11-17T12:16:16.660Z",
+      "createdAt": "2026-11-17T12:16:16.660Z"
+    },
+    {
+      "id": "log_1794917777457",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794917776664_jhh6",
+      "timestamp": "2026-11-17T12:16:17.457Z",
+      "createdAt": "2026-11-17T12:16:17.457Z"
+    },
+    {
+      "id": "log_1794917779733",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794917779249_b5np",
+      "timestamp": "2026-11-17T12:16:19.733Z",
+      "createdAt": "2026-11-17T12:16:19.733Z"
+    },
+    {
+      "id": "log_1794917787211",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794917776523_obqe",
+      "timestamp": "2026-11-17T12:16:27.211Z",
+      "createdAt": "2026-11-17T12:16:27.211Z"
+    },
+    {
+      "id": "log_1794920165277",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794920165067_qnym",
+      "timestamp": "2026-11-17T12:56:05.277Z",
+      "createdAt": "2026-11-17T12:56:05.277Z"
+    },
+    {
+      "id": "log_1794939361641",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794939360987_74z3",
+      "timestamp": "2026-11-17T18:16:01.641Z",
+      "createdAt": "2026-11-17T18:16:01.642Z"
+    },
+    {
+      "id": "log_1794939376883",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794939332784_uua7",
+      "timestamp": "2026-11-17T18:16:16.883Z",
+      "createdAt": "2026-11-17T18:16:16.883Z"
+    },
+    {
+      "id": "log_1794941355053",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794941351392_pk7e",
+      "timestamp": "2026-11-17T18:49:15.053Z",
+      "createdAt": "2026-11-17T18:49:15.053Z"
+    },
+    {
+      "id": "log_1794941423173",
+      "userId": "admins",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📤 Task Deliverables Submitted",
+      "timestamp": "2026-11-17T18:50:23.173Z",
+      "createdAt": "2026-11-17T18:50:23.173Z"
+    },
+    {
+      "id": "log_1794941423963",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Submitted: \"pdf genrate\"",
+      "timestamp": "2026-11-17T18:50:23.963Z",
+      "createdAt": "2026-11-17T18:50:23.963Z"
+    },
+    {
+      "id": "log_1794949245787",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794949245414_a0k8",
+      "timestamp": "2026-11-17T21:00:45.787Z",
+      "createdAt": "2026-11-17T21:00:45.787Z"
+    },
+    {
+      "id": "log_1794949569881",
+      "userId": "usr_1792604957142_k0b7",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 👑 Master Admin Final Approval & Gift!",
+      "timestamp": "2026-11-17T21:06:09.881Z",
+      "createdAt": "2026-11-17T21:06:09.881Z"
+    },
+    {
+      "id": "log_1794949571335",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Final Approved by Master Admin: \"pdf genrate\"",
+      "timestamp": "2026-11-17T21:06:11.335Z",
+      "createdAt": "2026-11-17T21:06:11.335Z"
+    },
+    {
+      "id": "log_1794956309996",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: print agreement ",
+      "timestamp": "2026-11-17T22:58:29.996Z",
+      "createdAt": "2026-11-17T22:58:29.996Z"
+    },
+    {
+      "id": "log_1794956310378",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-17T22:58:30.378Z",
+      "createdAt": "2026-11-17T22:58:30.378Z"
+    },
+    {
+      "id": "log_1794956312034",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"print agreement \"",
+      "timestamp": "2026-11-17T22:58:32.034Z",
+      "createdAt": "2026-11-17T22:58:32.034Z"
+    },
+    {
+      "id": "log_1794956886618",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794956886426_81r6",
+      "timestamp": "2026-11-17T23:08:06.618Z",
+      "createdAt": "2026-11-17T23:08:06.618Z"
+    },
+    {
+      "id": "log_1794959154220",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794959152599_dda2",
+      "timestamp": "2026-11-17T23:45:54.220Z",
+      "createdAt": "2026-11-17T23:45:54.220Z"
+    },
+    {
+      "id": "log_1794961065328",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794961065108_mfwe",
+      "timestamp": "2026-11-18T00:17:45.328Z",
+      "createdAt": "2026-11-18T00:17:45.328Z"
+    },
+    {
+      "id": "log_1794997226899",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794997225334_n0ob",
+      "timestamp": "2026-11-18T10:20:26.899Z",
+      "createdAt": "2026-11-18T10:20:26.899Z"
+    },
+    {
+      "id": "log_1794997447608",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1794997284302_yfwq",
+      "timestamp": "2026-11-18T10:24:07.608Z",
+      "createdAt": "2026-11-18T10:24:07.608Z"
+    },
+    {
+      "id": "log_1794998201865",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: One Pdf ",
+      "timestamp": "2026-11-18T10:36:41.865Z",
+      "createdAt": "2026-11-18T10:36:41.865Z"
+    },
+    {
+      "id": "log_1794998202289",
+      "userId": "usr_1792324121131_qjg8",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-18T10:36:42.289Z",
+      "createdAt": "2026-11-18T10:36:42.289Z"
+    },
+    {
+      "id": "log_1794998204051",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"One Pdf \"",
+      "timestamp": "2026-11-18T10:36:44.051Z",
+      "createdAt": "2026-11-18T10:36:44.051Z"
+    },
+    {
+      "id": "log_1795034140602",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795034067609_wu0z",
+      "timestamp": "2026-11-18T20:35:40.602Z",
+      "createdAt": "2026-11-18T20:35:40.602Z"
+    },
+    {
+      "id": "log_1795036147075",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795036146839_50pt",
+      "timestamp": "2026-11-18T21:09:07.075Z",
+      "createdAt": "2026-11-18T21:09:07.075Z"
+    },
+    {
+      "id": "log_1795036269185",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795036239258_69vj",
+      "timestamp": "2026-11-18T21:11:09.185Z",
+      "createdAt": "2026-11-18T21:11:09.185Z"
+    },
+    {
+      "id": "log_1795116852655",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795116788732_yss6",
+      "timestamp": "2026-11-19T19:34:12.655Z",
+      "createdAt": "2026-11-19T19:34:12.655Z"
+    },
+    {
+      "id": "log_1795116853636",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795116853392_2nj5",
+      "timestamp": "2026-11-19T19:34:13.636Z",
+      "createdAt": "2026-11-19T19:34:13.636Z"
+    },
+    {
+      "id": "log_1795116882801",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795116880549_94im",
+      "timestamp": "2026-11-19T19:34:42.801Z",
+      "createdAt": "2026-11-19T19:34:42.801Z"
+    },
+    {
+      "id": "log_1795171761353",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795171728137_8yso",
+      "timestamp": "2026-11-20T10:49:21.353Z",
+      "createdAt": "2026-11-20T10:49:21.353Z"
+    },
+    {
+      "id": "log_1795172516090",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795172515810_8rgo",
+      "timestamp": "2026-11-20T11:01:56.090Z",
+      "createdAt": "2026-11-20T11:01:56.090Z"
+    },
+    {
+      "id": "log_1795172854979",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_TASKS",
+      "details": "Created new item in tasks: testing",
+      "timestamp": "2026-11-20T11:07:34.979Z",
+      "createdAt": "2026-11-20T11:07:34.979Z"
+    },
+    {
+      "id": "log_1795172855443",
+      "userId": "usr_1792604581388_oacc",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 🚨 New Task Assigned",
+      "timestamp": "2026-11-20T11:07:35.443Z",
+      "createdAt": "2026-11-20T11:07:35.443Z"
+    },
+    {
+      "id": "log_1795172856954",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Task Assigned: \"testing\"",
+      "timestamp": "2026-11-20T11:07:36.954Z",
+      "createdAt": "2026-11-20T11:07:36.954Z"
+    },
+    {
+      "id": "log_1795172911995",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795172552092_ifo7",
+      "timestamp": "2026-11-20T11:08:31.995Z",
+      "createdAt": "2026-11-20T11:08:31.995Z"
+    },
+    {
+      "id": "log_1795173057696",
+      "userId": "all",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 📢 [HIGH] testing",
+      "timestamp": "2026-11-20T11:10:57.696Z",
+      "createdAt": "2026-11-20T11:10:57.696Z"
+    },
+    {
+      "id": "log_1795173057698",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Announcement: \"testing\"",
+      "timestamp": "2026-11-20T11:10:57.698Z",
+      "createdAt": "2026-11-20T11:10:57.698Z"
+    },
+    {
+      "id": "log_1795173057701",
+      "userId": "system",
+      "action": "CREATE_ANNOUNCEMENTS",
+      "details": "Created new item in announcements: testing",
+      "timestamp": "2026-11-20T11:10:57.701Z",
+      "createdAt": "2026-11-20T11:10:57.701Z"
+    },
+    {
+      "id": "log_1795173387197",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795173367282_zyiz",
+      "timestamp": "2026-11-20T11:16:27.197Z",
+      "createdAt": "2026-11-20T11:16:27.197Z"
+    },
+    {
+      "id": "log_1795173518767",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_GIFTS",
+      "details": "Created new item in gifts: Executive MVP Award",
+      "timestamp": "2026-11-20T11:18:38.767Z",
+      "createdAt": "2026-11-20T11:18:38.767Z"
+    },
+    {
+      "id": "log_1795173655700",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795173647526_26qa",
+      "timestamp": "2026-11-20T11:20:55.700Z",
+      "createdAt": "2026-11-20T11:20:55.700Z"
+    },
+    {
+      "id": "log_1795199466513",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795199463116_d7zh",
+      "timestamp": "2026-11-20T18:31:06.513Z",
+      "createdAt": "2026-11-20T18:31:06.513Z"
+    },
+    {
+      "id": "log_1795199509579",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795199466935_f1js",
+      "timestamp": "2026-11-20T18:31:49.579Z",
+      "createdAt": "2026-11-20T18:31:49.579Z"
+    },
+    {
+      "id": "log_1795263225236",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795263224842_kpra",
+      "timestamp": "2026-11-21T12:13:45.236Z",
+      "createdAt": "2026-11-21T12:13:45.236Z"
+    },
+    {
+      "id": "log_1795370072820",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795370064817_dlnt",
+      "timestamp": "2026-11-22T17:54:32.820Z",
+      "createdAt": "2026-11-22T17:54:32.820Z"
+    },
+    {
+      "id": "log_1795370551113",
+      "userId": "usr_1794902772635_kfin",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795370386433_ve6a",
+      "timestamp": "2026-11-22T18:02:31.113Z",
+      "createdAt": "2026-11-22T18:02:31.113Z"
+    },
+    {
+      "id": "log_1795519020754",
+      "userId": "usr_member_1",
+      "action": "CREATE_ATTENDANCE",
+      "details": "Created new item in attendance: att_1795519020647_s8a6",
+      "timestamp": "2026-11-24T11:17:00.755Z",
+      "createdAt": "2026-11-24T11:17:00.755Z"
+    },
+    {
+      "id": "log_1795519020977",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Zohaib Khan started attendance tracking session",
+      "timestamp": "2026-11-24T11:17:00.977Z",
+      "createdAt": "2026-11-24T11:17:00.977Z"
+    },
+    {
+      "id": "log_1795519031275",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Attendance session cancelled: Zohaib Khan",
+      "timestamp": "2026-11-24T11:17:11.275Z",
+      "createdAt": "2026-11-24T11:17:11.275Z"
+    },
+    {
+      "id": "log_1795535785234",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_PUSH_SUBSCRIPTIONS",
+      "details": "Created new item in push_subscriptions: sub_1795535785101_ozgl",
+      "timestamp": "2026-11-24T15:56:25.234Z",
+      "createdAt": "2026-11-24T15:56:25.234Z"
+    },
+    {
+      "id": "log_1795536151144",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_ATTENDANCE",
+      "details": "Created new item in attendance: att_1795536151071_g9du",
+      "timestamp": "2026-11-24T16:02:31.144Z",
+      "createdAt": "2026-11-24T16:02:31.144Z"
+    },
+    {
+      "id": "log_1795536152260",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Ali Zohaib started attendance tracking session",
+      "timestamp": "2026-11-24T16:02:32.260Z",
+      "createdAt": "2026-11-24T16:02:32.260Z"
+    },
+    {
+      "id": "log_1795536489896",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Attendance Logged: Ali Zohaib (Present)",
+      "timestamp": "2026-11-24T16:08:09.896Z",
+      "createdAt": "2026-11-24T16:08:09.896Z"
+    },
+    {
+      "id": "log_1795543093668",
+      "userId": "usr_admin_1",
+      "action": "CREATE_ATTENDANCE",
+      "details": "Created new item in attendance: att_1795543093583_5wgl",
+      "timestamp": "2026-11-24T17:58:13.668Z",
+      "createdAt": "2026-11-24T17:58:13.668Z"
+    },
+    {
+      "id": "log_1795543093821",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Ali Zohaib started attendance tracking session",
+      "timestamp": "2026-11-24T17:58:13.821Z",
+      "createdAt": "2026-11-24T17:58:13.821Z"
+    },
+    {
+      "id": "log_1795552328382",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Daily Attendance Cutoff (12:00 AM): Ali Zohaib",
+      "timestamp": "2026-11-24T20:32:08.382Z",
+      "createdAt": "2026-11-24T20:32:08.382Z"
+    },
+    {
+      "id": "log_1795552373012",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_ATTENDANCE",
+      "details": "Created new item in attendance: att_1795552372933_6y3x",
+      "timestamp": "2026-11-24T20:32:53.012Z",
+      "createdAt": "2026-11-24T20:32:53.012Z"
+    },
+    {
+      "id": "log_1795552373177",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Ali Zohaib started attendance tracking session",
+      "timestamp": "2026-11-24T20:32:53.177Z",
+      "createdAt": "2026-11-24T20:32:53.177Z"
+    },
+    {
+      "id": "log_1795552394250",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Attendance Logged: Ali Zohaib (Present)",
+      "timestamp": "2026-11-24T20:33:14.250Z",
+      "createdAt": "2026-11-24T20:33:14.250Z"
+    },
+    {
+      "id": "log_1795554186919",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_LEAVES",
+      "details": "Created new item in leaves: lev_1795554186780",
+      "timestamp": "2026-11-24T21:03:06.919Z",
+      "createdAt": "2026-11-24T21:03:06.919Z"
+    },
+    {
+      "id": "log_1795559102934",
+      "userId": "system",
+      "action": "CREATE_ANNOUNCEMENTS",
+      "details": "Created new item in announcements: Ali Zohaib posted a message",
+      "timestamp": "2026-11-24T22:25:02.934Z",
+      "createdAt": "2026-11-24T22:25:02.934Z"
+    },
+    {
+      "id": "log_1795559103072",
+      "userId": "usr_1792604581388_oacc",
+      "action": "CREATE_NOTIFICATIONS",
+      "details": "Created new item in notifications: 💬 Ali Zohaib mentioned you in Directives",
+      "timestamp": "2026-11-24T22:25:03.072Z",
+      "createdAt": "2026-11-24T22:25:03.072Z"
+    },
+    {
+      "id": "log_1795559103245",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Directive: \"Ali Zohaib posted a message\"",
+      "timestamp": "2026-11-24T22:25:03.245Z",
+      "createdAt": "2026-11-24T22:25:03.245Z"
+    },
+    {
+      "id": "log_1795559130199",
+      "userId": "system",
+      "action": "CREATE_OPERATIONS_HISTORY",
+      "details": "Created new item in operations_history: Deleted Announcement: \"Ali Zohaib posted a message\"",
+      "timestamp": "2026-11-24T22:25:30.199Z",
+      "createdAt": "2026-11-24T22:25:30.200Z"
+    },
+    {
+      "id": "log_1795559226730",
+      "userId": "usr_1792320516422_nv0x",
+      "action": "CREATE_LEAVES",
+      "details": "Created new item in leaves: lev_1795559226649",
+      "timestamp": "2026-11-24T22:27:06.730Z",
+      "createdAt": "2026-11-24T22:27:06.730Z"
     }
   ],
   "settings": {
     "companyName": "Stowave",
     "updatedAt": "2026-10-16T16:06:58.414Z",
     "apifyApiKey": "",
-    "apifyUserId": "",
+    "apifyUserId": "FMGVFIUSXe5NX5RJI",
     "companyTagline": "Modern Team Strategy, E-Commerce Operations & Automation",
     "groqModel": "openai/gpt-oss-120b",
     "timezone": "UTC+5 (PKT)",
@@ -911,15 +2974,15 @@
       "name": "Ali Zohaib",
       "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792321219/stowave_avatars/vhljiaysakw7lksfyukn.jpg",
       "role": "admin",
-      "currentPage": "/announcements",
+      "currentPage": "/social",
       "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
       "status": "online",
-      "sessionStartedAt": 1793565809752,
-      "lastHeartbeat": 1793566166759,
-      "lastSeen": 1793566166759,
+      "sessionStartedAt": 1795561612304,
+      "lastHeartbeat": 1795561672204,
+      "lastSeen": 1795561672204,
       "createdAt": "2026-10-18T10:48:37.952Z",
-      "updatedAt": "2026-11-01T20:49:26.759Z",
-      "leftAt": 1793553623711
+      "updatedAt": "2026-11-24T23:07:52.204Z",
+      "leftAt": 1795559629681
     },
     {
       "id": "prs_usr_1792324121131_qjg8",
@@ -927,14 +2990,15 @@
       "name": "Ali Haider",
       "avatar": "https://images.unsplash.com/photo-1534528766780?auto=format&fit=crop&w=200&q=80",
       "role": "member",
-      "currentPage": "/tasks/",
+      "currentPage": "/tasks",
       "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
       "status": "online",
-      "sessionStartedAt": 1793073327468,
-      "lastHeartbeat": 1793073342763,
-      "lastSeen": 1793073342763,
+      "sessionStartedAt": 1794944395705,
+      "lastHeartbeat": 1794944395705,
+      "lastSeen": 1794944395705,
       "createdAt": "2026-10-18T11:48:43.264Z",
-      "updatedAt": "2026-10-27T03:55:42.763Z"
+      "updatedAt": "2026-11-17T19:39:55.705Z",
+      "leftAt": 1794917777558
     },
     {
       "id": "prs_usr_admin_1",
@@ -999,14 +3063,15 @@
       "name": "Ali Husnain",
       "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792604956/stowave_avatars/vswt4pvspzuc9ayqygqq.jpg",
       "role": "member",
-      "currentPage": "/",
+      "currentPage": "/team",
       "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
       "status": "online",
-      "sessionStartedAt": 1792787882091,
-      "lastHeartbeat": 1792787882091,
-      "lastSeen": 1792604587789,
+      "sessionStartedAt": 1794906930610,
+      "lastHeartbeat": 1794906930610,
+      "lastSeen": 1794906930610,
       "createdAt": "2026-10-21T17:43:07.789Z",
-      "updatedAt": "2026-10-23T20:38:02.091Z"
+      "updatedAt": "2026-11-17T09:15:30.610Z",
+      "leftAt": 1793815120745
     },
     {
       "id": "prs_usr_1792604581388_oacc",
@@ -1042,14 +3107,15 @@
       "name": "Saif urrehmaan",
       "avatar": "https://images.unsplash.com/photo-1534528762657?auto=format&fit=crop&w=200&q=80",
       "role": "member",
-      "currentPage": "/tasks/",
+      "currentPage": "/",
       "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
       "status": "online",
-      "sessionStartedAt": 1793454851961,
-      "lastHeartbeat": 1793455017010,
-      "lastSeen": 1793455017010,
+      "sessionStartedAt": 1795242376536,
+      "lastHeartbeat": 1795242376536,
+      "lastSeen": 1795242376536,
       "createdAt": "2026-10-21T17:49:20.588Z",
-      "updatedAt": "2026-10-31T13:56:57.010Z"
+      "updatedAt": "2026-11-21T06:26:16.536Z",
+      "leftAt": 1794941354409
     },
     {
       "id": "prs_usr_1792604957142_k0b7",
@@ -1218,6 +3284,37 @@
       "lastHeartbeat": 1792787867100,
       "lastSeen": 1792787867100,
       "createdAt": "2026-10-23T20:37:47.100Z"
+    },
+    {
+      "id": "prs_usr_1794902772635_kfin",
+      "userId": "usr_1794902772635_kfin",
+      "name": "Waqar Hassan",
+      "avatar": "https://images.unsplash.com/photo-1534528750653?auto=format&fit=crop&w=200&q=80",
+      "role": "master_admin",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1795370550911,
+      "lastHeartbeat": 1795370550911,
+      "lastSeen": 1795370550911,
+      "createdAt": "2026-11-17T08:06:17.006Z",
+      "updatedAt": "2026-11-22T18:02:30.911Z",
+      "leftAt": 1795370404875
+    },
+    {
+      "id": "prs_usr_1794902772635_kfin",
+      "userId": "usr_1794902772635_kfin",
+      "name": "Waqar Hassan",
+      "avatar": "https://images.unsplash.com/photo-1534528750653?auto=format&fit=crop&w=200&q=80",
+      "role": "master_admin",
+      "currentPage": "/",
+      "pageTitle": "Stowave™ — Enterprise Growth, Omnichannel Social Command & Operations Hub",
+      "status": "online",
+      "sessionStartedAt": 1794902807022,
+      "lastHeartbeat": 1794902807022,
+      "lastSeen": 1794902807022,
+      "createdAt": "2026-11-17T08:06:47.023Z",
+      "updatedAt": "2026-11-17T08:06:47.023Z"
     }
   ],
   "invitations": [
@@ -1233,8 +3330,109 @@
       "invitedByName": "Ali Zohaib",
       "createdAt": "2026-10-18T11:47:37.147Z",
       "acceptedAt": "2026-10-18T11:48:41.133Z",
-      "acceptedUserId": "usr_1792324121131_qjg8",
-      "updatedAt": "2026-10-18T11:48:41.134Z"
+      "acceptedUserId": "usr_1792324121131_qjg8"
+    },
+    {
+      "id": "inv_1792604473350_e32i",
+      "email": "ezzywalk.sliper@gmail.com",
+      "role": "member",
+      "department": "Daily Social Media Posts Design & Scheduling, Gererate pdf of each step, physical appearance",
+      "token": "bc99c8ce77e6200f468aab2c3a8f7267c9b9302de4b84edd",
+      "status": "accepted",
+      "expiresAt": "2026-10-21T18:11:13.350Z",
+      "invitedBy": "usr_1792320516422_nv0x",
+      "invitedByName": "Ali Zohaib",
+      "createdAt": "2026-10-21T17:41:13.350Z",
+      "acceptedAt": "2026-10-21T17:43:01.388Z",
+      "acceptedUserId": "usr_1792604581388_oacc"
+    },
+    {
+      "id": "inv_1792604883583_a9ez",
+      "email": "saifurrehmaan126@gmail.com",
+      "role": "member",
+      "department": "Gererate pdf of each step, Real-time Brand Engagement & Trend Monitoring, Promotional Broadcasts & Customer SMS Alerts, Customer Retention & Re-engagement Campaigns, Weekly Email Newsletter & Offer Dispatch, Abandoned Cart WhatsApp Automated Recovery, Return Parcel (RTO) Inspection & Restocking, Warehouse Stock Physical Counting & Discrepancies, Promotional Ad Banners & High-CTR Creatives, Arrange meetings",
+      "token": "7a828f750fd3c2366b6f43d1bc511dd07be57cbb3be96071",
+      "status": "accepted",
+      "expiresAt": "2026-10-21T18:18:03.583Z",
+      "invitedBy": "usr_1792320516422_nv0x",
+      "invitedByName": "Ali Zohaib",
+      "createdAt": "2026-10-21T17:48:03.583Z",
+      "acceptedAt": "2026-10-21T17:49:17.143Z",
+      "acceptedUserId": "usr_1792604957142_k0b7"
+    },
+    {
+      "id": "inv_1792834131026_2iv5",
+      "email": "waqarhassan03164955@gmail.com",
+      "role": "master_admin",
+      "department": "Daily Bank Balances & Payment Reconciliation, Company Expense Invoices & Vendor Settlement, Team Hiring, Contract Review & Leave Approvals, Budget Authorizations & Major Expenditure Approvals",
+      "token": "a7755ea2f2a4e597bd379b54dcca814cb5082220f5276fc6",
+      "status": "pending",
+      "expiresAt": "2026-11-18T14:32:18.921Z",
+      "invitedBy": "usr_1792320516422_nv0x",
+      "invitedByName": "Ali Zohaib",
+      "createdAt": "2026-10-24T09:28:51.026Z"
+    },
+    {
+      "id": "inv_1793630054910_m5dc",
+      "email": "waqarhassan03164955@gmail.com",
+      "role": "master_admin",
+      "department": "Budget Authorizations & Major Expenditure Approvals, Ad Campaigns, Creative Assets & Discount Sign-off, Notebook Operational Procedure & Authorization, Courier COD (Cash on Delivery) Payout Audit, Profit & Loss Margin Weekly Documentation, Daily Bank Balances & Payment Reconciliation, Company Expense Invoices & Vendor Settlement, Team Hiring, Contract Review & Leave Approvals",
+      "token": "6c7647657885559a91f952ad2ace349b9d31bf1abce0486a",
+      "status": "pending",
+      "expiresAt": "2026-11-18T14:32:18.921Z",
+      "invitedBy": "usr_1792320516422_nv0x",
+      "invitedByName": "Ali Zohaib",
+      "createdAt": "2026-11-02T14:34:14.910Z"
+    },
+    {
+      "id": "inv_1793718406273_lkte",
+      "email": "waqarhassan03164955@gmail.com",
+      "role": "admin",
+      "department": "Daily Social Media Posts Design & Scheduling, Customer Comments & DM Replies Fast Turnaround, Courier COD (Cash on Delivery) Payout Audit, Daily Bank Balances & Payment Reconciliation, Profit & Loss Margin Weekly Documentation, Company Expense Invoices & Vendor Settlement, Ad Campaigns, Creative Assets & Discount Sign-off, Team Hiring, Contract Review & Leave Approvals",
+      "token": "a72c1c2537e93daba6a48e3ff825ea414e65c8ecdbd9403b",
+      "status": "pending",
+      "expiresAt": "2026-11-18T14:32:18.921Z",
+      "invitedBy": "usr_1792320516422_nv0x",
+      "invitedByName": "Ali Zohaib",
+      "createdAt": "2026-11-03T15:06:46.273Z"
+    },
+    {
+      "id": "inv_1793821308359_nzox",
+      "email": "waqarhassan03164955@gmail.com",
+      "role": "master_admin",
+      "department": "Budget Authorizations & Major Expenditure Approvals, Ad Campaigns, Creative Assets & Discount Sign-off, Notebook Operational Procedure & Authorization, Team Hiring, Contract Review & Leave Approvals, Profit & Loss Margin Weekly Documentation, Company Expense Invoices & Vendor Settlement, Courier COD (Cash on Delivery) Payout Audit, Daily Bank Balances & Payment Reconciliation",
+      "token": "7f7936f5f99626c064197228de35d61cc660e62e7f7d3676",
+      "status": "pending",
+      "expiresAt": "2026-11-18T14:32:18.921Z",
+      "invitedBy": "usr_1792320516422_nv0x",
+      "invitedByName": "Ali Zohaib",
+      "createdAt": "2026-11-04T19:41:48.359Z"
+    },
+    {
+      "id": "inv_1794405835405_ip4l",
+      "email": "waqarhassan03164955@gmail.com",
+      "role": "master_admin",
+      "department": "Budget Authorizations & Major Expenditure Approvals, Ad Campaigns, Creative Assets & Discount Sign-off, Notebook Operational Procedure & Authorization",
+      "token": "830f6429e2534c8523c3cec3ae61860530409eae805f9e94",
+      "status": "pending",
+      "expiresAt": "2026-11-18T14:32:18.921Z",
+      "invitedBy": "usr_1792320516422_nv0x",
+      "invitedByName": "Ali Zohaib",
+      "createdAt": "2026-11-11T14:03:55.405Z"
+    },
+    {
+      "id": "inv_1794902724614_6ibo",
+      "email": "waqarhassan03164955@gmail.com",
+      "role": "master_admin",
+      "department": "Budget Authorizations & Major Expenditure Approvals, Ad Campaigns, Creative Assets & Discount Sign-off, Notebook Operational Procedure & Authorization, Daily Bank Balances & Payment Reconciliation, Company Expense Invoices & Vendor Settlement, Profit & Loss Margin Weekly Documentation, Courier COD (Cash on Delivery) Payout Audit, Team Hiring, Contract Review & Leave Approvals",
+      "token": "fe41ad7d82ec759118ea87fc50d512eea3f728315d18b649",
+      "status": "accepted",
+      "expiresAt": "2026-11-24T08:05:24.614Z",
+      "invitedBy": "usr_1792320516422_nv0x",
+      "invitedByName": "Ali Zohaib",
+      "createdAt": "2026-11-17T08:05:24.614Z",
+      "acceptedAt": "2026-11-17T08:06:12.636Z",
+      "acceptedUserId": "usr_1794902772635_kfin"
     }
   ],
   "pending_profile_updates": [],
@@ -1271,39 +3469,6 @@
       "relatedId": "tsk_1792324647985",
       "read": true,
       "createdAt": "2026-10-18T11:57:27.994Z"
-    },
-    {
-      "id": "notif_1792325710176_apt6r",
-      "userId": "usr_1792320516422_nv0x",
-      "title": "🎉 Task Deliverable Approved!",
-      "message": "Admin approved \"task testing \"! Rating: 5/5 Stars ⭐. +100 points awarded.",
-      "type": "task_approved",
-      "link": "/tasks",
-      "relatedId": "tsk_1792324248868",
-      "read": true,
-      "createdAt": "2026-10-18T12:15:10.176Z"
-    },
-    {
-      "id": "notif_1792349655276_yjvao",
-      "userId": "usr_1792320516422_nv0x",
-      "title": "🚨 New Task Assigned",
-      "message": "You have been assigned: \"Hello testing \". Due date: 2026-10-20.",
-      "type": "task_assigned",
-      "link": "/tasks",
-      "relatedId": "tsk_1792349655275",
-      "read": true,
-      "createdAt": "2026-10-18T18:54:15.277Z"
-    },
-    {
-      "id": "notif_1792350168672_xoz0d",
-      "userId": "admins",
-      "title": "📤 Task Deliverables Submitted",
-      "message": "Ali Zohaib has submitted deliverables for \"Hello testing \". Click to review.",
-      "type": "task_submitted",
-      "link": "/tasks",
-      "relatedId": "tsk_1792349655275",
-      "read": false,
-      "createdAt": "2026-10-18T19:02:48.672Z"
     },
     {
       "id": "notif_1792356668525_tchad",
@@ -1350,17 +3515,6 @@
       "createdAt": "2026-10-18T22:41:04.884Z"
     },
     {
-      "id": "notif_1792833539245_yt9aj",
-      "userId": "usr_1792604581388_oacc",
-      "title": "🚨 New Task Assigned",
-      "message": "You have been assigned: \"Design 10 posts\". Due date: 2026-10-31.",
-      "type": "task_assigned",
-      "link": "/tasks",
-      "relatedId": "tsk_1792833538864",
-      "read": false,
-      "createdAt": "2026-10-24T09:18:59.245Z"
-    },
-    {
       "id": "notif_1792833758289_x9po8",
       "userId": "usr_1792324121131_qjg8",
       "title": "🚨 New Task Assigned",
@@ -1372,62 +3526,178 @@
       "createdAt": "2026-10-24T09:22:38.289Z"
     },
     {
-      "id": "notif_1793553548157_brh28",
+      "id": "notif_1793628707918_z8rdb",
       "userId": "usr_1792604581388_oacc",
-      "title": "🚨 New Task Assigned",
-      "message": "You have been assigned: \"pdf generate\". Due date: 2026-11-02.",
-      "type": "task_assigned",
+      "title": "👑 Master Admin Final Approval & Gift!",
+      "message": "Master Admin Ali Zohaib gave final approval on \"pdf generate\"! Rating: 5/5 Stars ⭐. Points awarded: +200. 🎁 Gift: star contributor",
+      "type": "task_completed",
       "link": "/tasks",
       "relatedId": "tsk_1793553547717",
-      "read": false,
-      "createdAt": "2026-11-01T17:19:08.157Z"
+      "read": true,
+      "createdAt": "2026-11-02T14:11:47.918Z"
     },
     {
-      "id": "notif_1793553573772_1qlck",
+      "id": "notif_1793890184319_pbcdn",
+      "userId": "usr_1792604581388_oacc",
+      "title": "👑 Master Admin Final Approval & Gift!",
+      "message": "Master Admin Ali Zohaib gave final approval on \"Design 10 posts\"! Rating: 5/5 Stars ⭐. Points awarded: +200. 🎁 Gift: Master Leadership Recognition Award",
+      "type": "task_completed",
+      "link": "/tasks",
+      "relatedId": "tsk_1792833538864",
+      "read": false,
+      "createdAt": "2026-11-05T14:49:44.319Z"
+    },
+    {
+      "id": "notif_1794070906700_0k0qb",
+      "userId": "usr_1792604581388_oacc",
+      "title": "✅ Deadline Extension Approved!",
+      "message": "Admin approved your extra time request for \"10 posts\". New deadline: 2026-11-10.",
+      "type": "extension_approved",
+      "link": "/tasks",
+      "relatedId": "tsk_1793987648614",
+      "read": true,
+      "createdAt": "2026-11-07T17:01:46.700Z"
+    },
+    {
+      "id": "notif_1794070909611_of139",
+      "userId": "usr_1792604581388_oacc",
+      "title": "✅ Deadline Extension Approved!",
+      "message": "Admin approved your extra time request for \"10 posts\". New deadline: 2026-11-10.",
+      "type": "extension_approved",
+      "link": "/tasks",
+      "relatedId": "tsk_1793987648614",
+      "read": false,
+      "createdAt": "2026-11-07T17:01:49.611Z"
+    },
+    {
+      "id": "notif_1794323468822_e0b0i",
+      "userId": "usr_1792324121131_qjg8",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"physical Appearance\". Due date: 2026-11-13.",
+      "type": "task_assigned",
+      "link": "/tasks",
+      "relatedId": "tsk_1794323468404",
+      "read": false,
+      "createdAt": "2026-11-10T15:11:08.822Z"
+    },
+    {
+      "id": "notif_1794865909077_tysek",
       "userId": "usr_1792604957142_k0b7",
       "title": "🚨 New Task Assigned",
-      "message": "You have been assigned: \"pdf genrate\". Due date: 2026-11-02.",
+      "message": "You have been assigned: \"Email Marketing \". Due date: 2026-11-19.",
       "type": "task_assigned",
+      "link": "/tasks",
+      "relatedId": "tsk_1794865908670",
+      "read": false,
+      "createdAt": "2026-11-16T21:51:49.077Z"
+    },
+    {
+      "id": "notif_1794865980083_vffku",
+      "userId": "usr_1792604581388_oacc",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"Ezzywalk posts\". Due date: 2026-11-19.",
+      "type": "task_assigned",
+      "link": "/tasks",
+      "relatedId": "tsk_1794865979703",
+      "read": false,
+      "createdAt": "2026-11-16T21:53:00.083Z"
+    },
+    {
+      "id": "notif_1794941422969_epm8q",
+      "userId": "admins",
+      "title": "📤 Task Deliverables Submitted",
+      "message": "Saif urrehmaan has submitted deliverables for \"pdf genrate\". Click to review.",
+      "type": "task_submitted",
+      "link": "/tasks",
+      "relatedId": "tsk_1793553573392",
+      "read": true,
+      "createdAt": "2026-11-17T18:50:22.969Z"
+    },
+    {
+      "id": "notif_1794949569567_bkrbd",
+      "userId": "usr_1792604957142_k0b7",
+      "title": "👑 Master Admin Final Approval & Gift!",
+      "message": "Master Admin Ali Zohaib gave final approval on \"pdf genrate\"! Rating: 3/5 Stars ⭐. Points awarded: +60.",
+      "type": "task_completed",
       "link": "/tasks",
       "relatedId": "tsk_1793553573392",
       "read": false,
-      "createdAt": "2026-11-01T17:19:33.772Z"
+      "createdAt": "2026-11-17T21:06:09.568Z"
     },
     {
-      "id": "notif_1793564158892_v0fsf",
-      "userId": "all",
-      "title": "📢 [HIGH] 🛡️ 2FA Security & Session Timeout Awareness",
-      "message": "All team members must ensure two-factor authentication is active on Google Drive & Stowave portal. Session timeouts have been enforced for safety.",
-      "type": "announcement",
-      "link": "/#announcements-section",
-      "relatedId": "ann_1793564158890_ijkf",
+      "id": "notif_1794956310187_rrsgf",
+      "userId": "usr_1794902772635_kfin",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"print agreement \". Due date: 2026-11-18.",
+      "type": "task_assigned",
+      "link": "/tasks",
+      "relatedId": "tsk_1794956309804",
       "read": false,
-      "createdAt": "2026-11-01T20:15:58.892Z"
+      "createdAt": "2026-11-17T22:58:30.187Z"
     },
     {
-      "id": "notif_1793565884581_04rf2",
-      "userId": "all",
-      "title": "📢 [HIGH] hello je",
-      "message": "kia hal je",
-      "type": "announcement",
-      "link": "/#announcements-section",
-      "relatedId": "ann_1793565884572_i87h",
+      "id": "notif_1794998202079_2lmgg",
+      "userId": "usr_1792324121131_qjg8",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"One Pdf \". Due date: 2026-11-21.",
+      "type": "task_assigned",
+      "link": "/tasks",
+      "relatedId": "tsk_1794998201654",
       "read": false,
-      "createdAt": "2026-11-01T20:44:44.581Z"
+      "createdAt": "2026-11-18T10:36:42.079Z"
     },
     {
-      "id": "notif_1793565909706_7yha2",
+      "id": "notif_1795172855203_qxf8b",
+      "userId": "usr_1792604581388_oacc",
+      "title": "🚨 New Task Assigned",
+      "message": "You have been assigned: \"testing\". Due date: 2026-11-22.",
+      "type": "task_assigned",
+      "link": "/tasks",
+      "relatedId": "tsk_1795172854737",
+      "read": false,
+      "createdAt": "2026-11-20T11:07:35.203Z"
+    },
+    {
+      "id": "notif_1795173057355_3rhsu",
       "userId": "all",
-      "title": "📢 [HIGH] Perspiciatis volupt",
-      "message": "Aut nostrud perferen",
+      "title": "📢 [HIGH] testing",
+      "message": "acha aaj hum ny decide kia hai k aaj rat ko meeting ho ge",
       "type": "announcement",
       "link": "/#announcements-section",
-      "relatedId": "ann_1793565909703_xy52",
+      "relatedId": "ann_1795173057353_gbyu",
+      "read": true,
+      "createdAt": "2026-11-20T11:10:57.355Z"
+    },
+    {
+      "id": "notif_1795559103001_hxoaj",
+      "userId": "usr_1792604581388_oacc",
+      "title": "💬 Ali Zohaib mentioned you in Directives",
+      "message": "hello zohaib testing",
+      "type": "announcement_mention",
+      "link": "/announcements",
+      "relatedId": "ann_1795559102825_uhhq",
       "read": false,
-      "createdAt": "2026-11-01T20:45:09.706Z"
+      "createdAt": "2026-11-24T22:25:03.001Z"
     }
   ],
   "push_subscriptions": [
+    {
+      "id": "sub_1795535785101_ozgl",
+      "userId": "usr_1792320516422_nv0x",
+      "userEmail": "",
+      "subscription": {
+        "endpoint": "https://fcm.googleapis.com/fcm/send/fxNeljC4Ctw:APA91bHdI3Y0pxbpYrdC7BYGTAASceizhXhbPr2tS52L8qQv-T9b_yl1e2LsOQYW8xZp7wzcuty76NJA8KX1sNqbNngsWkOeW-mKq4uPXPN7aZh3EyHqwccfkGxmLre5ZyyXV28l7jyR",
+        "expirationTime": null,
+        "keys": {
+          "p256dh": "BGeAZT71vQZ9a4Hpbmnda1kYg2AkRrqQhtumXGe09Z71-54K2onM4EVtOU6XMwV1VM_EAplM7DJ3lEY23nqIPy0",
+          "auth": "ayGGklyXTeQBkeGgG-AjMA"
+        }
+      },
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+      "lastActive": 1795559677327,
+      "createdAt": "2026-11-24T15:56:25.101Z",
+      "updatedAt": "2026-11-24T22:34:37.327Z"
+    },
     {
       "id": "sub_1792799231222_jgqk",
       "userId": "usr_1792320516422_nv0x",
@@ -1441,12 +3711,291 @@
         }
       },
       "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
-      "lastActive": 1793565926791,
+      "lastActive": 1794406516177,
       "createdAt": "2026-10-23T23:47:11.222Z",
-      "updatedAt": "2026-11-01T20:45:26.791Z"
+      "updatedAt": "2026-11-11T14:15:16.177Z"
     }
   ],
   "operations_history": [
+    {
+      "id": "hist_1795559130129_zpfz",
+      "category": "announcement",
+      "action": "ANNOUNCEMENT_DELETED",
+      "title": "Deleted Announcement: \"Ali Zohaib posted a message\"",
+      "urduTitle": "Announcement Khatam Ki: \"Ali Zohaib posted a message\"",
+      "description": "Announcement \"Ali Zohaib posted a message\" workspace sy delete kr di gai.",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Authorized User",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": "ann_1795559102825_uhhq",
+        "name": "Ali Zohaib posted a message",
+        "title": "Ali Zohaib posted a message"
+      },
+      "metadata": {},
+      "timestamp": "2026-11-24T22:25:30.129Z",
+      "formattedTime": "03:25 AM",
+      "formattedDate": "Nov 25, 2026",
+      "epoch": 1795559130129,
+      "createdAt": "2026-11-24T22:25:30.129Z"
+    },
+    {
+      "id": "hist_1795559103153_91wh",
+      "category": "announcement",
+      "action": "ANNOUNCEMENT_POSTED",
+      "title": "Directive: \"Ali Zohaib posted a message\"",
+      "urduTitle": "Nayi Directive: \"Ali Zohaib posted a message\"",
+      "description": "Ali Zohaib posted in Directives: \"hello zohaib testing\".",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Ali Zohaib",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": "ann_1795559102825_uhhq",
+        "name": "Ali Zohaib posted a message",
+        "title": "Ali Zohaib posted a message"
+      },
+      "metadata": {
+        "priority": "normal",
+        "pinned": false,
+        "category": "awareness",
+        "mentionedUserIds": [
+          "usr_1792604581388_oacc"
+        ]
+      },
+      "timestamp": "2026-11-24T22:25:03.153Z",
+      "formattedTime": "03:25 AM",
+      "formattedDate": "Nov 25, 2026",
+      "epoch": 1795559103153,
+      "createdAt": "2026-11-24T22:25:03.176Z"
+    },
+    {
+      "id": "hist_1795552394177_coax",
+      "category": "system",
+      "action": "ATTENDANCE_COMPLETED",
+      "title": "Attendance Logged: Ali Zohaib (Present)",
+      "urduTitle": "Attendance Logged: Ali Zohaib (Present)",
+      "description": "Official attendance stamped after 5 minutes continuous active engagement for 2026-11-25.",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Ali Zohaib",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": null,
+        "name": null,
+        "title": null
+      },
+      "metadata": {
+        "durationSeconds": 300,
+        "date": "2026-11-25"
+      },
+      "timestamp": "2026-11-24T20:33:14.177Z",
+      "formattedTime": "01:33 AM",
+      "formattedDate": "Nov 25, 2026",
+      "epoch": 1795552394177,
+      "createdAt": "2026-11-24T20:33:14.177Z"
+    },
+    {
+      "id": "hist_1795552373097_1c3m",
+      "category": "system",
+      "action": "ATTENDANCE_STARTED",
+      "title": "Ali Zohaib started attendance tracking session",
+      "urduTitle": "Ali Zohaib started attendance tracking session",
+      "description": "Active portal monitoring started for 2026-11-25. Attendance will be recorded only after 5 minutes of continuous portal usage before 12:00 AM midnight.",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Ali Zohaib",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": null,
+        "name": null,
+        "title": null
+      },
+      "metadata": {
+        "targetSeconds": 300,
+        "date": "2026-11-25",
+        "cutoff": "12:00 AM Midnight"
+      },
+      "timestamp": "2026-11-24T20:32:53.097Z",
+      "formattedTime": "01:32 AM",
+      "formattedDate": "Nov 25, 2026",
+      "epoch": 1795552373097,
+      "createdAt": "2026-11-24T20:32:53.099Z"
+    },
+    {
+      "id": "hist_1795552328222_fga6",
+      "category": "system",
+      "action": "ATTENDANCE_EXPIRED_MIDNIGHT",
+      "title": "Daily Attendance Cutoff (12:00 AM): Ali Zohaib",
+      "urduTitle": "Daily Attendance Cutoff (12:00 AM): Ali Zohaib",
+      "description": "Incomplete attendance session for 2026-11-24 expired automatically at 12:00 AM midnight cutoff.",
+      "actor": {
+        "id": "usr_admin_1",
+        "name": "Ali Zohaib",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": null,
+        "name": null,
+        "title": null
+      },
+      "metadata": {
+        "sessionDate": "2026-11-24",
+        "expiredAt": "2026-11-24T20:32:08.222Z"
+      },
+      "timestamp": "2026-11-24T20:32:08.222Z",
+      "formattedTime": "01:32 AM",
+      "formattedDate": "Nov 25, 2026",
+      "epoch": 1795552328222,
+      "createdAt": "2026-11-24T20:32:08.294Z"
+    },
+    {
+      "id": "hist_1795543093742_4cp9",
+      "category": "system",
+      "action": "ATTENDANCE_STARTED",
+      "title": "Ali Zohaib started attendance tracking session",
+      "urduTitle": "Ali Zohaib started attendance tracking session (5-Minute Continuous Rule)",
+      "description": "Active portal monitoring started. Attendance will be recorded only after 5 minutes of continuous portal usage.",
+      "actor": {
+        "id": "usr_admin_1",
+        "name": "Ali Zohaib",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": null,
+        "name": null,
+        "title": null
+      },
+      "metadata": {
+        "targetSeconds": 300,
+        "date": "2026-11-24"
+      },
+      "timestamp": "2026-11-24T17:58:13.742Z",
+      "formattedTime": "10:58 PM",
+      "formattedDate": "Nov 24, 2026",
+      "epoch": 1795543093742,
+      "createdAt": "2026-11-24T17:58:13.744Z"
+    },
+    {
+      "id": "hist_1795536489645_4zd2",
+      "category": "system",
+      "action": "ATTENDANCE_COMPLETED",
+      "title": "Attendance Logged: Ali Zohaib (Present)",
+      "urduTitle": "Ali Zohaib ki attendance lag gayi (5 Minute Continuous Usage Verified)",
+      "description": "Official attendance stamped after 5 minutes continuous active engagement.",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Ali Zohaib",
+        "role": "admin",
+        "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792321219/stowave_avatars/vhljiaysakw7lksfyukn.jpg"
+      },
+      "target": {
+        "id": null,
+        "name": null,
+        "title": null
+      },
+      "metadata": {
+        "durationSeconds": 300,
+        "date": "2026-11-24"
+      },
+      "timestamp": "2026-11-24T16:08:09.645Z",
+      "formattedTime": "09:08 PM",
+      "formattedDate": "Nov 24, 2026",
+      "epoch": 1795536489645,
+      "createdAt": "2026-11-24T16:08:09.645Z"
+    },
+    {
+      "id": "hist_1795536151897_6s6d",
+      "category": "system",
+      "action": "ATTENDANCE_STARTED",
+      "title": "Ali Zohaib started attendance tracking session",
+      "urduTitle": "Ali Zohaib started attendance tracking session (5-Minute Continuous Rule)",
+      "description": "Active portal monitoring started. Attendance will be recorded only after 5 minutes of continuous portal usage.",
+      "actor": {
+        "id": "usr_1792320516422_nv0x",
+        "name": "Ali Zohaib",
+        "role": "admin",
+        "avatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792321219/stowave_avatars/vhljiaysakw7lksfyukn.jpg"
+      },
+      "target": {
+        "id": null,
+        "name": null,
+        "title": null
+      },
+      "metadata": {
+        "targetSeconds": 300,
+        "date": "2026-11-24"
+      },
+      "timestamp": "2026-11-24T16:02:31.897Z",
+      "formattedTime": "09:02 PM",
+      "formattedDate": "Nov 24, 2026",
+      "epoch": 1795536151897,
+      "createdAt": "2026-11-24T16:02:31.924Z"
+    },
+    {
+      "id": "hist_1795519031193_yx53",
+      "category": "system",
+      "action": "ATTENDANCE_ABANDONED",
+      "title": "Attendance session cancelled: Zohaib Khan",
+      "urduTitle": "Zohaib Khan ne 5 minute se pehle attendance check uncheck kiya (Attendance nahi lagi)",
+      "description": "User stopped after 0m 0s. 5-minute requirement was not met.",
+      "actor": {
+        "id": "usr_member_1",
+        "name": "Zohaib Khan",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": null,
+        "name": null,
+        "title": null
+      },
+      "metadata": {},
+      "timestamp": "2026-11-24T11:17:11.193Z",
+      "formattedTime": "04:17 PM",
+      "formattedDate": "Nov 24, 2026",
+      "epoch": 1795519031193,
+      "createdAt": "2026-11-24T11:17:11.194Z"
+    },
+    {
+      "id": "hist_1795519020846_e3x5",
+      "category": "system",
+      "action": "ATTENDANCE_STARTED",
+      "title": "Zohaib Khan started attendance tracking session",
+      "urduTitle": "Zohaib Khan started attendance tracking session (5-Minute Continuous Rule)",
+      "description": "Active portal monitoring started. Attendance will be recorded only after 5 minutes of continuous portal usage.",
+      "actor": {
+        "id": "usr_member_1",
+        "name": "Zohaib Khan",
+        "role": "admin",
+        "avatar": "/icon.png"
+      },
+      "target": {
+        "id": null,
+        "name": null,
+        "title": null
+      },
+      "metadata": {
+        "targetSeconds": 300,
+        "date": "2026-11-24"
+      },
+      "timestamp": "2026-11-24T11:17:00.846Z",
+      "formattedTime": "04:17 PM",
+      "formattedDate": "Nov 24, 2026",
+      "epoch": 1795519020846,
+      "createdAt": "2026-11-24T11:17:00.873Z"
+    },
     {
       "id": "hist_1793565968679_o3zv",
       "category": "announcement",
@@ -1633,6 +4182,90 @@
       "formattedDate": "Nov 2, 2026",
       "epoch": 1793564158893,
       "createdAt": "2026-11-01T20:15:58.913Z"
+    }
+  ],
+  "attendance": [
+    {
+      "id": "att_1795519020647_s8a6",
+      "userId": "usr_member_1",
+      "userName": "Zohaib Khan",
+      "userEmail": "zohaib@company.com",
+      "userAvatar": "",
+      "userDepartment": "Engineering",
+      "date": "2026-11-24",
+      "status": "incomplete",
+      "startTime": "2026-11-24T11:17:00.647Z",
+      "lastHeartbeat": "2026-11-24T11:17:00.647Z",
+      "activeSeconds": 0,
+      "targetSeconds": 300,
+      "verified": false,
+      "ruleMet": null,
+      "completedTime": null,
+      "durationSeconds": 0,
+      "createdAt": "2026-11-24T11:17:00.647Z",
+      "updatedAt": "2026-11-24T11:17:11.099Z",
+      "notes": "Session stopped before completing 5 continuous minutes (Active: 0m 0s). Attendance not marked."
+    },
+    {
+      "id": "att_1795536151071_g9du",
+      "userId": "usr_1792320516422_nv0x",
+      "userName": "Ali Zohaib",
+      "userEmail": "alizohaib.web@gmail.com",
+      "userAvatar": "https://res.cloudinary.com/dqmjtblih/image/upload/v1792321219/stowave_avatars/vhljiaysakw7lksfyukn.jpg",
+      "userDepartment": "Executive Leadership",
+      "date": "2026-11-24",
+      "status": "present",
+      "startTime": "2026-11-24T16:02:31.071Z",
+      "lastHeartbeat": "2026-11-24T16:08:06.135Z",
+      "activeSeconds": 300,
+      "targetSeconds": 300,
+      "verified": true,
+      "ruleMet": "5_minutes_continuous_active_usage",
+      "completedTime": "2026-11-24T16:08:08.780Z",
+      "durationSeconds": 300,
+      "createdAt": "2026-11-24T16:02:31.071Z",
+      "updatedAt": "2026-11-24T16:08:08.780Z"
+    },
+    {
+      "id": "att_1795543093583_5wgl",
+      "userId": "usr_admin_1",
+      "userName": "Ali Zohaib",
+      "userEmail": "alizohaib.web@gmail.com",
+      "userAvatar": "",
+      "userDepartment": "General",
+      "date": "2026-11-24",
+      "status": "incomplete",
+      "startTime": "2026-11-24T17:58:13.583Z",
+      "lastHeartbeat": "2026-11-24T17:58:13.879Z",
+      "activeSeconds": 0,
+      "targetSeconds": 300,
+      "verified": false,
+      "ruleMet": null,
+      "completedTime": null,
+      "durationSeconds": 0,
+      "createdAt": "2026-11-24T17:58:13.583Z",
+      "updatedAt": "2026-11-24T20:32:08.129Z",
+      "notes": "Session automatically expired at 12:00 AM midnight cutoff for 2026-11-24. Continuous 5-minute portal engagement was not completed before midnight."
+    },
+    {
+      "id": "att_1795552372933_6y3x",
+      "userId": "usr_1792320516422_nv0x",
+      "userName": "Ali Zohaib",
+      "userEmail": "alizohaib.web@gmail.com",
+      "userAvatar": "",
+      "userDepartment": "Executive Leadership",
+      "date": "2026-11-25",
+      "status": "present",
+      "startTime": "2026-11-24T20:32:52.933Z",
+      "lastHeartbeat": "2026-11-24T20:32:52.933Z",
+      "activeSeconds": 300,
+      "targetSeconds": 300,
+      "verified": true,
+      "ruleMet": "5_minutes_continuous_active_usage",
+      "completedTime": "2026-11-24T20:33:14.098Z",
+      "durationSeconds": 300,
+      "createdAt": "2026-11-24T20:32:52.933Z",
+      "updatedAt": "2026-11-24T20:33:14.098Z"
     }
   ]
 }
